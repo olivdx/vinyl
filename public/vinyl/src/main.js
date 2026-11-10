@@ -33,7 +33,7 @@ const worker = { postMessage: (m, transfer) => { busy(); (masterWorker ||= start
 // The progress bar (index.html) shows window.__load: a download with got/total, or just "busy" when the size is unknown.
 const busy = (h = { got: 0, total: 0 }) => (window.__load = h);
 const idle = () => { if (window.__load) window.__load.done = true; };
-const AZ0 = -0.5, EL0 = 0.6;   // default camera
+const AZ0 = -0.12, EL0 = 0.88;   // default camera: nearly front-on, looking down from high up
 const S = { hudOn: false, lastDown: 0, tel: null, tRecv: 0, zoom: 0, zoomT: 0, az: AZ0, el: EL0, rpm: 33.3333, rec: null, pending: null, motor: false, cue: true, ready: false };
 let ctx = null, node = null, drag = null;
 // ?og renders just the deck on black, with no interface and no audio: it is how og.png (the share image) is made

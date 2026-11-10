@@ -1,6 +1,95 @@
 {
  "albums": [
   {
+   "id": "ben-xuan",
+   "title": "bến xuân",
+   "by": "bến xuân",
+   "cover": "covers/ben-xuan.jpg",
+   "discs": 2,
+   "sides": [
+    {
+     "id": "ben-xuan-a",
+     "album": "ben-xuan",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/ben-xuan/a/",
+     "tracks": [
+      {
+       "title": "Còn thương rau đắng mọc sau hè",
+       "by": "bến xuân",
+       "len": 370
+      },
+      {
+       "title": "Bến xuân",
+       "by": "bến xuân",
+       "len": 353
+      }
+     ]
+    },
+    {
+     "id": "ben-xuan-b",
+     "album": "ben-xuan",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/ben-xuan/b/",
+     "tracks": [
+      {
+       "title": "Anh cho em mùa xuân",
+       "by": "bến xuân",
+       "len": 348
+      },
+      {
+       "title": "Lắng nghe mùa xuân về",
+       "by": "bến xuân",
+       "len": 266
+      }
+     ]
+    },
+    {
+     "id": "ben-xuan-c",
+     "album": "ben-xuan",
+     "disc": 2,
+     "side": "C",
+     "title": "Side C",
+     "dir": "assets/ben-xuan/c/",
+     "tracks": [
+      {
+       "title": "Mộng chiều xuân",
+       "by": "bến xuân",
+       "len": 239
+      },
+      {
+       "title": "Gái xuân",
+       "by": "bến xuân",
+       "len": 291
+      }
+     ]
+    },
+    {
+     "id": "ben-xuan-d",
+     "album": "ben-xuan",
+     "disc": 2,
+     "side": "D",
+     "title": "Side D",
+     "dir": "assets/ben-xuan/d/",
+     "tracks": [
+      {
+       "title": "Mùa xuân đầu tiên",
+       "by": "bến xuân",
+       "len": 347
+      },
+      {
+       "title": "Tình hoài thương",
+       "by": "bến xuân",
+       "len": 413
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "mck",
    "title": "HVL",
    "by": "RPT MCK",
