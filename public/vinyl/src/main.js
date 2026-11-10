@@ -2,7 +2,7 @@
 import { Renderer } from './render.js';
 import { TAU } from './dsp.js';
 import { RECORDS, ALBUM } from './records.js';
-import { press, makeVis } from './press.js';
+import { press } from './press.js';
 import { PIVOT_X, PIVOT_Y, ALPHA_REST, R_DISC, R_LABEL, R_LEADIN, W33, alphaForRadius, stylusXY, grooveRadius, thetaForRadius } from './geometry.js';
 
 const $ = (id) => document.getElementById(id);
@@ -160,20 +160,37 @@ async function loadPrecompiled(dir = ROOT + 'assets/', me = pick, pressing = nul
     look.side = S.markRec?.side || 'A'; look.art = albumArt(S.markRec?.album);
     w.next = { rec: look, vis: { data: new Uint8Array(visData), cols: man.vis.cols, rows: man.vis.rows }, preview: true };
   }).catch(() => {});
-  const [audio, visData] = await Promise.all([h.audio, h.vis]);
+  let audio = await h.audio;
+  const visData = await h.vis;
+  h.audio = null;                               // the decoded audio is hundreds of MB: let it go once copied out
   if (me !== pick) return;                      // another record was chosen meanwhile
   if (audio.length < man.n || audio.sampleRate !== man.fs) throw new Error('precompiled record does not match its manifest');
-  const unpack = (q) => {                       // 16-bit DPCM of the wall slope -> wall displacement (m)
-    const w = new Float32Array(man.n); let d = 0;
-    for (let i = 0; i < 4096; i++) { const x = q[i] * 32768; if (Math.abs(x - Math.round(x)) > 0.01) throw new Error('this browser did not decode the record losslessly'); }
-    for (let i = 0; i < man.n; i++) { d += Math.round(q[i] * 32768) * man.gain; w[i] = d; }
-    return w;
-  };
-  const rec = { ...man.rec, rTab: Float64Array.from(man.rTab), wallIn: unpack(audio.getChannelData(0)), wallOut: unpack(audio.getChannelData(1)) };
-  // the pressing plant: roughness, dust, scratches and echo are seeded, so they are made here instead of downloaded
-  press(rec, pressing?.cond ?? man.press.cond, pressing?.seed ?? man.press.seed);
+  const q0 = new Float32Array(man.n), q1 = new Float32Array(man.n);
+  audio.copyFromChannel(q0, 0); audio.copyFromChannel(q1, 1); audio = null;
+  // unpack + the pressing plant (roughness, dust, scratches and echo are seeded, so they are made, not downloaded)
+  const out = await pressOffThread({
+    rec: man.rec, rTab: Float64Array.from(man.rTab), n: man.n, gain: man.gain, q0, q1,
+    cond: pressing?.cond ?? man.press.cond, seed: pressing?.seed ?? man.press.seed, makeVis: !!pressing,
+  }, [q0.buffer, q1.buffer]);
+  if (me !== pick) return;
   S.man = man; S.manDir = dir; S.load = null;
-  gotRecord(rec, pressing ? makeVis(rec) : { data: new Uint8Array(visData), cols: man.vis.cols, rows: man.vis.rows });
+  gotRecord(out.rec, out.vis || { data: new Uint8Array(visData), cols: man.vis.cols, rows: man.vis.rows });
+}
+// One worker for opening precut sides (press-worker.js); requests are matched to replies by id.
+let pressWorker = null, pressSeq = 0;
+const pressWaiting = new Map();
+function pressOffThread(msg, transfer) {
+  if (!pressWorker) {
+    pressWorker = new Worker(new URL('./press-worker.js', import.meta.url), { type: 'module' });
+    pressWorker.onmessage = ({ data: r }) => {
+      const p = pressWaiting.get(r.id); if (!p) return;
+      pressWaiting.delete(r.id);
+      if (r.error) p.reject(new Error(r.error)); else p.resolve(r);
+    };
+    pressWorker.onerror = (e) => { for (const p of pressWaiting.values()) p.reject(new Error(e.message || 'press worker failed')); pressWaiting.clear(); };
+  }
+  const id = ++pressSeq;
+  return new Promise((resolve, reject) => { pressWaiting.set(id, { resolve, reject }); pressWorker.postMessage({ ...msg, id }, transfer); });
 }
 function houseRecord() {                        // "Demo EP" on the shelf: assets/, or synthesised and mastered here
   S.workerHasSource = false;

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node test/basic.mjs && node test/response.mjs && node test/noise.mjs && node test/scenario.mjs",
+    "test": "node test/basic.mjs && node test/response.mjs && node test/noise.mjs && node test/scenario.mjs && node test/press-worker.mjs",
     "bench": "node test/bench.mjs",
     "lathe": "node lathe.mjs all",
     "albums": "node lathe.mjs albums && node --env-file-if-exists=.env scripts/r2-upload.mjs --if-configured",

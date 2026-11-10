@@ -309,322 +309,6 @@
    ]
   },
   {
-   "id": "bao-tang-cua-nuoi-tiec",
-   "title": "Nếu Những Tiếc Nuối",
-   "by": "Vũ.",
-   "cover": "covers/bao-tang-cua-nuoi-tiec.jpg",
-   "discs": 1,
-   "sides": [
-    {
-     "id": "bao-tang-cua-nuoi-tiec-a",
-     "album": "bao-tang-cua-nuoi-tiec",
-     "disc": 1,
-     "side": "A",
-     "title": "Side A",
-     "dir": "assets/bao-tang-cua-nuoi-tiec/a/",
-     "tracks": [
-      {
-       "title": "Nếu Những Tiếc Nuối",
-       "by": "Vũ.",
-       "len": 260
-      },
-      {
-       "title": "Bình Yên",
-       "by": "Vũ. & Binz",
-       "len": 196
-      },
-      {
-       "title": "Mùa Mưa Ấy",
-       "by": "Vũ.",
-       "len": 228
-      },
-      {
-       "title": "Ngồi Chờ Trong Vấn Vương",
-       "by": "Vũ., My Anh",
-       "len": 202
-      },
-      {
-       "title": "Dành Hết Xuân Thì Để Chờ Nhau",
-       "by": "Vũ. & Hà Anh Tuấn",
-       "len": 288
-      }
-     ]
-    },
-    {
-     "id": "bao-tang-cua-nuoi-tiec-b",
-     "album": "bao-tang-cua-nuoi-tiec",
-     "disc": 1,
-     "side": "B",
-     "title": "Side B",
-     "dir": "assets/bao-tang-cua-nuoi-tiec/b/",
-     "tracks": [
-      {
-       "title": "Và Em Sẽ Luôn Là Người Tôi Yêu Nhất",
-       "by": "Vũ.",
-       "len": 258
-      },
-      {
-       "title": "Những Chuyến Bay",
-       "by": "Vũ.",
-       "len": 273
-      },
-      {
-       "title": "Mây Khóc Vì Điều Gì",
-       "by": "Vũ.",
-       "len": 214
-      },
-      {
-       "title": "Những Lời Hứa Bỏ Quên",
-       "by": "Vũ. & Dear Jane",
-       "len": 236
-      },
-      {
-       "title": "Không Yêu Em Thì Yêu Ai?",
-       "by": "Vũ., Low G",
-       "len": 233
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "osad",
-   "title": "O_O",
-   "by": "OSAD, Onionn., Hoàng Rob",
-   "cover": "covers/osad.jpg",
-   "discs": 2,
-   "sides": [
-    {
-     "id": "osad-a",
-     "album": "osad",
-     "disc": 1,
-     "side": "A",
-     "title": "Side A",
-     "dir": "assets/osad/a/",
-     "tracks": [
-      {
-       "title": "Chơi",
-       "by": "OSAD, Onionn., Hoàng Rob",
-       "len": 123
-      },
-      {
-       "title": "Chương Trình Quảng Cáo",
-       "by": "OSAD, Onionn.",
-       "len": 171
-      },
-      {
-       "title": "Cinema",
-       "by": "OSAD, Onionn.",
-       "len": 169
-      },
-      {
-       "title": "Kệ",
-       "by": "OSAD, Onionn.",
-       "len": 171
-      }
-     ]
-    },
-    {
-     "id": "osad-b",
-     "album": "osad",
-     "disc": 1,
-     "side": "B",
-     "title": "Side B",
-     "dir": "assets/osad/b/",
-     "tracks": [
-      {
-       "title": "Làm Nó Mưa",
-       "by": "OSAD, Onionn., Hoàng Rob",
-       "len": 214
-      },
-      {
-       "title": "Làm",
-       "by": "OSAD, Onionn.",
-       "len": 164
-      },
-      {
-       "title": "Lên Tàu",
-       "by": "OSAD, Onionn.",
-       "len": 164
-      },
-      {
-       "title": "Lú Như Con Cú",
-       "by": "OSAD, Onionn.",
-       "len": 126
-      }
-     ]
-    },
-    {
-     "id": "osad-c",
-     "album": "osad",
-     "disc": 2,
-     "side": "C",
-     "title": "Side C",
-     "dir": "assets/osad/c/",
-     "tracks": [
-      {
-       "title": "Một Ngày Nào Đó",
-       "by": "OSAD, Onionn.",
-       "len": 87
-      },
-      {
-       "title": "Người Âm Ỉ",
-       "by": "OSAD, Onionn.",
-       "len": 122
-      },
-      {
-       "title": "Người Ta Nói",
-       "by": "OSAD, Mỹ Mỹ, Onionn.",
-       "len": 206
-      },
-      {
-       "title": "Nhớ Người Yêu",
-       "by": "OSAD, Onionn.",
-       "len": 175
-      }
-     ]
-    },
-    {
-     "id": "osad-d",
-     "album": "osad",
-     "disc": 2,
-     "side": "D",
-     "title": "Side D",
-     "dir": "assets/osad/d/",
-     "tracks": [
-      {
-       "title": "Ôi Bóng Hình",
-       "by": "OSAD, Dazi, Onionn.",
-       "len": 218
-      },
-      {
-       "title": "Tham Quan Họ Hàng",
-       "by": "OSAD, Onionn.",
-       "len": 186
-      },
-      {
-       "title": "Tương Tư Để Dành",
-       "by": "OSAD, Onionn.",
-       "len": 242
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "phung-khanh-linh",
-   "title": "Giữa Một Vạn Người",
-   "by": "Phung Khanh Linh",
-   "vinyl": {
-    "color": "#1e4db8",
-    "clear": 0.72
-   },
-   "cover": "covers/phung-khanh-linh.jpg",
-   "discs": 2,
-   "sides": [
-    {
-     "id": "phung-khanh-linh-a",
-     "album": "phung-khanh-linh",
-     "disc": 1,
-     "side": "A",
-     "title": "Side A",
-     "dir": "assets/phung-khanh-linh/a/",
-     "tracks": [
-      {
-       "title": "GRIEF IS THE PRICE YOU PAY FOR LOVE",
-       "by": "Phung Khanh Linh",
-       "len": 170
-      },
-      {
-       "title": "Khóc Block",
-       "by": "Phung Khanh Linh",
-       "len": 183
-      },
-      {
-       "title": "Tâm Sự Với Em Một Mình",
-       "by": "Phung Khanh Linh",
-       "len": 183
-      }
-     ]
-    },
-    {
-     "id": "phung-khanh-linh-b",
-     "album": "phung-khanh-linh",
-     "disc": 1,
-     "side": "B",
-     "title": "Side B",
-     "dir": "assets/phung-khanh-linh/b/",
-     "tracks": [
-      {
-       "title": "Em Đau",
-       "by": "Phung Khanh Linh",
-       "len": 307
-      },
-      {
-       "title": "Hiện Thực Phũ Phàng",
-       "by": "Phung Khanh Linh",
-       "len": 210
-      },
-      {
-       "title": "Cờ Người",
-       "by": "Phung Khanh Linh",
-       "len": 234
-      }
-     ]
-    },
-    {
-     "id": "phung-khanh-linh-c",
-     "album": "phung-khanh-linh",
-     "disc": 2,
-     "side": "C",
-     "title": "Side C",
-     "dir": "assets/phung-khanh-linh/c/",
-     "tracks": [
-      {
-       "title": "Anh Là Thằng Tồi",
-       "by": "Phung Khanh Linh",
-       "len": 206
-      },
-      {
-       "title": "Linh Cảm",
-       "by": "Phung Khanh Linh",
-       "len": 256
-      },
-      {
-       "title": "Ám Ảnh Về Anh",
-       "by": "Phung Khanh Linh",
-       "len": 186
-      }
-     ]
-    },
-    {
-     "id": "phung-khanh-linh-d",
-     "album": "phung-khanh-linh",
-     "disc": 2,
-     "side": "D",
-     "title": "Side D",
-     "dir": "assets/phung-khanh-linh/d/",
-     "tracks": [
-      {
-       "title": "Ước Anh Tan Nát Con Tim",
-       "by": "Phung Khanh Linh",
-       "len": 234
-      },
-      {
-       "title": "Điều Em Không Muốn",
-       "by": "Phung Khanh Linh",
-       "len": 231
-      },
-      {
-       "title": "Hãy Nói Anh Sai Rồi",
-       "by": "Phung Khanh Linh",
-       "len": 194
-      }
-     ]
-    }
-   ]
-  },
-  {
    "id": "starboy",
    "title": "Starboy (Explicit Version)",
    "by": "The Weeknd",
@@ -762,6 +446,603 @@
        "title": "I Feel It Coming",
        "by": "The Weeknd",
        "len": 269
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "bao-tang-cua-nuoi-tiec",
+   "title": "Nếu Những Tiếc Nuối",
+   "by": "Vũ.",
+   "cover": "covers/bao-tang-cua-nuoi-tiec.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "bao-tang-cua-nuoi-tiec-a",
+     "album": "bao-tang-cua-nuoi-tiec",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/bao-tang-cua-nuoi-tiec/a/",
+     "tracks": [
+      {
+       "title": "Nếu Những Tiếc Nuối",
+       "by": "Vũ.",
+       "len": 260
+      },
+      {
+       "title": "Bình Yên",
+       "by": "Vũ. & Binz",
+       "len": 196
+      },
+      {
+       "title": "Mùa Mưa Ấy",
+       "by": "Vũ.",
+       "len": 228
+      },
+      {
+       "title": "Ngồi Chờ Trong Vấn Vương",
+       "by": "Vũ., My Anh",
+       "len": 202
+      },
+      {
+       "title": "Dành Hết Xuân Thì Để Chờ Nhau",
+       "by": "Vũ. & Hà Anh Tuấn",
+       "len": 288
+      }
+     ]
+    },
+    {
+     "id": "bao-tang-cua-nuoi-tiec-b",
+     "album": "bao-tang-cua-nuoi-tiec",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/bao-tang-cua-nuoi-tiec/b/",
+     "tracks": [
+      {
+       "title": "Và Em Sẽ Luôn Là Người Tôi Yêu Nhất",
+       "by": "Vũ.",
+       "len": 258
+      },
+      {
+       "title": "Những Chuyến Bay",
+       "by": "Vũ.",
+       "len": 273
+      },
+      {
+       "title": "Mây Khóc Vì Điều Gì",
+       "by": "Vũ.",
+       "len": 214
+      },
+      {
+       "title": "Những Lời Hứa Bỏ Quên",
+       "by": "Vũ. & Dear Jane",
+       "len": 236
+      },
+      {
+       "title": "Không Yêu Em Thì Yêu Ai?",
+       "by": "Vũ., Low G",
+       "len": 233
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "gold-bottle",
+   "title": "Nhà Giam Tâm Hồn",
+   "by": "Bình Gold",
+   "cover": "covers/gold-bottle.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "gold-bottle-a",
+     "album": "gold-bottle",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/gold-bottle/a/",
+     "tracks": [
+      {
+       "title": "ADAMN",
+       "by": "Bình Gold",
+       "len": 224
+      },
+      {
+       "title": "ĐỔI TƯ THẾ",
+       "by": "Bình Gold,Andree Right Hand",
+       "len": 228
+      },
+      {
+       "title": "Đừng Bắt Anh Hứa",
+       "by": "Bình Gold",
+       "len": 186
+      }
+     ]
+    },
+    {
+     "id": "gold-bottle-b",
+     "album": "gold-bottle",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/gold-bottle/b/",
+     "tracks": [
+      {
+       "title": "Em Iu",
+       "by": "Wxrdie, Bình Gold, 2Pillz, Andree",
+       "len": 180
+      },
+      {
+       "title": "Obgtlh",
+       "by": "Lil Shady & Bình Gold",
+       "len": 237
+      },
+      {
+       "title": "Trăng Hoa Mây Mưa",
+       "by": "Bình Gold",
+       "len": 194
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "nhuc",
+   "title": "Nhức",
+   "by": "Various artists",
+   "cover": "covers/nhuc.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "nhuc-a",
+     "album": "nhuc",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/nhuc/a/",
+     "tracks": [
+      {
+       "title": "B.E.C.D.B.K",
+       "by": "brook, KhoaiTay feat. consauzuize",
+       "len": 202
+      },
+      {
+       "title": "Biên Giới Long Bình",
+       "by": "Obito & Shiki",
+       "len": 179
+      },
+      {
+       "title": "Dạo Này",
+       "by": "Obito",
+       "len": 284
+      },
+      {
+       "title": "dư âm",
+       "by": "Obito",
+       "len": 167
+      }
+     ]
+    },
+    {
+     "id": "nhuc-b",
+     "album": "nhuc",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/nhuc/b/",
+     "tracks": [
+      {
+       "title": "Lạng Quanh",
+       "by": "Hngle, Parys, VSTRA",
+       "len": 244
+      },
+      {
+       "title": "Moianh",
+       "by": "Various artists",
+       "len": 174
+      },
+      {
+       "title": "' NHỨC TIỀM THỨC |",
+       "by": "Hà An Huy",
+       "len": 180
+      },
+      {
+       "title": "Tìm Em",
+       "by": "Hngle feat. Bảo Anh",
+       "len": 275
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "no-wren",
+   "title": "Nổ",
+   "by": "Wren Evans, itsnk",
+   "cover": "covers/no-wren.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "no-wren-a",
+     "album": "no-wren",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/no-wren/a/",
+     "tracks": [
+      {
+       "title": "144",
+       "by": "Wren Evans, itsnk",
+       "len": 247
+      },
+      {
+       "title": "Chờ Trong Trăng",
+       "by": "Wren Evans, itsnk",
+       "len": 202
+      },
+      {
+       "title": "gắn bó né tránh sợ hãi (interlude)",
+       "by": "Wren Evans, itsnk",
+       "len": 105
+      },
+      {
+       "title": "Gió Đưa Tình",
+       "by": "Wren Evans, itsnk",
+       "len": 221
+      },
+      {
+       "title": "Không Thử Sao Biết",
+       "by": "Wren Evans, itsnk",
+       "len": 143
+      },
+      {
+       "title": "mưa chưa tạnh (interlude)",
+       "by": "Wren Evans, itsnk",
+       "len": 48
+      },
+      {
+       "title": "Ngủ Quên",
+       "by": "Wren Evans, itsnk",
+       "len": 155
+      }
+     ]
+    },
+    {
+     "id": "no-wren-b",
+     "album": "no-wren",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/no-wren/b/",
+     "tracks": [
+      {
+       "title": "Nổ không?",
+       "by": "Wren Evans, itsnk",
+       "len": 160
+      },
+      {
+       "title": "Nội Bài",
+       "by": "Wren Evans, itsnk",
+       "len": 162
+      },
+      {
+       "title": "Thu Đợi",
+       "by": "Wren Evans, itsnk",
+       "len": 311
+      },
+      {
+       "title": "Vừa Tìm Thấy Đã Đánh Mất",
+       "by": "Wren Evans, itsnk",
+       "len": 263
+      },
+      {
+       "title": "Yêu 4 Real",
+       "by": "Wren Evans, itsnk",
+       "len": 178
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "no",
+   "title": "Nộ",
+   "by": "Various artists",
+   "cover": "covers/no.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "no-a",
+     "album": "no",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/no/a/",
+     "tracks": [
+      {
+       "title": "Băng Qua Cảnh Căng",
+       "by": "7dnight & Wxrdie",
+       "len": 198
+      },
+      {
+       "title": "Đầu Đường Xó Chợ",
+       "by": "Obito, Shiki & Lăng LD",
+       "len": 185
+      },
+      {
+       "title": "MAY KIN THANH DO",
+       "by": "Richie D. ICY, Obito & TONoise",
+       "len": 157
+      },
+      {
+       "title": "N0L4B3L",
+       "by": "RPT MCK, Thành Draw & RPT Orijinn",
+       "len": 265
+      }
+     ]
+    },
+    {
+     "id": "no-b",
+     "album": "no",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/no/b/",
+     "tracks": [
+      {
+       "title": "Như Một Người Rưng",
+       "by": "OSAD & Hà An Huy",
+       "len": 177
+      },
+      {
+       "title": "Panorama",
+       "by": "Richie D. ICY & Obito",
+       "len": 205
+      },
+      {
+       "title": "PULL UP (Explicit)",
+       "by": "Dangrangto, TeuYungBoy, Donal",
+       "len": 255
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "phung-khanh-linh",
+   "title": "Giữa Một Vạn Người",
+   "by": "Phung Khanh Linh",
+   "vinyl": {
+    "color": "#1e4db8",
+    "clear": 0.72
+   },
+   "cover": "covers/phung-khanh-linh.jpg",
+   "discs": 2,
+   "sides": [
+    {
+     "id": "phung-khanh-linh-a",
+     "album": "phung-khanh-linh",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/phung-khanh-linh/a/",
+     "tracks": [
+      {
+       "title": "GRIEF IS THE PRICE YOU PAY FOR LOVE",
+       "by": "Phung Khanh Linh",
+       "len": 170
+      },
+      {
+       "title": "Khóc Block",
+       "by": "Phung Khanh Linh",
+       "len": 183
+      },
+      {
+       "title": "Tâm Sự Với Em Một Mình",
+       "by": "Phung Khanh Linh",
+       "len": 183
+      }
+     ]
+    },
+    {
+     "id": "phung-khanh-linh-b",
+     "album": "phung-khanh-linh",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/phung-khanh-linh/b/",
+     "tracks": [
+      {
+       "title": "Em Đau",
+       "by": "Phung Khanh Linh",
+       "len": 307
+      },
+      {
+       "title": "Hiện Thực Phũ Phàng",
+       "by": "Phung Khanh Linh",
+       "len": 210
+      },
+      {
+       "title": "Cờ Người",
+       "by": "Phung Khanh Linh",
+       "len": 234
+      }
+     ]
+    },
+    {
+     "id": "phung-khanh-linh-c",
+     "album": "phung-khanh-linh",
+     "disc": 2,
+     "side": "C",
+     "title": "Side C",
+     "dir": "assets/phung-khanh-linh/c/",
+     "tracks": [
+      {
+       "title": "Anh Là Thằng Tồi",
+       "by": "Phung Khanh Linh",
+       "len": 206
+      },
+      {
+       "title": "Linh Cảm",
+       "by": "Phung Khanh Linh",
+       "len": 256
+      },
+      {
+       "title": "Ám Ảnh Về Anh",
+       "by": "Phung Khanh Linh",
+       "len": 186
+      }
+     ]
+    },
+    {
+     "id": "phung-khanh-linh-d",
+     "album": "phung-khanh-linh",
+     "disc": 2,
+     "side": "D",
+     "title": "Side D",
+     "dir": "assets/phung-khanh-linh/d/",
+     "tracks": [
+      {
+       "title": "Ước Anh Tan Nát Con Tim",
+       "by": "Phung Khanh Linh",
+       "len": 234
+      },
+      {
+       "title": "Điều Em Không Muốn",
+       "by": "Phung Khanh Linh",
+       "len": 231
+      },
+      {
+       "title": "Hãy Nói Anh Sai Rồi",
+       "by": "Phung Khanh Linh",
+       "len": 194
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "osad",
+   "title": "O_O",
+   "by": "OSAD, Onionn., Hoàng Rob",
+   "cover": "covers/osad.jpg",
+   "discs": 2,
+   "sides": [
+    {
+     "id": "osad-a",
+     "album": "osad",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/osad/a/",
+     "tracks": [
+      {
+       "title": "Chơi",
+       "by": "OSAD, Onionn., Hoàng Rob",
+       "len": 123
+      },
+      {
+       "title": "Chương Trình Quảng Cáo",
+       "by": "OSAD, Onionn.",
+       "len": 171
+      },
+      {
+       "title": "Cinema",
+       "by": "OSAD, Onionn.",
+       "len": 169
+      },
+      {
+       "title": "Kệ",
+       "by": "OSAD, Onionn.",
+       "len": 171
+      }
+     ]
+    },
+    {
+     "id": "osad-b",
+     "album": "osad",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/osad/b/",
+     "tracks": [
+      {
+       "title": "Làm Nó Mưa",
+       "by": "OSAD, Onionn., Hoàng Rob",
+       "len": 214
+      },
+      {
+       "title": "Làm",
+       "by": "OSAD, Onionn.",
+       "len": 164
+      },
+      {
+       "title": "Lên Tàu",
+       "by": "OSAD, Onionn.",
+       "len": 164
+      },
+      {
+       "title": "Lú Như Con Cú",
+       "by": "OSAD, Onionn.",
+       "len": 126
+      }
+     ]
+    },
+    {
+     "id": "osad-c",
+     "album": "osad",
+     "disc": 2,
+     "side": "C",
+     "title": "Side C",
+     "dir": "assets/osad/c/",
+     "tracks": [
+      {
+       "title": "Một Ngày Nào Đó",
+       "by": "OSAD, Onionn.",
+       "len": 87
+      },
+      {
+       "title": "Người Âm Ỉ",
+       "by": "OSAD, Onionn.",
+       "len": 122
+      },
+      {
+       "title": "Người Ta Nói",
+       "by": "OSAD, Mỹ Mỹ, Onionn.",
+       "len": 206
+      },
+      {
+       "title": "Nhớ Người Yêu",
+       "by": "OSAD, Onionn.",
+       "len": 175
+      }
+     ]
+    },
+    {
+     "id": "osad-d",
+     "album": "osad",
+     "disc": 2,
+     "side": "D",
+     "title": "Side D",
+     "dir": "assets/osad/d/",
+     "tracks": [
+      {
+       "title": "Ôi Bóng Hình",
+       "by": "OSAD, Dazi, Onionn.",
+       "len": 218
+      },
+      {
+       "title": "Tham Quan Họ Hàng",
+       "by": "OSAD, Onionn.",
+       "len": 186
+      },
+      {
+       "title": "Tương Tư Để Dành",
+       "by": "OSAD, Onionn.",
+       "len": 242
       }
      ]
     }
