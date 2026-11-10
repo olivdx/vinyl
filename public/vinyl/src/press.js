@@ -18,13 +18,14 @@ const ROUGH_WHITE = 0.7e-9, ROUGH_RED = 1.3e-9, ECHO = 0.006;   // calibrated: s
 
 export function press(rec, cond = DEFAULT_CONDITION, seed = 7) {
   const { wallIn: A, wallOut: B, n, spr, rTab, thetaEnd } = rec;
+  const walls = !!(A && B);   // without walls (a preview to draw while the audio downloads): only the disc's look
   const R = rng(seed);
   const S = Math.round(spr);
   const dsAt = (i) => TAU * grooveRadius(rTab, i * TAU / spr) / spr;   // metres of groove per sample
 
   // 1. groove echo: cutting groove n+1 pushes the land into groove n (pre-echo), and a little back.
   const e = ECHO * (cond.echo ?? 1);
-  if (e > 0) {
+  if (e > 0 && walls) {
     const k = onePole(2500, rec.fs);
     let lp = 0, lq = 0;
     for (let i = 0; i + S < n; i++) {
@@ -35,7 +36,7 @@ export function press(rec, cond = DEFAULT_CONDITION, seed = 7) {
 
   // 2. wall roughness, independent per wall
   const q = cond.noise ?? 1;
-  if (q > 0) {
+  if (q > 0 && walls) {
     // xorshift32; each draw gives a unit-variance triangular value from its two 16-bit halves
     let s = (seed * 2654435761) >>> 0 || 1;
     const K = Math.sqrt(6) / 65536, leak = Math.exp(-TAU * 12 / rec.fs), w = ROUGH_WHITE * q * K, r = ROUGH_RED * q * K;
@@ -50,6 +51,7 @@ export function press(rec, cond = DEFAULT_CONDITION, seed = 7) {
 
   // 3. dust: bumps on a wall
   const bump = (arr, i, h, hl) => {
+    if (!walls) return;
     for (let j = -hl; j <= hl; j++) { const k = i + j; if (k >= 0 && k < n) arr[k] += h * 0.5 * (1 + Math.cos(Math.PI * j / hl)); }
   };
   const nDust = Math.round((cond.dust ?? 0) * 6 * n / spr);
@@ -77,7 +79,7 @@ export function press(rec, cond = DEFAULT_CONDITION, seed = 7) {
         const t = (m - fPrev) / (f - fPrev), rc = rPrev + t * (rr - rPrev);
         const theta = TAU * m + phi0 + slant * (rc - r0) / len;
         const i = Math.round(theta * spr / TAU);
-        if (theta > 0 && theta < thetaEnd) {
+        if (walls && theta > 0 && theta < thetaEnd) {
           const ds = dsAt(i), hl = Math.ceil(4 * sig / ds);
           for (let j = -hl; j <= hl; j++) {
             const k = i + j; if (k < 0 || k >= n) continue;

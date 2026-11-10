@@ -102,21 +102,37 @@ function start() {
 
 // ---------- precompiled record (lathe.mjs): the clean cut ships as DPCM; decode it, press it here, go ----------
 const decodeAudio = async (url, fs) => new OfflineAudioContext(2, 1, fs).decodeAudioData(await (await fetch(url)).arrayBuffer());   // for mastering here
+let recordStore;
+const recordCache = () => (recordStore ??= ('caches' in self ? caches.open('vinyl-records-v1') : Promise.reject()).then((c) => {
+  navigator.storage?.persist?.().catch(() => {});   // ask the browser not to evict it under storage pressure
+  return c;
+}).catch(() => null));
 // Start every download for a record at once and expose how far the big one is.
 function fetchRecord(dir) {
   const h = { dir, got: 0, total: 0 };
   h.man = fetch(dir + 'record.json', { cache: 'no-store' }).then((r) => { if (!r.ok) throw new Error('no precompiled record'); return r.json(); });
   h.audio = h.man.then(async (man) => {
-    const r = await fetch(dir + man.walls);
+    // The cut sides are tens of MB, more than the browser's HTTP cache keeps per file, so they are kept in Cache
+    // Storage, keyed by the side's build time: opening a side again needs no download; a side cut again does.
+    const url = new URL(dir + man.walls, location.href).href, key = url + '?built=' + encodeURIComponent(man.built || '');
+    const store = await recordCache();
+    const hit = await store?.match(key).catch(() => null);
+    if (hit) { const buf = await hit.arrayBuffer(); h.total = h.got = buf.byteLength; return new OfflineAudioContext(2, 1, man.fs).decodeAudioData(buf); }
+    const r = await fetch(url);
     if (!r.ok) throw new Error('no precompiled record');
     h.total = +r.headers.get('content-length') || 0;
-    let buf;
+    let blob;
     if (r.body) {
       const reader = r.body.getReader(), chunks = [];
       for (;;) { const { done, value } = await reader.read(); if (done) break; chunks.push(value); h.got += value.length; }
-      buf = await new Blob(chunks).arrayBuffer();
-    } else buf = await r.arrayBuffer();
-    return new OfflineAudioContext(2, 1, man.fs).decodeAudioData(buf);
+      blob = new Blob(chunks);
+    } else blob = await r.blob();
+    if (store) {                                  // keep it, and drop older cuts of the same side
+      store.put(key, new Response(blob, { headers: { 'Content-Type': r.headers.get('content-type') || 'audio/flac' } }))
+        .then(() => store.keys()).then((ks) => Promise.all(ks.filter((q) => q.url.startsWith(url + '?') && q.url !== key).map((q) => store.delete(q))))
+        .catch(() => {});                         // out of quota, private window...: it just downloads next time
+    }
+    return new OfflineAudioContext(2, 1, man.fs).decodeAudioData(await blob.arrayBuffer());
   });
   h.vis = h.man.then((man) => fetch(dir + man.vis.file).then((r) => r.arrayBuffer()));
   for (const k of ['man', 'audio', 'vis']) h[k].catch(() => {});
@@ -133,6 +149,15 @@ async function loadPrecompiled(dir = ROOT + 'assets/', me = pick, pressing = nul
   if (man.version !== 2) throw new Error('precompiled record is in an old format');
   if (h === window.__boot && man.walls !== 'record.flac') { h = fetchRecord(dir); man = await h.man; }
   S.load = busy(h);
+  // Mid-change, the new disc's look needs only the manifest and record.vis (small), not the audio (tens of MB):
+  // press a preview without walls so the change can finish; the real record replaces it, identical, when it is in.
+  if (!pressing) h.vis.then((visData) => {
+    const w = S.swap;
+    if (me !== pick || !w || w.swapped || w.next) return;
+    const look = press({ ...man.rec, rTab: Float64Array.from(man.rTab) }, man.press.cond, man.press.seed);
+    look.side = S.markRec?.side || 'A'; look.art = albumArt(S.markRec?.album);
+    w.next = { rec: look, vis: { data: new Uint8Array(visData), cols: man.vis.cols, rows: man.vis.rows }, preview: true };
+  }).catch(() => {});
   const [audio, visData] = await Promise.all([h.audio, h.vis]);
   if (me !== pick) return;                      // another record was chosen meanwhile
   if (audio.length < man.n || audio.sampleRate !== man.fs) throw new Error('precompiled record does not match its manifest');
@@ -511,7 +536,7 @@ function beginSwap(meta) {
     send({ t: 'cueTo', al: ALPHA_REST });       // needle up, arm back to its rest
     setMotor(false); send({ t: 'brake', on: true });
     if (S.moved) $('t-reset').click();          // back to the default view, so the change happens in frame
-  } else Object.assign(S.swap, { meta, next: null, swapped: false, failed: false });
+  } else Object.assign(S.swap, { meta, next: null, swapped: false, failed: false, preview: false });
   announce();
 }
 function failSwap() { if (S.swap) S.swap.failed = true; }
@@ -534,11 +559,17 @@ function stepSwap(dt) {
     if (go) w.p = Math.min(1, w.p + speed * dt);
     if (w.p === 1 && w.next) {                  // out of frame: put the new disc there, label and all
       renderer.setRecord(w.next.rec, w.next.vis); S.drawnRec = w.next.rec;
-      S.platterRec = w.meta; w.swapped = true; w.next = null;
+      S.platterRec = w.meta; w.swapped = true; w.preview = !!w.next.preview; w.next = null;
     }
   } else {
+    if (w.next && !w.next.preview) {            // the real record is in (the disc drawn so far was its preview)
+      renderer.setRecord(w.next.rec, w.next.vis); S.drawnRec = w.next.rec;
+      w.preview = false; w.next = null;
+    }
     w.p = Math.max(0, w.p - speed * dt);
-    if (w.p === 0) {                            // down on the spindle: hand the record to the engine and play
+    if (w.p === 0 && w.preview) {               // down, but the audio is still downloading: wait here, hands off
+      if (w.failed) { S.swap = null; send({ t: 'brake', on: false }); announce(); }
+    } else if (w.p === 0) {                     // down on the spindle: hand the record to the engine and play
       S.swap = null; send({ t: 'brake', on: false });
       loadRecord(); start();
       announce();
