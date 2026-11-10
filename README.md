@@ -27,6 +27,21 @@ Output: `public/vinyl/assets/<album>/<side>/` (the cut sides), `public/covers/<a
 The source audio stays in `albums/` and is never served (it is git-ignored). Optional `albums/<folder>/album.json`:
 `{ "title": "...", "by": "...", "sides": 4 }`.
 
+### Serving the albums from Cloudflare R2
+
+Set these in `.env` and `npm run albums` uploads what changed after cutting (`npm run r2` uploads on its own;
+add `--dry` to only list, `--prune` to also delete sides no longer in the library):
+
+```
+NEXT_PUBLIC_ALBUMS_URL=https://<public bucket URL>/   # the page reads library.json, assets/, covers/ from here
+R2_ACCOUNT_ID=...
+R2_ACCESS_KEY_ID=...                                  # R2 API token with Object Read & Write on the bucket
+R2_SECRET_ACCESS_KEY=...
+R2_BUCKET=...
+```
+
+The bucket needs public access and a CORS rule allowing GET/HEAD from the site's origin, exposing `Content-Length`.
+
 The built-in double LP (*Public Domain Sessions*) is defined in `public/vinyl/src/records.js`; its cover can be
 dropped in as `public/covers/collection.jpg` (or `.png`, `.webp`).
 

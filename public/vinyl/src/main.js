@@ -9,8 +9,13 @@ const $ = (id) => document.getElementById(id);
 const ROOT = new URL('../', import.meta.url).pathname;   // /vinyl/: assets/ and records/ live next to src/
 // The library: the built-in double LP (records.js) and every album cut from albums/<folder>/ by `npm run albums`
 // (library.json). Each album is a set of sides; each side is one record.
-const LIB = await fetch(ROOT + 'library.json', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : { albums: [] })).catch(() => ({ albums: [] }));
-const ALBUMS = [{ ...ALBUM, cover: null, sides: RECORDS.map((r) => ({ ...r, album: ALBUM.id })) }, ...(LIB.albums || [])];
+// The library can live elsewhere (e.g. an R2 bucket): window.__ALBUMS_URL, set from NEXT_PUBLIC_ALBUMS_URL in
+// app/layout.tsx, is the base holding library.json, assets/<album>/ and covers/. Its paths resolve against it.
+const LIB_BASE = new URL(window.__ALBUMS_URL ? window.__ALBUMS_URL.replace(/\/?$/, '/') : ROOT, location.href).href;
+const LIB = await fetch(LIB_BASE + 'library.json', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : { albums: [] })).catch(() => ({ albums: [] }));
+const abs = (p) => (p ? new URL(p, LIB_BASE).href : p);
+const libAlbums = (LIB.albums || []).map((a) => ({ ...a, cover: abs(a.cover), sides: a.sides.map((s) => ({ ...s, dir: abs(s.dir || `assets/${s.id}/`) })) }));
+const ALBUMS = [{ ...ALBUM, cover: null, sides: RECORDS.map((r) => ({ ...r, album: ALBUM.id })) }, ...libAlbums];
 const SIDES = ALBUMS.flatMap((a) => a.sides);
 // The album cover, printed on the label of every side (label.js). Loaded once per album; the built-in album
 // looks for /covers/<id>.jpg|png|webp. A cover that is not there leaves the plain paper label.
@@ -19,8 +24,9 @@ function albumArt(albumId) {
   if (!albumId) return null;
   if (ART.has(albumId)) return ART.get(albumId);
   const a = ALBUMS.find((x) => x.id === albumId), img = new Image();
-  const tries = a?.cover ? ['/' + a.cover] : ['jpg', 'png', 'webp'].map((e) => `/covers/${albumId}.${e}`);
+  const tries = a?.cover ? [a.cover] : ['jpg', 'png', 'webp'].map((e) => `/covers/${albumId}.${e}`);
   img.decoding = 'async';
+  img.crossOrigin = 'anonymous';                // it is drawn into a WebGL texture: a cover from another origin needs CORS
   img.onerror = () => { tries.shift(); if (tries.length) img.src = tries[0]; };
   img.src = tries[0];
   ART.set(albumId, img);
@@ -288,7 +294,7 @@ async function pickRecord(r) {
   markRecord(r);
   if (!r.tracks) return houseRecord();
   S.workerHasSource = false;
-  try { await loadPrecompiled(ROOT + (r.dir || `assets/${r.id}/`), me); }
+  try { await loadPrecompiled(/^https?:/.test(r.dir) ? r.dir : ROOT + (r.dir || `assets/${r.id}/`), me); }
   catch (err) {                                 // not built (or stale): cut and press it here instead, which takes a while
     console.info(`${r.title}: ${err.message || err}; mastering in the browser`);
     if (me === pick) { S.man = null; master(r, me); }

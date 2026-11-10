@@ -45,3 +45,6 @@ next-env.d.ts
 /albums/*/*.mp3
 /albums/*/*.wav
 /albums/*/*.m4a
+
+# album sides are served from R2 (npm run r2); their record.json / record.vis stay so the lathe knows they are cut
+/public/vinyl/assets/*/*/record.flac

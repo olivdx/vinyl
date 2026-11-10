@@ -37,7 +37,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script
           type={typeof window === "undefined" ? "text/javascript" : "text/plain"}
           suppressHydrationWarning
-          dangerouslySetInnerHTML={{ __html: BOOT_SCRIPT }}
+          dangerouslySetInnerHTML={{ __html: `window.__ALBUMS_URL=${JSON.stringify(process.env.NEXT_PUBLIC_ALBUMS_URL || "")};` + BOOT_SCRIPT }}
         />
         {MODULES.map((m) => (
           <link key={m} rel="modulepreload" href={`/vinyl/src/${m}.js`} />

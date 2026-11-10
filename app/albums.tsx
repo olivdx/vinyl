@@ -37,7 +37,7 @@ export function AlbumsButton() {
 
 function Cover({ album }: { album: Album }) {
   const [ext, setExt] = useState(0); // the built-in album: which extension to try next; past the end = no cover
-  const src = album.cover ? `/${album.cover}` : ext < EXTS.length ? `/covers/${album.id}.${EXTS[ext]}` : null;
+  const src = album.cover ? album.cover :ext < EXTS.length ? `/covers/${album.id}.${EXTS[ext]}` : null;
   const [failed, setFailed] = useState(false);
   return (
     <span className="cover">
