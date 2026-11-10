@@ -15,6 +15,14 @@ const P3 = [ARM_LE - 0.040 * CB, 0.040 * SB, -0.0125];
 const TUBE = G.bezier([0, 0, 0], [0.075 * Math.cos(0.28), 0.075 * Math.sin(0.28), -0.003], [P3[0] - 0.075 * CB, P3[1] + 0.075 * SB, -0.0085], P3, 32);
 const REST_PT = TUBE[20];
 const STROBE = [-0.158, -0.160], LAMP = [STROBE[0] + 0.7026 * 0.024, STROBE[1] + 0.7115 * 0.024, -0.013];
+// Coloured vinyl (library.json album.vinyl): "#rrggbb" or { color: "#rrggbb", clear: 0..1 }. Returns
+// [linear r, g, b, clear] for the disc shader; plain black vinyl is all zeros.
+function vinylTint(v) {
+  const hex = typeof v === 'string' ? v : v?.color, m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
+  if (!m) return [0, 0, 0, 0];
+  const lin = (i) => Math.pow(parseInt(m[1].slice(i, i + 2), 16) / 255, 2.2);
+  return [lin(0), lin(2), lin(4), Math.max(0, Math.min(1, +(v?.clear ?? 0)))];
+}
 const BLACK = [0.012, 0.012, 0.013], CHROME = [0.62, 0.63, 0.66], AMBER = [1.0, 0.55, 0.12];
 // cue lever: a handle hinged on its post beside the arm base. Modelled raised (needle up); it tips down by LEVER_DROP.
 const LEVER_B = [PIVOT_X + 0.042, PIVOT_Y - 0.046, -0.016], LEVER_TIP = [PIVOT_X + 0.056, PIVOT_Y - 0.058, -0.004];
@@ -111,7 +119,7 @@ export class Renderer {
     const warp = new Float32Array(9), scr = new Float32Array(48);
     (rec.warp || []).slice(0, 3).forEach((w, i) => warp.set([w.k, w.amp, w.ph], i * 3));
     (rec.scratches || []).slice(0, 12).forEach((s, i) => scr.set([s.r0, s.r1, s.phi0, s.phi1], i * 4));
-    this.info = { rLo, rHi, rows: vis.rows, revEnd: rec.thetaEnd / TAU, warp, scr, nScr: Math.min(12, (rec.scratches || []).length), dust: rec.condition?.dust ?? 0, ecc: rec.ecc || [0, 0] };
+    this.info = { rLo, rHi, rows: vis.rows, revEnd: rec.thetaEnd / TAU, warp, scr, nScr: Math.min(12, (rec.scratches || []).length), dust: rec.condition?.dust ?? 0, ecc: rec.ecc || [0, 0], tint: vinylTint(rec.vinyl) };
     const titles = rec.tracks.map((t) => t.title || 'Untitled'), art = rec.art;
     this.labelRec = rec;
     this.setLabel(titles, rec.side || 'A', art);
@@ -189,7 +197,7 @@ export class Renderer {
       [m.tube, arm, [0.30, 0.30, 0.32], 0.16, 1, 0, off], [m.weight, arm, [0.022, 0.022, 0.024], 0.42, 0.7, 0, off], [m.dial, arm, CHROME, 0.28, 1, 0, off],
       [m.collar, head, CHROME, 0.2, 1, 0, off], [m.shell, head, [0.014, 0.014, 0.015], 0.4, 0.2, 0, off], [m.holder, head, [0.80, 0.36, 0.05], 0.42, 0, 0, off],
     ];
-    if (info && !st.noDisc) items.push([m.edge, discM, [0.008, 0.008, 0.008], 0.22, 0, 0, off]);
+    if (info && !st.noDisc) items.push([m.edge, discM, info.tint.some((v) => v) ? info.tint.slice(0, 3).map((v) => v * 0.45) : [0.008, 0.008, 0.008], 0.22, 0, 0, off]);
 
     // 1. shadow map from the key light
     gl.bindFramebuffer(gl.FRAMEBUFFER, this.fbo); gl.viewport(0, 0, SHADOW, SHADOW); gl.clear(gl.DEPTH_BUFFER_BIT);
@@ -220,6 +228,7 @@ export class Renderer {
     gl.uniform3fv(u.uWarp, info.warp); gl.uniform4fv(u.uScr, info.scr); gl.uniform1i(u.uNScr, info.nScr);
     gl.uniform1f(u.uRLo, info.rLo); gl.uniform1f(u.uRHi, info.rHi); gl.uniform1f(u.uRows, info.rows);
     gl.uniform1f(u.uRevEnd, info.revEnd); gl.uniform1f(u.uW, GROOVE_W); gl.uniform1f(u.uDust, info.dust);
+    gl.uniform4fv(u.uTint, info.tint);
     [['uLut', this.tex.lut], ['uVis', this.tex.vis], ['uLabel', this.tex.label]].forEach(([name, tex], i) => {
       gl.activeTexture(gl.TEXTURE0 + i); gl.bindTexture(gl.TEXTURE_2D, tex); gl.uniform1i(u[name], i);
     });

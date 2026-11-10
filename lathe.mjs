@@ -137,7 +137,7 @@ function build({ id, out, load, cutOpts, keepSource, peaks, extra }) {
 // ---- albums: albums/<folder>/ holds the songs (any audio ffmpeg reads) and cover.jpg or cover.png ----
 // Each album becomes a set of LP sides: as many as it needs at up to SIDE_MAX each (always an even number, two to a
 // disc), the songs kept in order and spread so the sides come out as even as they can. albums/<folder>/album.json may
-// override { title, by, sides }. Output: public/vinyl/assets/<album>/<side>/, public/covers/<album>.<ext> and
+// override { title, by, sides } and set vinyl: "#rrggbb" or { color, clear: 0..1 } for a coloured pressing. Output: public/vinyl/assets/<album>/<side>/, public/covers/<album>.<ext> and
 // public/vinyl/library.json, which the page reads.
 const albumsDir = join(root, 'albums'), coversDir = join(root, 'public', 'covers'), libFile = join(root, 'public', 'vinyl', 'library.json');
 const AUDIO = /\.(flac|mp3|wav|m4a|aac|ogg|opus|aiff?)$/i, SIDE_MAX = 20 * 60, PEAKS = [0.1, 0.085, 0.075, 0.065, 0.055, 0.045];
@@ -179,15 +179,25 @@ function albumPlans() {
       };
     });
     const ext = coverFile ? extname(coverFile).toLowerCase().replace('.jpeg', '.jpg') : '';
-    return { id, name, dir, title: over.title || songs[0].album || name, by, coverFile, cover: coverFile ? `covers/${id}${ext}` : null, discs: Math.ceil(sides.length / 2), sides };
+    return { id, name, dir, title: over.title || songs[0].album || name, by, vinyl: over.vinyl, coverFile, cover: coverFile ? `covers/${id}${ext}` : null, discs: Math.ceil(sides.length / 2), sides };
   }).filter(Boolean);
 }
 function writeLibrary(plans) {
-  const albums = plans.map(({ id, title, by, cover, discs, sides }) => ({
-    id, title, by, cover, discs,
+  const fromPlans = plans.map(({ id, title, by, vinyl, cover, discs, sides }) => ({
+    id, title, by, ...(vinyl && { vinyl }), cover, discs,
     sides: sides.filter((s) => existsSync(join(root, 'public', 'vinyl', s.dir, 'record.json')))
       .map(({ id, album, disc, side, title, dir, tracks }) => ({ id, album, disc, side, title, dir, tracks: tracks.map(({ file, ...t }) => t) })),
   })).filter((a) => a.sides.length);
+  const planIds = new Set(fromPlans.map((a) => a.id));
+  let kept = [];
+  try {
+    const prev = JSON.parse(readFileSync(libFile, 'utf8'));
+    // Albums cut earlier (e.g. mck, starboy) stay listed until their assets are gone, even if albums/<folder>/ has no songs.
+    kept = (prev.albums || []).filter(
+      (a) => !planIds.has(a.id) && (a.sides || []).some((s) => existsSync(join(root, 'public', 'vinyl', s.dir || `assets/${s.id}/`, 'record.json'))),
+    );
+  } catch {}
+  const albums = [...kept, ...fromPlans];
   writeFileSync(libFile, JSON.stringify({ albums }, null, 1));
   log(`library: ${albums.map((a) => `${a.title} (${a.sides.length} sides)`).join(', ') || 'no albums'} -> public/vinyl/library.json`);
 }

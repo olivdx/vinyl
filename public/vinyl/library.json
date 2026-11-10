@@ -2,8 +2,8 @@
  "albums": [
   {
    "id": "ben-xuan",
-   "title": "bến xuân",
-   "by": "bến xuân",
+   "title": "Bến Xuân",
+   "by": "Bến Xuân",
    "cover": "covers/ben-xuan.jpg",
    "discs": 2,
    "sides": [
@@ -303,6 +303,465 @@
        "title": "Thịt Lợn",
        "by": "RPT MCK",
        "len": 228
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "bao-tang-cua-nuoi-tiec",
+   "title": "Nếu Những Tiếc Nuối",
+   "by": "Vũ.",
+   "cover": "covers/bao-tang-cua-nuoi-tiec.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "bao-tang-cua-nuoi-tiec-a",
+     "album": "bao-tang-cua-nuoi-tiec",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/bao-tang-cua-nuoi-tiec/a/",
+     "tracks": [
+      {
+       "title": "Nếu Những Tiếc Nuối",
+       "by": "Vũ.",
+       "len": 260
+      },
+      {
+       "title": "Bình Yên",
+       "by": "Vũ. & Binz",
+       "len": 196
+      },
+      {
+       "title": "Mùa Mưa Ấy",
+       "by": "Vũ.",
+       "len": 228
+      },
+      {
+       "title": "Ngồi Chờ Trong Vấn Vương",
+       "by": "Vũ., My Anh",
+       "len": 202
+      },
+      {
+       "title": "Dành Hết Xuân Thì Để Chờ Nhau",
+       "by": "Vũ. & Hà Anh Tuấn",
+       "len": 288
+      }
+     ]
+    },
+    {
+     "id": "bao-tang-cua-nuoi-tiec-b",
+     "album": "bao-tang-cua-nuoi-tiec",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/bao-tang-cua-nuoi-tiec/b/",
+     "tracks": [
+      {
+       "title": "Và Em Sẽ Luôn Là Người Tôi Yêu Nhất",
+       "by": "Vũ.",
+       "len": 258
+      },
+      {
+       "title": "Những Chuyến Bay",
+       "by": "Vũ.",
+       "len": 273
+      },
+      {
+       "title": "Mây Khóc Vì Điều Gì",
+       "by": "Vũ.",
+       "len": 214
+      },
+      {
+       "title": "Những Lời Hứa Bỏ Quên",
+       "by": "Vũ. & Dear Jane",
+       "len": 236
+      },
+      {
+       "title": "Không Yêu Em Thì Yêu Ai?",
+       "by": "Vũ., Low G",
+       "len": 233
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "osad",
+   "title": "O_O",
+   "by": "OSAD, Onionn., Hoàng Rob",
+   "cover": "covers/osad.jpg",
+   "discs": 2,
+   "sides": [
+    {
+     "id": "osad-a",
+     "album": "osad",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/osad/a/",
+     "tracks": [
+      {
+       "title": "Chơi",
+       "by": "OSAD, Onionn., Hoàng Rob",
+       "len": 123
+      },
+      {
+       "title": "Chương Trình Quảng Cáo",
+       "by": "OSAD, Onionn.",
+       "len": 171
+      },
+      {
+       "title": "Cinema",
+       "by": "OSAD, Onionn.",
+       "len": 169
+      },
+      {
+       "title": "Kệ",
+       "by": "OSAD, Onionn.",
+       "len": 171
+      }
+     ]
+    },
+    {
+     "id": "osad-b",
+     "album": "osad",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/osad/b/",
+     "tracks": [
+      {
+       "title": "Làm Nó Mưa",
+       "by": "OSAD, Onionn., Hoàng Rob",
+       "len": 214
+      },
+      {
+       "title": "Làm",
+       "by": "OSAD, Onionn.",
+       "len": 164
+      },
+      {
+       "title": "Lên Tàu",
+       "by": "OSAD, Onionn.",
+       "len": 164
+      },
+      {
+       "title": "Lú Như Con Cú",
+       "by": "OSAD, Onionn.",
+       "len": 126
+      }
+     ]
+    },
+    {
+     "id": "osad-c",
+     "album": "osad",
+     "disc": 2,
+     "side": "C",
+     "title": "Side C",
+     "dir": "assets/osad/c/",
+     "tracks": [
+      {
+       "title": "Một Ngày Nào Đó",
+       "by": "OSAD, Onionn.",
+       "len": 87
+      },
+      {
+       "title": "Người Âm Ỉ",
+       "by": "OSAD, Onionn.",
+       "len": 122
+      },
+      {
+       "title": "Người Ta Nói",
+       "by": "OSAD, Mỹ Mỹ, Onionn.",
+       "len": 206
+      },
+      {
+       "title": "Nhớ Người Yêu",
+       "by": "OSAD, Onionn.",
+       "len": 175
+      }
+     ]
+    },
+    {
+     "id": "osad-d",
+     "album": "osad",
+     "disc": 2,
+     "side": "D",
+     "title": "Side D",
+     "dir": "assets/osad/d/",
+     "tracks": [
+      {
+       "title": "Ôi Bóng Hình",
+       "by": "OSAD, Dazi, Onionn.",
+       "len": 218
+      },
+      {
+       "title": "Tham Quan Họ Hàng",
+       "by": "OSAD, Onionn.",
+       "len": 186
+      },
+      {
+       "title": "Tương Tư Để Dành",
+       "by": "OSAD, Onionn.",
+       "len": 242
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "phung-khanh-linh",
+   "title": "Giữa Một Vạn Người",
+   "by": "Phung Khanh Linh",
+   "vinyl": {
+    "color": "#1e4db8",
+    "clear": 0.72
+   },
+   "cover": "covers/phung-khanh-linh.jpg",
+   "discs": 2,
+   "sides": [
+    {
+     "id": "phung-khanh-linh-a",
+     "album": "phung-khanh-linh",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/phung-khanh-linh/a/",
+     "tracks": [
+      {
+       "title": "GRIEF IS THE PRICE YOU PAY FOR LOVE",
+       "by": "Phung Khanh Linh",
+       "len": 170
+      },
+      {
+       "title": "Khóc Block",
+       "by": "Phung Khanh Linh",
+       "len": 183
+      },
+      {
+       "title": "Tâm Sự Với Em Một Mình",
+       "by": "Phung Khanh Linh",
+       "len": 183
+      }
+     ]
+    },
+    {
+     "id": "phung-khanh-linh-b",
+     "album": "phung-khanh-linh",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/phung-khanh-linh/b/",
+     "tracks": [
+      {
+       "title": "Em Đau",
+       "by": "Phung Khanh Linh",
+       "len": 307
+      },
+      {
+       "title": "Hiện Thực Phũ Phàng",
+       "by": "Phung Khanh Linh",
+       "len": 210
+      },
+      {
+       "title": "Cờ Người",
+       "by": "Phung Khanh Linh",
+       "len": 234
+      }
+     ]
+    },
+    {
+     "id": "phung-khanh-linh-c",
+     "album": "phung-khanh-linh",
+     "disc": 2,
+     "side": "C",
+     "title": "Side C",
+     "dir": "assets/phung-khanh-linh/c/",
+     "tracks": [
+      {
+       "title": "Anh Là Thằng Tồi",
+       "by": "Phung Khanh Linh",
+       "len": 206
+      },
+      {
+       "title": "Linh Cảm",
+       "by": "Phung Khanh Linh",
+       "len": 256
+      },
+      {
+       "title": "Ám Ảnh Về Anh",
+       "by": "Phung Khanh Linh",
+       "len": 186
+      }
+     ]
+    },
+    {
+     "id": "phung-khanh-linh-d",
+     "album": "phung-khanh-linh",
+     "disc": 2,
+     "side": "D",
+     "title": "Side D",
+     "dir": "assets/phung-khanh-linh/d/",
+     "tracks": [
+      {
+       "title": "Ước Anh Tan Nát Con Tim",
+       "by": "Phung Khanh Linh",
+       "len": 234
+      },
+      {
+       "title": "Điều Em Không Muốn",
+       "by": "Phung Khanh Linh",
+       "len": 231
+      },
+      {
+       "title": "Hãy Nói Anh Sai Rồi",
+       "by": "Phung Khanh Linh",
+       "len": 194
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "starboy",
+   "title": "Starboy (Explicit Version)",
+   "by": "The Weeknd",
+   "vinyl": {
+    "color": "#f0566e",
+    "clear": 0.75
+   },
+   "cover": "covers/starboy.jpg",
+   "discs": 2,
+   "sides": [
+    {
+     "id": "starboy-a",
+     "album": "starboy",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/starboy/a/",
+     "tracks": [
+      {
+       "title": "Starboy",
+       "by": "The Weeknd",
+       "len": 230
+      },
+      {
+       "title": "Party Monster",
+       "by": "The Weeknd",
+       "len": 249
+      },
+      {
+       "title": "False Alarm",
+       "by": "The Weeknd",
+       "len": 220
+      },
+      {
+       "title": "Reminder",
+       "by": "The Weeknd",
+       "len": 219
+      }
+     ]
+    },
+    {
+     "id": "starboy-b",
+     "album": "starboy",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/starboy/b/",
+     "tracks": [
+      {
+       "title": "Rockin’",
+       "by": "The Weeknd",
+       "len": 233
+      },
+      {
+       "title": "Secrets",
+       "by": "The Weeknd",
+       "len": 266
+      },
+      {
+       "title": "True Colors",
+       "by": "The Weeknd",
+       "len": 206
+      },
+      {
+       "title": "Stargirl Interlude",
+       "by": "The Weeknd",
+       "len": 112
+      },
+      {
+       "title": "Sidewalks",
+       "by": "The Weeknd",
+       "len": 231
+      }
+     ]
+    },
+    {
+     "id": "starboy-c",
+     "album": "starboy",
+     "disc": 2,
+     "side": "C",
+     "title": "Side C",
+     "dir": "assets/starboy/c/",
+     "tracks": [
+      {
+       "title": "Six Feet Under",
+       "by": "The Weeknd",
+       "len": 238
+      },
+      {
+       "title": "Love To Lay",
+       "by": "The Weeknd",
+       "len": 223
+      },
+      {
+       "title": "A Lonely Night",
+       "by": "The Weeknd",
+       "len": 220
+      },
+      {
+       "title": "Attention",
+       "by": "The Weeknd",
+       "len": 198
+      },
+      {
+       "title": "Ordinary Life",
+       "by": "The Weeknd",
+       "len": 222
+      }
+     ]
+    },
+    {
+     "id": "starboy-d",
+     "album": "starboy",
+     "disc": 2,
+     "side": "D",
+     "title": "Side D",
+     "dir": "assets/starboy/d/",
+     "tracks": [
+      {
+       "title": "Nothing Without You",
+       "by": "The Weeknd",
+       "len": 199
+      },
+      {
+       "title": "All I Know",
+       "by": "The Weeknd",
+       "len": 321
+      },
+      {
+       "title": "Die For You",
+       "by": "The Weeknd",
+       "len": 260
+      },
+      {
+       "title": "I Feel It Coming",
+       "by": "The Weeknd",
+       "len": 269
       }
      ]
     }

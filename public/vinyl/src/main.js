@@ -63,6 +63,7 @@ function startWorker() {
 function gotRecord(rec, vis) {
   rec.side = S.markRec?.side || 'A';             // printed on the label
   rec.art = albumArt(S.markRec?.album);         // and the album cover, if there is one
+  rec.vinyl = ALBUMS.find((a) => a.id === S.markRec?.album)?.vinyl;   // coloured vinyl, if the album has one
   if (S.swap) S.swap.next = { rec, vis };        // stepSwap() puts it on the platter once the old disc is out of the way
   else { renderer.setRecord(rec, vis); S.drawnRec = rec; S.platterRec = S.markRec; }
   idle();

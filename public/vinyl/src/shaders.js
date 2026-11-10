@@ -118,6 +118,23 @@ export const REC_FS = COMMON + `
 in vec3 vP, vN; in vec2 vQ; out vec4 o;
 uniform mat4 uM; uniform sampler2D uLut, uVis, uLabel;
 uniform float uRLo, uRHi, uRows, uRevEnd, uW, uDust; uniform vec4 uScr[12]; uniform int uNScr;
+uniform vec4 uTint;   // coloured vinyl: linear albedo, a = how clear it is (0 opaque .. 1 see-through); black = (0,0,0,0)
+// The colour of the vinyl itself: what gets past the glossy top surface (1 - Fresnel) and comes back out.
+// Opaque PVC scatters near the surface, like paint. Clear PVC is a coloured glass over a black mat: most light
+// goes through and is lost, so the body reads deep and dark, the longer path at a slant filters it deeper, and
+// what does come back is forward-scattered light: a coloured halo around the key's reflection, and light piped
+// out along the disc to its rim.
+vec3 body(vec3 N, vec3 V, float key, float r) {
+  vec3 C = uTint.rgb; if (dot(C, C) < 1e-6) return vec3(0.0);
+  float nv = max(dot(N, V), 0.0), nl = max(dot(N, L1), 0.0), T = 1.0 - (0.04 + 0.96 * pow(1.0 - nv, 5.0));
+  vec3 lit = KEYC * key * nl + RIMC * 0.25 * max(dot(N, L3), 0.0) + vec3(0.03);
+  vec3 opaque = C * 0.30 * lit;
+  vec3 deep = pow(C, vec3(1.6 + 0.8 * (1.0 - nv)));                        // filtered through the thickness
+  float halo = pow(max(dot(reflect(-L1, N), V), 0.0), 18.0);              // light scattered forward inside the plastic
+  float rim = smoothstep(0.138, 0.1508, r);                               // light piped out along the disc
+  vec3 clear = deep * (0.022 * lit + vec3(0.002)) + C * KEYC * key * (0.30 * halo) + C * rim * (0.03 + 0.08 * key);
+  return mix(opaque, clear, uTint.a) * T;
+}
 float lut(float r) {
   float x = clamp((r - uRLo) / (uRHi - uRLo), 0.0, 1.0) * 2047.0; int i = int(floor(x));
   return mix(texelFetch(uLut, ivec2(i, 0), 0).r, texelFetch(uLut, ivec2(min(i + 1, 2047), 0), 0).r, x - float(i));
@@ -141,15 +158,18 @@ void main() {
     float cover = inside * mix(sharp, min(1.0, 2.0 * uW / pitch), smoothstep(0.25, 0.9, px / pitch));
     float vis = texture(uVis, vec2(fract(ph), (n + floor(ph) + 0.5) / uRows)).r;   // modulation of this revolution
     // groove walls: a radial fan of 45-degree mirrors -> anisotropic streaks, widened by modulation
-    float sig = 0.014 + 0.085 * vis; vec3 groove = vec3(0.0016) + vis * 0.003;
+    // coloured vinyl: the groove walls scatter light into the plastic, so their sheen comes back in its colour
+    vec3 tint = body(N, V, key, r), C = uTint.rgb, gcol = vec3(1.0);
+    if (dot(C, C) > 1e-6) gcol = mix(vec3(1.0), C / max(C.r, max(C.g, C.b)) * 1.3, 0.35 + 0.45 * uTint.a);
+    float sig = 0.014 + 0.085 * vis; vec3 groove = vec3(0.0016) + vis * 0.003 + tint * 1.25;
     for (int i = 0; i < 3; i++) {
       vec3 L = i == 0 ? L1 : (i == 1 ? L3 : LS), H = normalize(L + V);
       vec3 lc = i == 0 ? KEYC * key : (i == 1 ? RIMC * 1.6 : vec3(0.5, 0.56, 0.66));
       float th = dot(Tw, H), s = exp(-th * th / (2.0 * sig * sig)) * 0.0085 / sig * (0.3 + 0.7 * max(dot(N, H), 0.0));
-      groove += s * lc * (vec3(0.72, 0.70, 0.67) + 0.28 * cos(6.2832 * (th * 9.0 + r * 55.0 + vec3(0.0, 0.33, 0.67))));
+      groove += s * lc * gcol * (vec3(0.72, 0.70, 0.67) + 0.28 * cos(6.2832 * (th * 9.0 + r * 55.0 + vec3(0.0, 0.33, 0.67))));
     }
     float fr = pow(1.0 - max(dot(N, V), 0.0), 5.0);
-    vec3 land = vec3(0.0012) + env(reflect(-V, N), 0.07) * (0.045 + 0.955 * fr) * (0.5 + 0.5 * sh) + brdf(N, V, L1, vec3(0.045), vec3(0.002), 0.12) * KEYC * key;
+    vec3 land = vec3(0.0012) + env(reflect(-V, N), 0.07) * (0.045 + 0.955 * fr) * (0.5 + 0.5 * sh) + brdf(N, V, L1, vec3(0.045), vec3(0.002), 0.12) * KEYC * key + tint;
     c = mix(land, groove, cover);
     for (int i = 0; i < uNScr; i++) {                          // scratches catch the light
       vec4 s = uScr[i];
