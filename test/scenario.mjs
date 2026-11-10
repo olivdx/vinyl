@@ -1,0 +1,28 @@
+// Behavioural checks on a default (imperfect) pressing: cue drop, play, knock, scratch, run-out lock.
+import { makeRecord, rms, dB } from './lib.mjs';
+import { DEFAULT_CONDITION } from '../public/vinyl/src/press.js';
+import { Engine } from '../public/vinyl/src/engine.js';
+import { alphaForRadius, grooveRadius, R_LEADIN, ALPHA_REST } from '../public/vinyl/src/geometry.js';
+const fs = 48000, TAU = 2 * Math.PI;
+const rec = makeRecord((t) => 0.3 * Math.sin(TAU * 440 * t) + 0.2 * Math.sin(TAU * 3000 * t), 10, fs, DEFAULT_CONDITION);
+const e = new Engine(fs); e.setRecord(rec);
+const a = new Float32Array(480), b = new Float32Array(480);
+const run = (secs) => { let p = 0; for (let i = 0; i < secs * 100; i++) { e.process(a, b, 480); p += rms(a) ** 2; } return Math.sqrt(p / (secs * 100)); };
+const say = (label, level) => { const t = e.telemetry(); console.log(label.padEnd(34), 'out', dB(level).toFixed(1).padStart(6), 'dB  rpm', (e.wp * 60 / TAU).toFixed(2), ' r', (t.r * 1000).toFixed(1), 'mm  rev', (t.theta / TAU).toFixed(2), ' hc', (t.hc * 1e6).toFixed(1), 'um  N', (t.nIn * 1000).toFixed(1), (t.nOut * 1000).toFixed(1), ' loss', t.loss.toFixed(2), 'blown', e.blown | 0); };
+say('parked, motor off', run(0.5));
+e.setMotor(true); say('spin-up 2 s', run(2));
+e.cueTo(alphaForRadius(R_LEADIN - 0.0012)); say('auto-cue to lead-in (3 s)', run(3));
+say('lead-in groove (4 s)', run(4));
+say('music (3 s)', run(3));
+e.bump(1); say('after a knock (1 s)', run(1));
+e.bump(6); say('after a hard knock (1 s)', run(1));
+e.platterHand(true); for (let i = 0; i < 50; i++) { e.platterMove(-0.03); run(0.01); } say('scratch backwards 0.5 s', 0);
+for (let i = 0; i < 50; i++) { e.platterMove(0.06); run(0.01); } e.platterHand(false); say('scratch forwards 0.5 s', 0);
+say('recover (2 s)', run(2));
+e.setVtf(0.25); say('tracking force 0.25 g (2 s)', run(2)); e.setVtf(1.8);
+e.cueTo(alphaForRadius(grooveRadius(rec.rTab, rec.thetaLock - 3 * TAU))); say('jump to lead-out (3 s)', run(3));
+say('lead-out (8 s)', run(8));
+const th1 = e.tel.theta; say('run-out (4 s)', run(4));
+console.log('locked groove holds:', e.tel.theta >= rec.thetaLock - TAU && Math.abs(e.tel.r - 0.0532) < 3e-4, 'theta', (e.tel.theta / TAU).toFixed(2), 'of', (rec.thetaEnd / TAU).toFixed(2));
+e.setMotor(false); say('motor off, coast 6 s', run(6));
+e.cueTo(ALPHA_REST); say('return to rest (3 s)', run(3));

@@ -1,0 +1,223 @@
+{
+ "albums": [
+  {
+   "id": "mck",
+   "title": "HVL",
+   "by": "RPT MCK",
+   "cover": "covers/mck.jpg",
+   "discs": 3,
+   "sides": [
+    {
+     "id": "mck-a",
+     "album": "mck",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/mck/a/",
+     "tracks": [
+      {
+       "title": "Elegie",
+       "by": "RPT MCK",
+       "len": 87
+      },
+      {
+       "title": "IDK",
+       "by": "RPT MCK",
+       "len": 196
+      },
+      {
+       "title": "Wtf Bby I'm Lit",
+       "by": "RPT MCK",
+       "len": 167
+      },
+      {
+       "title": "Anh Không Muốn Nó Dễ Dàng",
+       "by": "RPT MCK",
+       "len": 165
+      },
+      {
+       "title": "Baby (feat. marzuz)",
+       "by": "RPT MCK, marzuz",
+       "len": 173
+      },
+      {
+       "title": "Yêu Anh Giết Anh",
+       "by": "RPT MCK",
+       "len": 165
+      }
+     ]
+    },
+    {
+     "id": "mck-b",
+     "album": "mck",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/mck/b/",
+     "tracks": [
+      {
+       "title": "Mắt Môi Tay Chân (feat. Tage)",
+       "by": "RPT MCK, Tage",
+       "len": 192
+      },
+      {
+       "title": "Đao Của Anh Vừa",
+       "by": "RPT MCK",
+       "len": 124
+      },
+      {
+       "title": "Là Gì Của Nhau",
+       "by": "RPT MCK",
+       "len": 143
+      },
+      {
+       "title": "Night In Prague",
+       "by": "RPT MCK",
+       "len": 214
+      },
+      {
+       "title": "Một Cái Ôm",
+       "by": "RPT MCK",
+       "len": 202
+      }
+     ]
+    },
+    {
+     "id": "mck-c",
+     "album": "mck",
+     "disc": 2,
+     "side": "C",
+     "title": "Side C",
+     "dir": "assets/mck/c/",
+     "tracks": [
+      {
+       "title": "Liệm",
+       "by": "RPT MCK",
+       "len": 233
+      },
+      {
+       "title": "Nếu Như Ta Chẳng Còn (feat. A$AP Ướt Mi)",
+       "by": "RPT MCK, A$AP Ướt Mi",
+       "len": 318
+      },
+      {
+       "title": "Ai Mới Là Kẻ Xấu Xa",
+       "by": "RPT MCK",
+       "len": 192
+      },
+      {
+       "title": "Slippery (feat. Tùng Dương)",
+       "by": "RPT MCK, Tùng Dương",
+       "len": 215
+      }
+     ]
+    },
+    {
+     "id": "mck-d",
+     "album": "mck",
+     "disc": 2,
+     "side": "D",
+     "title": "Side D",
+     "dir": "assets/mck/d/",
+     "tracks": [
+      {
+       "title": "Intenpol",
+       "by": "RPT MCK",
+       "len": 54
+      },
+      {
+       "title": "Tây Thi",
+       "by": "RPT MCK",
+       "len": 104
+      },
+      {
+       "title": "Hút và Hút",
+       "by": "RPT MCK",
+       "len": 135
+      },
+      {
+       "title": "Dưa Chua",
+       "by": "RPT MCK",
+       "len": 182
+      },
+      {
+       "title": "Xa Xôi (feat. Obito)",
+       "by": "RPT MCK, Obito",
+       "len": 218
+      },
+      {
+       "title": "Che Phủ",
+       "by": "RPT MCK",
+       "len": 155
+      }
+     ]
+    },
+    {
+     "id": "mck-e",
+     "album": "mck",
+     "disc": 3,
+     "side": "E",
+     "title": "Side E",
+     "dir": "assets/mck/e/",
+     "tracks": [
+      {
+       "title": "Oanh M = Thuoc",
+       "by": "RPT MCK",
+       "len": 204
+      },
+      {
+       "title": "Ghet Xog Lai Thik",
+       "by": "RPT MCK",
+       "len": 113
+      },
+      {
+       "title": "Nhìn Kẻ Thù Của Tao",
+       "by": "RPT MCK",
+       "len": 234
+      },
+      {
+       "title": "Envy (feat. THANHDRAW)",
+       "by": "RPT MCK, THANHDRAW",
+       "len": 235
+      },
+      {
+       "title": "Cảm Ơn",
+       "by": "RPT MCK",
+       "len": 159
+      }
+     ]
+    },
+    {
+     "id": "mck-f",
+     "album": "mck",
+     "disc": 3,
+     "side": "F",
+     "title": "Side F",
+     "dir": "assets/mck/f/",
+     "tracks": [
+      {
+       "title": "Không Cần Lo Cho Tao",
+       "by": "RPT MCK",
+       "len": 156
+      },
+      {
+       "title": "Huh (feat. RPT Orijinn & THANHDRAW)",
+       "by": "RPT MCK, RPT Orijinn, THANHDRAW",
+       "len": 252
+      },
+      {
+       "title": "Nguyễn Văn Mười",
+       "by": "RPT MCK",
+       "len": 242
+      },
+      {
+       "title": "Thịt Lợn",
+       "by": "RPT MCK",
+       "len": 228
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
