@@ -12,23 +12,24 @@ const ROOT = new URL('../', import.meta.url).pathname;   // /vinyl/: assets/ and
 // The library can live elsewhere (e.g. an R2 bucket): window.__ALBUMS_URL, set from NEXT_PUBLIC_ALBUMS_URL in
 // app/layout.tsx, is the base holding library.json, assets/<album>/ and covers/. Its paths resolve against it.
 const LIB_BASE = new URL(window.__ALBUMS_URL ? window.__ALBUMS_URL.replace(/\/?$/, '/') : ROOT, location.href).href;
-const LIB = await fetch(LIB_BASE + 'library.json', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : { albums: [] })).catch(() => ({ albums: [] }));
 const abs = (p) => (p ? new URL(p, LIB_BASE).href : p);
+const libFetch = window.__boot?.lib ?? fetch(LIB_BASE + 'library.json', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : { albums: [] })).catch(() => ({ albums: [] }));
+const LIB = await libFetch;
 const libAlbums = (LIB.albums || []).map((a) => ({ ...a, cover: abs(a.cover), sides: a.sides.map((s) => ({ ...s, dir: abs(s.dir || `assets/${s.id}/`) })) }));
-const ALBUMS = [{ ...ALBUM, cover: null, sides: RECORDS.map((r) => ({ ...r, album: ALBUM.id })) }, ...libAlbums];
-const SIDES = ALBUMS.flatMap((a) => a.sides);
-// The album cover, printed on the label of every side (label.js). Loaded once per album; the built-in album
-// looks for /covers/<id>.jpg|png|webp. A cover that is not there leaves the plain paper label.
+let ALBUMS = [{ ...ALBUM, sides: RECORDS.map((r) => ({ ...r, album: ALBUM.id })) }, ...libAlbums];
+let SIDES = ALBUMS.flatMap((a) => a.sides);
+// The album cover, printed on the label of every side (label.js). Loaded once per album.
+// An album without a cover leaves the plain paper label.
 const ART = new Map();
 function albumArt(albumId) {
   if (!albumId) return null;
   if (ART.has(albumId)) return ART.get(albumId);
-  const a = ALBUMS.find((x) => x.id === albumId), img = new Image();
-  const tries = a?.cover ? [a.cover] : ['jpg', 'png', 'webp'].map((e) => `/covers/${albumId}.${e}`);
+  const a = ALBUMS.find((x) => x.id === albumId);
+  if (!a?.cover) { ART.set(albumId, null); return null; }
+  const img = new Image();
   img.decoding = 'async';
   img.crossOrigin = 'anonymous';                // it is drawn into a WebGL texture: a cover from another origin needs CORS
-  img.onerror = () => { tries.shift(); if (tries.length) img.src = tries[0]; };
-  img.src = tries[0];
+  img.src = a.cover;
   ART.set(albumId, img);
   return img;
 }
@@ -238,7 +239,7 @@ function powerMsg() {
 }
 $('power').addEventListener('click', powerOn);       // the pill; a tap on the scene powers on too (see the pointer handlers)
 $('power-msg').textContent = POWER_MSG;
-if (!OG) initAudio().catch(() => {});   // best effort before any gesture; the click retries if the browser refused
+// Worklet modules load on power-on (powerOn -> initAudio) so they do not compete with the opening record download.
 
 // ---------- controls ----------
 function setMotor(on) { S.motor = on; send({ t: 'motor', on }); $('b-start').textContent = on ? 'Stop' : 'Start'; $('b-start').classList.toggle('on', on); }
@@ -342,10 +343,10 @@ async function master(r, me, seed) {            // the slow way: fetch the audio
   } catch (err) { console.error(err); if (me === pick) { idle(); status(`Could not load ${r.title}.`); failSwap(); } }
 }
 window.vinyl = {
-  records: SIDES,
+  get records() { return SIDES; },
   get current() { return S.markId; },
   get swapping() { return !!S.swap; },
-  albums: ALBUMS,
+  get albums() { return ALBUMS; },
   get track() { return S.trackIdx ?? -1; },
   pick(id) { const r = SIDES.find((x) => x.id === id); S.cueTrack = null; if (r) pickRecord(r); },
   play(id, i) { playSong(id, i); },
@@ -500,13 +501,14 @@ function drawNumbers(t) {
 }
 function drawStats() {
   const t = S.tel; if (!t) return;
-  drawNumbers(t);
   // the readout only exists while the needle is on the record (with a grace period so that
   // lifting it to jump elsewhere does not make the panel blink)
   const down = t.hc < 40e-6, clock = performance.now();
   if (down) S.lastDown = clock;
   const show = down || (S.lastDown > 0 && clock - S.lastDown < 3000);
   if (show !== S.hudOn) { S.hudOn = show; $('hud').classList.toggle('on', show); }
+  // each write invalidates layout; skip them while nobody can see the numbers
+  if (show && !document.documentElement.classList.contains('albums-open')) drawNumbers(t);
   // in a track: its title and time, bars moving while the record turns; anywhere else: the record's name
   // only while the platter holds the record that was picked last: switching shows the new name straight away,
   // and never a track of the previous record while the new one loads
@@ -610,11 +612,15 @@ function tick() {
   }
   const moved = Math.abs(S.zoomT) > 0.01 || Math.abs(S.az - AZ0) > 0.01 || Math.abs(S.el - EL0) > 0.01;
   if (moved !== S.moved) { S.moved = moved; $('t-reset').hidden = !moved; }
+  // Behind the Albums modal the deck is dimmed: draw it at a third of the rate so the GPU has room for the modal's own animations.
+  const behindModal = document.documentElement.classList.contains('albums-open');
+  if (behindModal && !S.swap && frame++ % 3 !== 0) return;
   guard('render', () => {
     if (OG) renderer.draw({ thp: 2.2, al: alphaForRadius(0.108), zt: 0, zoom: 0, az: -0.5, el: 0.6, motor: true, rpm: 33.3333, bare: true, dist: 1.1, at: [0.021, -0.07, -0.093], ...window.__og });   // deck high in the frame: X overlays the bottom
-    else renderer.draw({ thp: t ? t.thp + t.wp * dt : 0, al: t ? t.al : ALPHA_REST, zt: t ? t.zb + t.ze : 5e-3, zoom: S.zoom, az: S.az, el: S.el, motor: S.motor, rpm: S.rpm, discOff, lever: S.lever });
+    else renderer.draw({ thp: t ? t.thp + t.wp * dt : 0, al: t ? t.al : ALPHA_REST, zt: t ? t.zb + t.ze : 5e-3, zoom: S.zoom, az: S.az, el: S.el, motor: S.motor, rpm: S.rpm, discOff, lever: S.lever,
+      ...(behindModal && { res: 0.4, keepShadow: true }) });
   });
-  if (frame++ % 2 === 0 && S.hudOn) guard('groove view', drawScope);
+  if (frame++ % 2 === 0 && S.hudOn && !behindModal) guard('groove view', drawScope);
   if (frame % 6 === 0) guard('readout', drawStats);
 }
 tick();

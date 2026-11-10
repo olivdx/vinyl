@@ -5,7 +5,8 @@
 // `cut` is passed to the lathe (src/cut.js) for that side; `len` is the song's length in seconds (for the list).
 const commons = (file) => 'https://commons.wikimedia.org/wiki/File:' + file;
 
-export const ALBUM = { id: 'collection', title: 'Public Domain Sessions', by: 'Various artists', discs: 2 };
+// cover: a path under public/ (e.g. '/covers/collection.jpg'), or null for the plain placeholder
+export const ALBUM = { id: 'collection', title: 'Public Domain Sessions', by: 'Various artists', discs: 2, cover: null };
 
 const T = {
   moonlight: { credit: 'Paul Pitman, piano, for Musopen', licence: 'public domain', url: commons("Ludwig_van_Beethoven_-_sonata_no._14_in_c_sharp_minor_%27moonlight%27,_op._27_no._2_-_i._adagio_sostenuto.ogg"), by: 'Beethoven' },

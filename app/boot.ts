@@ -4,8 +4,9 @@ export const BOOT_SCRIPT = `
 // Start downloading and decoding the opening record now, before any module has even been requested.
 (function () {
   // phones get a short record first: a long side needs several hundred MB of memory once decoded
-  var small = matchMedia('(max-width: 760px), (pointer: coarse)').matches;
+  var libBase = window.__ALBUMS_URL ? window.__ALBUMS_URL.replace(/\\/?$/, '/') : '/vinyl/';
   var id = 'side-a', dir = '/vinyl/assets/' + id + '/', b = window.__boot = { id: id, dir: dir, got: 0, total: 0 };
+  b.lib = fetch(libBase + 'library.json', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : { albums: [] }; }).catch(function () { return { albums: [] }; });
   b.man = fetch(dir + 'record.json').then(function (r) { if (!r.ok) throw new Error('no precompiled record'); return r.json(); });
   b.vis = fetch(dir + 'record.vis').then(function (r) { if (!r.ok) throw new Error('no precompiled record'); return r.arrayBuffer(); });
   b.audio = fetch(dir + 'record.flac').then(function (r) {

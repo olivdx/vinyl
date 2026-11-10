@@ -49,7 +49,9 @@ html, body { margin: 0; height: 100%; background: #030304; color: var(--fg); fon
 
 .panel { position: fixed; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; backdrop-filter: blur(16px); padding: 14px; z-index: 4; }
 #ctl { top: 46px; right: 14px; width: 236px; max-height: calc(100% - 86px); overflow: auto; }
-#hud { left: 16px; bottom: 40px; width: 292px; padding: 10px; opacity: 0; pointer-events: none; transition: opacity .5s; }
+#hud { left: 16px; bottom: 40px; width: 292px; padding: 10px; opacity: 0; pointer-events: none; transition: opacity .5s; contain: layout paint; }
+/* readouts change text several times a second: keep their relayout from reaching the rest of the page */
+#toggles, #foot, #hover-track { contain: layout paint; }
 #hud.on { opacity: 1; }   /* only while the needle is on the record */
 h2 { font-size: 10px; margin: 14px 0 6px; color: var(--dim); letter-spacing: .14em; text-transform: uppercase; font-weight: 500; }
 h2:first-child { margin-top: 0; }
@@ -74,7 +76,8 @@ input[type=range] { flex: 1; min-width: 0; accent-color: var(--acc); height: 14p
 #power span { padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); backdrop-filter: blur(10px); letter-spacing: .1em; text-transform: uppercase; font-size: 11px; }
 
 dialog { background: rgba(15,15,16,.97); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 28px 30px 22px; max-width: 540px; width: calc(100% - 40px); max-height: calc(100% - 40px); overflow: auto; font-size: 13px; line-height: 1.58; }
-dialog::backdrop { background: rgba(0,0,0,.6); backdrop-filter: blur(3px); }
+/* no backdrop-filter: the WebGL deck under it changes every frame, so a blur would be recomputed full-screen each frame */
+dialog::backdrop { background: rgba(0,0,0,.66); }
 dialog h3 { font-size: 18px; margin: 0 0 14px; font-weight: 600; letter-spacing: -.01em; }
 dialog p, dialog ul { margin: 0 0 12px; color: var(--soft); }
 dialog ul { padding-left: 18px; } dialog li { margin: 5px 0; }
@@ -111,7 +114,7 @@ dialog form button { font: inherit; color: var(--fg); background: rgba(255,255,2
 #hover-track[hidden] { display: none; }
 
 /* ---------- Albums: the double LP (app/albums.tsx) ---------- */
-dialog.albums { max-width: 820px; width: calc(100% - 48px); padding: 22px 24px 18px; background: rgba(15,15,16,.95); backdrop-filter: blur(16px); }
+dialog.albums { max-width: 820px; width: calc(100% - 48px); padding: 22px 24px 18px; background: rgb(15,15,16); }
 dialog.albums .head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
 dialog.albums h3 { font-size: 10px; margin: 0; color: var(--dim); letter-spacing: .14em; text-transform: uppercase; font-weight: 500; }
 dialog.albums .close { all: unset; cursor: pointer; color: var(--dim); font-size: 12px; padding: 2px 6px; border-radius: 6px; }
@@ -131,24 +134,26 @@ dialog.albums .close:hover { color: var(--fg); }
 .album-view .disc h4 { margin: 0 0 8px; font-size: 10px; color: var(--dim); letter-spacing: .14em; text-transform: uppercase; font-weight: 500; }
 .album-view .disc + .disc { margin-top: 18px; }
 .album-view .sides { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.album-view .side { min-width: 0; border: 1px solid var(--line); border-radius: 10px; padding: 6px; background: rgba(255,255,255,.02); }
-.album-view .side[aria-current=true] { border-color: var(--acc); animation: sidePulse 1.6s ease-in-out infinite; }
-@keyframes sidePulse { 50% { border-color: rgba(255,180,84,.3); } }
+.album-view .side { position: relative; min-width: 0; border: 1px solid var(--line); border-radius: 10px; padding: 6px; background: rgba(255,255,255,.02); }
+/* the pulse animates opacity of a ring, not border-color, so it never repaints the side */
+.album-view .side[aria-current=true]::after { content: ''; position: absolute; inset: -1px; border: 1px solid var(--acc); border-radius: 10px; pointer-events: none; animation: ringPulse 1.6s ease-in-out infinite; will-change: opacity; }
+@keyframes ringPulse { 50% { opacity: .3; } }
 .album-view .side-head { all: unset; box-sizing: border-box; display: flex; align-items: baseline; gap: 8px; width: 100%; padding: 6px 8px 8px; border-radius: 7px; cursor: pointer; }
 .album-view .side-head b { font-weight: 600; } .album-view .side-head span { color: var(--dim); font-variant-numeric: tabular-nums; }
 .album-view .side-head em { margin-left: auto; font-style: normal; font-size: 11px; color: var(--dim); }
 .album-view .side[aria-current=true] .side-head em { color: var(--acc); }
+.album-view .side-head { transition: background .12s ease; }
 .album-view .side-head:hover, .album-view .side-head:focus-visible { background: rgba(255,255,255,.06); }
 .album-view .side-head:hover em { color: var(--fg); }
 .album-view ol { list-style: none; margin: 0; padding: 0; }
-.album-view .song { all: unset; box-sizing: border-box; display: flex; align-items: baseline; gap: 10px; width: 100%; padding: 5px 8px; border-radius: 7px; cursor: pointer; }
+.album-view .song { all: unset; box-sizing: border-box; display: flex; align-items: baseline; gap: 10px; width: 100%; padding: 5px 8px; border-radius: 7px; cursor: pointer; transition: background .12s ease; }
 .album-view .song:hover, .album-view .song:focus-visible { background: rgba(255,255,255,.07); }
 .album-view .song .n { flex: 0 0 14px; color: var(--dim); font-variant-numeric: tabular-nums; }
 .album-view .song .t { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .album-view .song .t i { font-style: normal; color: var(--dim); margin-left: 6px; }
 .album-view .song .l { color: var(--dim); font-variant-numeric: tabular-nums; }
 .album-view .song[aria-current=true] .t, .album-view .song[aria-current=true] .n { color: var(--acc); }
-@media (prefers-reduced-motion: reduce) { .album-view .side[aria-current=true] { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .album-view .side[aria-current=true]::after { animation: none; } }
 dialog.albums .credit { margin: 18px 0 0; padding-top: 12px; border-top: 1px solid var(--line); color: var(--dim); font-size: 11px; line-height: 1.6; }
 dialog.albums .credit a { color: var(--soft); }
 @media (max-width: 640px) {
@@ -161,8 +166,10 @@ dialog.albums .credit a { color: var(--soft); }
 dialog.albums .back { all: unset; cursor: pointer; color: var(--soft); font-size: 12px; padding: 2px 6px; margin-left: -6px; border-radius: 6px; }
 dialog.albums .back:hover { color: var(--fg); background: rgba(255,255,255,.06); }
 .album-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 22px 18px; list-style: none; margin: 0; padding: 0; }
-.album { all: unset; box-sizing: border-box; display: block; width: 100%; cursor: pointer; border-radius: 6px; }
-.album .cover { position: relative; display: block; aspect-ratio: 1; border-radius: 4px; overflow: hidden; background: #1a1a1c; box-shadow: 0 6px 16px rgba(0,0,0,.55); transition: transform .25s ease, box-shadow .25s ease; }
+.album-grid > li { contain: layout style; }
+.album { all: unset; box-sizing: border-box; position: relative; display: block; width: 100%; cursor: pointer; border-radius: 6px; }
+/* hover moves the cover only (transform): a box-shadow transition would repaint it every frame */
+.album .cover { position: relative; display: block; aspect-ratio: 1; border-radius: 4px; overflow: hidden; background: #1a1a1c; box-shadow: 0 8px 20px rgba(0,0,0,.58); transition: transform .18s ease; will-change: transform; }
 .album .cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .album .ph { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 12px; gap: 3px; background: radial-gradient(circle at 70% 30%, #2b2b2f, #121214 70%); }
 .album .ph::before { content: ''; position: absolute; right: -28%; top: -28%; width: 90%; aspect-ratio: 1; border-radius: 50%; background: repeating-radial-gradient(circle, #0b0b0c 0 2px, #141416 2px 3px); }
@@ -171,10 +178,13 @@ dialog.albums .back:hover { color: var(--fg); background: rgba(255,255,255,.06);
 .album .meta { display: block; margin-top: 8px; }
 .album .meta b { display: block; font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .album .meta i { display: block; font-style: normal; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.album:hover .cover, .album:focus-visible .cover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,.6); }
+@media (hover: hover) and (pointer: fine) {
+  .album:hover .cover, .album:hover::after { transform: translateY(-4px); }
+}
+.album:focus-visible .cover, .album:focus-visible::after { transform: translateY(-4px); }
 .album:focus-visible .cover { outline: 2px solid var(--soft); outline-offset: 2px; }
-.album[aria-current=true] .cover { outline: 2px solid var(--acc); outline-offset: 3px; animation: albumPulse 1.6s ease-in-out infinite; }
+/* the playing album's ring sits on the button (the cover clips its children) and pulses by opacity */
+.album[aria-current=true]::after { content: ''; position: absolute; left: -5px; top: -5px; width: calc(100% + 10px); aspect-ratio: 1; border: 2px solid var(--acc); border-radius: 8px; pointer-events: none; transition: transform .18s ease; animation: ringPulse 1.6s ease-in-out infinite; will-change: opacity, transform; }
 .album[aria-current=true] .meta b { color: var(--acc); }
-@keyframes albumPulse { 50% { outline-color: rgba(255,180,84,.3); } }
-@media (prefers-reduced-motion: reduce) { .album[aria-current=true] .cover { animation: none; } .album .cover { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .album[aria-current=true]::after { animation: none; } .album .cover, .album::after { transition: none; } }
 @media (max-width: 640px) { .album-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 16px 12px; } }

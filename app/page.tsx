@@ -1,4 +1,5 @@
-import { Albums, AlbumsButton } from "./albums";
+import { AlbumsButton } from "./albums-button";
+import { AlbumsLazy } from "./albums-lazy";
 import { EngineLoader } from "./engine-loader";
 
 // The page is the original record player's markup. public/vinyl/src/main.js wires it up after
@@ -82,7 +83,7 @@ export default function Home() {
         <div className="row"><button id="b-bump">Knock the table</button></div>
       </section>
 
-      <Albums />
+      <AlbumsLazy />
 
       <dialog id="more">
         <h3>A record player simulated &quot;from the groove up&quot;</h3>

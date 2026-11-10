@@ -9,6 +9,8 @@ import {
 } from './geometry.js';
 
 const PIVOT_H = 0.030, DECK_Z = -0.022, FLOOR_Z = -0.080, FOV = 30 * Math.PI / 180, SHADOW = 2048;
+const MOBILE = matchMedia('(max-width: 760px), (pointer: coarse)').matches;
+const DISC_RING = MOBILE ? 40 : 56, DISC_ARC = MOBILE ? 128 : 192;
 const CB = Math.cos(ARM_BETA), SB = Math.sin(ARM_BETA), lerp = (a, b, t) => a + (b - a) * t;
 // arm tube: a J-shaped bend from the pivot to the headshell collar, in the arm frame (+x = pivot -> stylus)
 const P3 = [ARM_LE - 0.040 * CB, 0.040 * SB, -0.0125];
@@ -47,7 +49,7 @@ export class Renderer {
       platter: m(L([[0, -0.0215], [0.164, -0.0215], [0.1645, -0.0205], [0.1645, -0.0072], [0.1625, -0.0045], [0.1535, -0.0036], [0.1535, -0.0025], [0, -0.0025]], 160)),
       mat: m(L([[0.1495, -0.0025], [0.1495, -0.0013], [0, -0.0013]], 96)),
       spindle: m(L([[0.0036, -0.003], [0.0036, 0.009], [0.003, 0.0108], [0.0015, 0.0115], [0, 0.0115]], 24)),
-      edge: m(G.cyl(R_DISC, R_DISC, -0.0013, 0, 128, false)), disc: m(G.annulus(0.0036, R_DISC, 56, 192)),
+      edge: m(G.cyl(R_DISC, R_DISC, -0.0013, 0, MOBILE ? 96 : 128, false)), disc: m(G.annulus(0.0036, R_DISC, DISC_RING, DISC_ARC)),
       strobe: m(G.merge(at(L([[0.019, DECK_Z], [0.019, -0.006], [0.0175, -0.0045], [0, -0.0045]], 32), STROBE[0], STROBE[1]))),
       lens: m(G.box(-0.0015, -0.006, -0.018, 0.0015, 0.006, -0.008)),
       buttons: m(G.merge(G.rbox(-0.139, -0.184, -0.097, -0.158, DECK_Z, DECK_Z + 0.004, 0.003, 0.0008),
@@ -168,10 +170,11 @@ export class Renderer {
     return Math.hypot(p[0] - ax - k * dx, p[1] - ay - k * dy);
   }
 
-  // st: { thp, al, zt (stylus height above the disc), zoom, az, el, motor, rpm, lever (0 down .. 1 up) }
+  // st: { thp, al, zt (stylus height above the disc), zoom, az, el, motor, rpm, lever (0 down .. 1 up),
+  //       res (backing-store scale, 1 = full), keepShadow (reuse the last shadow map) }
   draw(st) {
     const gl = this.gl, c = this.canvas, m = this.m, I = G.ident(), info = this.info, ecc = info ? info.ecc : [0, 0];
-    const dpr = Math.min(2, window.devicePixelRatio || 1), w = Math.round(c.clientWidth * dpr), h = Math.round(c.clientHeight * dpr);
+    const dpr = Math.min(2, window.devicePixelRatio || 1) * (st.res ?? 1), w = Math.round(c.clientWidth * dpr), h = Math.round(c.clientHeight * dpr);
     if (c.width !== w || c.height !== h) { c.width = w; c.height = h; }
     const cam = this.camera(st);
     const spin = G.Rz(-st.thp), dOff = st.discOff || [0, 0, 0, 0];        // record change (main.js swap): lift, slide and tilt the disc
@@ -200,11 +203,14 @@ export class Renderer {
     if (info && !st.noDisc) items.push([m.edge, discM, info.tint.some((v) => v) ? info.tint.slice(0, 3).map((v) => v * 0.45) : [0.008, 0.008, 0.008], 0.22, 0, 0, off]);
 
     // 1. shadow map from the key light
-    gl.bindFramebuffer(gl.FRAMEBUFFER, this.fbo); gl.viewport(0, 0, SHADOW, SHADOW); gl.clear(gl.DEPTH_BUFFER_BIT);
-    gl.useProgram(this.dep.p); gl.uniformMatrix4fv(this.dep.u.uVP, false, this.lvp);
-    gl.enable(gl.POLYGON_OFFSET_FILL); gl.polygonOffset(2, 4);
-    for (let i = 1; i < items.length; i++) { gl.uniformMatrix4fv(this.dep.u.uM, false, items[i][1]); gl.bindVertexArray(items[i][0].vao); gl.drawArrays(gl.TRIANGLES, 0, items[i][0].count); }
-    gl.disable(gl.POLYGON_OFFSET_FILL);
+    if (!st.keepShadow || !this.shadowReady) {
+      gl.bindFramebuffer(gl.FRAMEBUFFER, this.fbo); gl.viewport(0, 0, SHADOW, SHADOW); gl.clear(gl.DEPTH_BUFFER_BIT);
+      gl.useProgram(this.dep.p); gl.uniformMatrix4fv(this.dep.u.uVP, false, this.lvp);
+      gl.enable(gl.POLYGON_OFFSET_FILL); gl.polygonOffset(2, 4);
+      for (let i = 1; i < items.length; i++) { gl.uniformMatrix4fv(this.dep.u.uM, false, items[i][1]); gl.bindVertexArray(items[i][0].vao); gl.drawArrays(gl.TRIANGLES, 0, items[i][0].count); }
+      gl.disable(gl.POLYGON_OFFSET_FILL);
+      this.shadowReady = true;
+    }
 
     // 2. beauty pass
     gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, w, h);

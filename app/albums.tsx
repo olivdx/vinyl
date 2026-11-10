@@ -1,14 +1,13 @@
 "use client";
 
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, memo, useEffect, useRef, useState } from "react";
 
 // The album picker. Albums come from the engine (public/vinyl/src/main.js): the built-in double LP plus every
 // album cut from albums/<folder>/ (`npm run albums`). An album is a set of LP sides, two to a disc; each side is a
 // record the engine can put on the platter. The engine exposes window.vinyl and fires:
 //   'vinyl:state'       { current, track, swapping }  the side on (or headed for) the platter, the song under the needle
 //   'vinyl:open-albums'                               when the now-playing readout is clicked
-// Covers: an album cut from a folder brings its cover.jpg / cover.png (album.cover); the built-in one looks for
-// public/covers/<album id>.(jpg|png|webp). Without a cover, a placeholder.
+// Covers: album.cover (from library.json, or ALBUM.cover in records.js for the built-in one). Without one, a placeholder.
 
 type Song = { title: string; by: string; len: number; credit?: string; licence?: string; url?: string };
 type Side = { id: string; album: string; disc: number; side: string; title: string; tracks: Song[] };
@@ -22,34 +21,23 @@ declare global {
 }
 
 const OPEN = "vinyl:open-albums";
-const EXTS = ["jpg", "png", "webp"];
 const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, "0")}`;
 const sideLen = (s: Side) => s.tracks.reduce((a, t) => a + t.len, 0);
 const albumLen = (a: Album) => a.sides.reduce((x, s) => x + sideLen(s), 0);
 
-export function AlbumsButton() {
-  return (
-    <button id="t-albums" onClick={() => dispatchEvent(new Event(OPEN))}>
-      Albums
-    </button>
-  );
-}
-
-function Cover({ album }: { album: Album }) {
-  const [ext, setExt] = useState(0); // the built-in album: which extension to try next; past the end = no cover
-  const src = album.cover ? album.cover :ext < EXTS.length ? `/covers/${album.id}.${EXTS[ext]}` : null;
+const Cover = memo(function Cover({ album }: { album: Album }) {
   const [failed, setFailed] = useState(false);
   return (
     <span className="cover">
-      {!src || failed ? (
+      {!album.cover || failed ? (
         <span className="ph"><b>{album.title}</b><i>{album.by}</i></span>
       ) : (
         // eslint-disable-next-line @next/next/no-img-element -- user-supplied files of unknown size and format
-        <img src={src} alt="" loading="lazy" onError={() => (album.cover ? setFailed(true) : setExt(ext + 1))} />
+        <img src={album.cover} alt="" decoding="async" onError={() => setFailed(true)} />
       )}
     </span>
   );
-}
+});
 
 // one line per recording, for the fine print (only the built-in album carries credits)
 function credits(sides: Side[]) {
@@ -79,7 +67,7 @@ function AlbumView({ album, current, track, done }: { album: Album; current: str
             {album.sides.filter((s) => s.disc === d).map((s) => {
               const on = s.id === current;
               return (
-                <div key={s.id} className="side" aria-current={on}>
+                <div key={s.id} className="side" aria-current={on ? "true" : undefined}>
                   <button className="side-head" onClick={() => { done(); window.vinyl?.pick(s.id); }}>
                     <b>Side {s.side}</b><span>{fmt(sideLen(s))}</span>
                     <em>{on ? "On the platter" : "Put this side on"}</em>
@@ -87,7 +75,7 @@ function AlbumView({ album, current, track, done }: { album: Album; current: str
                   <ol>
                     {s.tracks.map((t, i) => (
                       <li key={i}>
-                        <button className="song" aria-current={on && i === track} onClick={() => { done(); window.vinyl?.play(s.id, i); }}>
+                        <button className="song" aria-current={on && i === track ? "true" : undefined} onClick={() => { done(); window.vinyl?.play(s.id, i); }}>
                           <span className="n">{i + 1}</span>
                           <span className="t">{t.title}<i>{t.by}</i></span>
                           <span className="l">{fmt(t.len)}</span>
@@ -122,21 +110,40 @@ export function Albums() {
   const [openId, setOpenId] = useState<string | null>(null); // the album being looked at; null = all albums
 
   useEffect(() => {
-    const sync = () => {
+    const el = ref.current;
+    if (!el) return;
+    const onToggle = () => document.documentElement.classList.toggle("albums-open", el.open);
+    el.addEventListener("toggle", onToggle);
+    return () => {
+      el.removeEventListener("toggle", onToggle);
+      document.documentElement.classList.remove("albums-open");
+    };
+  }, []);
+
+  useEffect(() => {
+    const syncAlbums = () => {
       const x = window.vinyl;
-      if (x) setV({ albums: x.albums, current: x.current, track: x.track });
+      if (x) setV((prev) => (prev.albums === x.albums ? prev : { ...prev, albums: x.albums }));
+    };
+    const syncPlayback = (e: Event) => {
+      const x = window.vinyl;
+      if (!x) return;
+      const d = (e as CustomEvent<{ current: string | null; track: number }>).detail;
+      const current = d?.current ?? x.current ?? null;
+      const track = d?.track ?? x.track ?? -1;
+      setV((prev) => (prev.current === current && prev.track === track ? prev : { ...prev, current, track }));
     };
     const open = () => {
-      sync();
+      syncAlbums();
       const x = window.vinyl;
       setOpenId(x && x.albums.length === 1 ? x.albums[0].id : null); // one album: straight to it
       const d = ref.current;
       if (d && !d.open) { d.showModal(); d.scrollTop = 0; }
     };
-    sync();
-    addEventListener("vinyl:state", sync);
+    syncAlbums();
+    addEventListener("vinyl:state", syncPlayback);
     addEventListener(OPEN, open);
-    return () => { removeEventListener("vinyl:state", sync); removeEventListener(OPEN, open); };
+    return () => { removeEventListener("vinyl:state", syncPlayback); removeEventListener(OPEN, open); };
   }, []);
 
   const close = () => ref.current?.close();
@@ -165,7 +172,12 @@ export function Albums() {
         <ul className="album-grid">
           {albums.map((a) => (
             <li key={a.id}>
-              <button className="album" aria-current={a === playing} onClick={() => { setOpenId(a.id); if (ref.current) ref.current.scrollTop = 0; }}>
+              <button
+                type="button"
+                className="album"
+                aria-current={a === playing ? "true" : undefined}
+                onClick={() => { setOpenId(a.id); if (ref.current) ref.current.scrollTop = 0; }}
+              >
                 <Cover album={a} />
                 <span className="meta">
                   <b>{a.title}</b>

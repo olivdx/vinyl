@@ -42,8 +42,8 @@ R2_BUCKET=...
 
 The bucket needs public access and a CORS rule allowing GET/HEAD from the site's origin, exposing `Content-Length`.
 
-The built-in double LP (*Public Domain Sessions*) is defined in `public/vinyl/src/records.js`; its cover can be
-dropped in as `public/covers/collection.jpg` (or `.png`, `.webp`).
+The built-in double LP (*Public Domain Sessions*) is defined in `public/vinyl/src/records.js`; to give it a cover,
+drop an image in `public/covers/` and set `cover` on `ALBUM` there (e.g. `'/covers/collection.jpg'`).
 
 ## Playing it like a record
 
