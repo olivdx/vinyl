@@ -142,6 +142,16 @@ function build({ id, out, load, cutOpts, keepSource, peaks, extra }) {
 const albumsDir = join(root, 'albums'), coversDir = join(root, 'public', 'covers'), libFile = join(root, 'public', 'vinyl', 'library.json');
 const AUDIO = /\.(flac|mp3|wav|m4a|aac|ogg|opus|aiff?)$/i, SIDE_MAX = 20 * 60, PEAKS = [0.1, 0.085, 0.075, 0.065, 0.055, 0.045];
 const slug = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'album';
+// Tags from download sites are untidy: HTML entities in a title ("B&uacute;t"), an artist repeated ("A;A;A") or
+// followed by a note in brackets ("A[A--full name]"). What the page shows is cleaned up; the files are left alone.
+const ENT = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ' };
+const ACCENT = { grave: '̀', acute: '́', circ: '̂', tilde: '̃', uml: '̈' };
+const tidy = (s) => (s || '').replace(/&(#x?[0-9a-f]+|[a-z]+);/gi, (m, e) => {
+  if (e[0] === '#') return String.fromCodePoint(/^#x/i.test(e) ? parseInt(e.slice(2), 16) : +e.slice(1));
+  const a = /^([a-z])(grave|acute|circ|tilde|uml)$/i.exec(e);
+  return a ? (a[1] + ACCENT[a[2].toLowerCase()]).normalize('NFC') : ENT[e.toLowerCase()] ?? m;
+}).trim();
+const artists = (s) => [...new Set(tidy(s).replace(/\[[^\]]*\]/g, '').split(/\s*[;,]\s*/).filter(Boolean))].join(', ');
 function probe(file) {
   const r = spawnSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration:format_tags', '-of', 'json', file], { encoding: 'utf8' });
   if (r.status !== 0) throw new Error(`ffprobe could not read ${file}: ${r.stderr}`);
@@ -174,7 +184,7 @@ function albumPlans() {
       const letter = String.fromCharCode(65 + i), tracks = songs.slice(a, b);
       return {
         id: `${id}-${letter.toLowerCase()}`, album: id, disc: (i >> 1) + 1, side: letter, title: `Side ${letter}`, dir: `assets/${id}/${letter.toLowerCase()}/`,
-        tracks: tracks.map((t) => ({ title: t.title || t.file.replace(AUDIO, '').replace(/^\d+[\s._-]+/, ''), by: (t.artist || by).split(';').join(', '), len: Math.round(t.len), file: t.file })),
+        tracks: tracks.map((t) => ({ title: tidy(t.title) || t.file.replace(AUDIO, '').replace(/^\d+[\s._-]+/, ''), by: artists(t.artist || by), len: Math.round(t.len), file: t.file })),
         sources: tracks.map((t) => { const st = statSync(join(dir, t.file)); return `${t.file}|${st.size}|${Math.round(st.mtimeMs)}`; }),
       };
     });

@@ -657,6 +657,95 @@
    ]
   },
   {
+   "id": "cai-thu-hai",
+   "title": "Cái Thứ Hai",
+   "by": "Thắng",
+   "cover": "covers/cai-thu-hai.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "cai-thu-hai-a",
+     "album": "cai-thu-hai",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/cai-thu-hai/a/",
+     "tracks": [
+      {
+       "title": "Khóc Đấy",
+       "by": "Thắng",
+       "len": 227
+      },
+      {
+       "title": "Bút Chì Bạc",
+       "by": "Thắng",
+       "len": 187
+      },
+      {
+       "title": "Hoá Ra Là",
+       "by": "Thắng, Wala",
+       "len": 201
+      },
+      {
+       "title": "Gội Đầu (với Hà Lê)",
+       "by": "Thắng, Hà Lê",
+       "len": 265
+      },
+      {
+       "title": "100%",
+       "by": "Thắng",
+       "len": 176
+      },
+      {
+       "title": "Căn Gác Lặng",
+       "by": "Thắng",
+       "len": 151
+      }
+     ]
+    },
+    {
+     "id": "cai-thu-hai-b",
+     "album": "cai-thu-hai",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/cai-thu-hai/b/",
+     "tracks": [
+      {
+       "title": "Đồng Ý",
+       "by": "Thắng",
+       "len": 157
+      },
+      {
+       "title": "60m Vuông",
+       "by": "Thắng",
+       "len": 147
+      },
+      {
+       "title": "Nấu Con Beat",
+       "by": "Thắng, Wala",
+       "len": 200
+      },
+      {
+       "title": "Rất",
+       "by": "Thắng, SUNI, Pixel Neko",
+       "len": 200
+      },
+      {
+       "title": "Sáng ra chỉ cần",
+       "by": "Kế Phúc",
+       "len": 209
+      },
+      {
+       "title": "Tình Nhân Muôn Kiếp",
+       "by": "Thắng",
+       "len": 238
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "em-va-trinh",
    "title": "Em Và Trịnh",
    "by": "Bùi Lan Hương",
