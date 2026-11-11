@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { BOOT_SCRIPT } from "./boot";
 import "./globals.css";
 
@@ -45,7 +46,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         ))}
       </head>
       {/* extensions (e.g. ColorZilla's cz-shortcut-listen) add attributes to <body> before React hydrates */}
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
