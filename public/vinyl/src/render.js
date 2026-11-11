@@ -297,6 +297,9 @@ export class Renderer {
       gl.useProgram(this.dep.p); gl.uniformMatrix4fv(this.dep.u.uVP, false, this.lvp);
       gl.enable(gl.POLYGON_OFFSET_FILL); gl.polygonOffset(2, 4);
       for (let i = 1; i < items.length; i++) { gl.uniformMatrix4fv(this.dep.u.uM, false, items[i][1]); gl.bindVertexArray(items[i][0].vao); gl.drawArrays(gl.TRIANGLES, 0, items[i][0].count); }
+      // the disc's face is drawn by its own program below: put it in the shadow map too, or only its open rim (m.edge)
+      // casts, and a lifted record throws a thin ring instead of a solid disc
+      if (info && !st.noDisc) { gl.uniformMatrix4fv(this.dep.u.uM, false, discM); gl.bindVertexArray(m.disc.vao); gl.drawArrays(gl.TRIANGLES, 0, m.disc.count); }
       gl.disable(gl.POLYGON_OFFSET_FILL);
       this.shadowReady = true;
     }
