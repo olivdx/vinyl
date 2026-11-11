@@ -6,7 +6,7 @@ html, body { margin: 0; height: 100%; background: #030304; color: var(--fg); fon
 /* progress bar for whatever record is loading (driven by the inline script in <head>) */
 #loader { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 7; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 14px 18px 10px; border-radius: 10px; opacity: 0; transition: opacity .25s; pointer-events: none; color: var(--dim); font: 10px var(--mono); }
 .loading #loader { opacity: 1; }
-.ready #loader { background: rgba(8,8,9,.72); backdrop-filter: blur(10px); }   /* over the deck, when changing records */
+.ready #loader { display: none; }   /* once the deck is up, loading shows on its own red readout (render.js) */
 #loader .bar { width: 150px; height: 2px; border-radius: 2px; background: rgba(255,255,255,.13); overflow: hidden; }
 #loader-fill { display: block; width: 0; height: 100%; border-radius: 2px; background: var(--soft); }
 #loader.wait #loader-fill { width: 34% !important; animation: slide 1.05s ease-in-out infinite; }   /* size unknown, or finishing up */
@@ -66,14 +66,10 @@ input[type=range] { flex: 1; min-width: 0; accent-color: var(--acc); height: 14p
 #stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px 12px; margin-top: 8px; font: 10px/1.4 var(--mono); }
 #stats span { color: var(--dim); } #stats b { font-weight: 400; float: right; color: var(--soft); }
 
-/* only the pill takes clicks: the scene under the overlay can be dragged and zoomed, and tapping it also powers on */
-#power { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(0,0,0,.28); z-index: 5; opacity: 0; pointer-events: none; transition: opacity .4s ease-out .25s; }
-.ready #power { opacity: 1; }
-.ready #power span { pointer-events: auto; cursor: pointer; }
-.ready #power.busy span { cursor: progress; }
-#power.busy span::before { content: ''; display: inline-block; width: 10px; height: 10px; margin-right: 10px; vertical-align: -1px; border: 1.5px solid rgba(255,255,255,.22); border-top-color: var(--fg); border-radius: 50%; animation: spin .8s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-#power span { padding: 9px 18px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); backdrop-filter: blur(10px); letter-spacing: .1em; text-transform: uppercase; font-size: 11px; }
+/* Powering on is the START/STOP button on the deck itself (render.js / main.js), its green light breathing until
+   pressed; a tap anywhere on the scene still powers on too. The old overlay pill stays in the DOM, hidden, because
+   main.js still writes its state there. */
+#power { display: none; }
 
 dialog { background: rgba(15,15,16,.97); color: var(--fg); border: 1px solid var(--line); border-radius: 14px; padding: 28px 30px 22px; max-width: 540px; width: calc(100% - 40px); max-height: calc(100% - 40px); overflow: auto; font-size: 13px; line-height: 1.58; }
 /* no backdrop-filter: the WebGL deck under it changes every frame, so a blur would be recomputed full-screen each frame */

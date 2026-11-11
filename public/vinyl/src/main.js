@@ -158,6 +158,7 @@ async function loadPrecompiled(dir = ROOT + 'assets/', me = pick, pressing = nul
     if (me !== pick || !w || w.swapped || w.next) return;
     const look = press({ ...man.rec, rTab: Float64Array.from(man.rTab) }, man.press.cond, man.press.seed);
     look.side = S.markRec?.side || 'A'; look.art = albumArt(S.markRec?.album);
+    look.vinyl = ALBUMS.find((a) => a.id === S.markRec?.album)?.vinyl;   // same colour as the real record, so nothing pops when it replaces this
     w.next = { rec: look, vis: { data: new Uint8Array(visData), cols: man.vis.cols, rows: man.vis.rows }, preview: true };
   }).catch(() => {});
   let audio = await h.audio;
@@ -412,6 +413,8 @@ canvas.addEventListener('pointerdown', (e) => {
     drag = { type: 'pinch', d0: Math.hypot(a[0] - b[0], a[1] - b[1]) || 1, z0: S.zoomT };
     return;
   }
+  const btn = e.button === 0 ? renderer.deckButton(e.clientX, e.clientY, e.pointerType === 'touch' ? 0.008 : 0.0015) : null;
+  if (btn) { drag = { type: 'button', btn, tap: true, x0: e.clientX, y0: e.clientY }; return; }   // START/STOP or 33/45 on the deck
   const pa = renderer.pick(e.clientX, e.clientY, 0.018), p = renderer.pick(e.clientX, e.clientY, 0);
   // until it is powered on the scene can only be looked around; a tap that doesn't drag powers it on
   const plain = S.started && S.ready && e.button === 0 && !e.shiftKey && !e.altKey;
@@ -441,8 +444,12 @@ canvas.addEventListener('pointerleave', () => { hover.hidden = true; });
 canvas.addEventListener('pointermove', (e) => {
   if (touches.has(e.pointerId)) touches.set(e.pointerId, [e.clientX, e.clientY]);
   if (!drag || drag.type === 'orbit') hoverSong(e); else hover.hidden = true;
-  if (!drag) { if (e.pointerType !== 'touch') canvas.style.cursor = S.started && S.ready && !S.swap && onLever(e) ? 'pointer' : 'grab'; return; }
+  if (!drag) {
+    if (e.pointerType !== 'touch') canvas.style.cursor = !S.swap && (renderer.deckButton(e.clientX, e.clientY, 0.0015) || (S.started && S.ready && onLever(e))) ? 'pointer' : 'grab';
+    return;
+  }
   if (drag.type === 'lever') return;
+  if (drag.type === 'button') { if (Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) > 8) drag.tap = false; return; }   // slid off: no press
   if (drag.type === 'pinch') {
     const [a, b] = [...touches.values()];
     if (b) S.zoomT = Math.max(-0.8, Math.min(0.985, drag.z0 + 0.6 * Math.log(Math.hypot(a[0] - b[0], a[1] - b[1]) / drag.d0)));
@@ -464,6 +471,11 @@ canvas.addEventListener('pointermove', (e) => {
 const release = () => {
   if (!drag) return;
   if (drag.type === 'arm') send({ t: 'hand', on: false });
+  else if (drag.type === 'button' && drag.tap && drag.btn === 'speed') document.querySelector('[data-rpm]:not(.on)')?.click();   // 33 <-> 45, as in Controls
+  else if (drag.type === 'button' && drag.tap) {
+    if (!S.on) S.tapped = performance.now();    // powers on in the click / touchend that follows (iOS needs a real gesture)
+    else if (S.started && !S.swap) setMotor(!S.motor);
+  }
   else if (drag.type === 'orbit' && drag.tap) S.tapped = performance.now();   // powers on in the click / touchend that follows
   else if (drag.type === 'platter') {
     send({ t: 'platter', on: false });
@@ -556,16 +568,23 @@ function beginSwap(meta) {
     send({ t: 'cueTo', al: ALPHA_REST });       // needle up, arm back to its rest
     setMotor(false); send({ t: 'brake', on: true });
     if (S.moved) $('t-reset').click();          // back to the default view, so the change happens in frame
-  } else Object.assign(S.swap, { meta, next: null, swapped: false, failed: false, preview: false });
+  } else Object.assign(S.swap, { meta, next: null, swapped: false, failed: false, preview: false, prepared: false });
   announce();
 }
 function failSwap() { if (S.swap) S.swap.failed = true; }
-const ease = (x) => { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); };
+const clamp01 = (x) => Math.max(0, Math.min(1, x));
+const ease = (x) => { x = clamp01(x); return x * x * (3 - 2 * x); };
+const easeIn = (x) => { x = clamp01(x); return x * x; };   // fastest at x = 1
+const FLIP_TIME = 1.1;    // s for each half of a flip (up and over, over and down)
 function stepSwap(dt) {
   const w = S.swap; if (!w) return null;
-  const speed = (REDUCED.matches ? 3 : 1) / SWAP_OUT;
-  const parked = !S.tel || (S.tel.al > ALPHA_REST - 0.03 && S.tel.zb > 1e-3);
-  const go = (performance.now() - w.t0) / 1000 > SWAP_WAIT && (parked || (performance.now() - w.t0) > 2500) && !S.resetting;
+  const speed = (REDUCED.matches ? 3 : 1) / (w.flip ? FLIP_TIME : SWAP_OUT);
+  const now = performance.now(), parked = !S.tel || (S.tel.al > ALPHA_REST - 0.03 && S.tel.zb > 1e-3);
+  if (w.flip && w.next && !w.prepared) { renderer.prepare(w.next.rec); w.prepared = true; }   // draw the other label while the disc is still down
+  // A flip turns the disc over in plain sight, through edge-on at full speed: it may only start once the other side
+  // is here (its preview is enough), or it would stall edge-on waiting for it. A slide-out can wait out of frame.
+  const ready = !w.flip || w.prepared || now - w.t0 > 4000;
+  const go = (now - w.t0) / 1000 > SWAP_WAIT && (parked || now - w.t0 > 2500) && ready && !S.resetting;
   if (w.failed && !w.swapped) {                 // nothing new to put on: bring back what was there
     w.p = Math.max(0, w.p - speed * dt);
     if (w.p === 0) {
@@ -596,11 +615,39 @@ function stepSwap(dt) {
     }
   }
   if (w.flip) {                                 // lift high, turn edge-on, swap the side there, turn on down
-    const up = ease(w.p / 0.4), turn = ease((w.p - 0.4) / 0.6) * Math.PI / 2;
+    // The turn speeds up all the way to edge-on (p = 1) and the way back mirrors it: since the sign flips with the
+    // direction of p, the angular speed carries straight through the swap, one continuous half-turn, no stop edge-on.
+    // It starts while the disc is still rising, so the lift and the turn blend instead of running one after the other.
+    const up = ease(w.p / 0.55), turn = easeIn((w.p - 0.2) / 0.8) * Math.PI / 2;
     return [0, 0, FLIP_LIFT * up, (w.swapped ? -1 : 1) * turn, AZ0 + Math.PI / 2];   // about the line of sight: it turns like a coin, edge-on to us
   }
-  const lift = ease(w.p / 0.25), slide = ease((w.p - 0.25) / 0.75);
+  // overlapping, so the disc never comes to rest between lifting off the spindle and sliding away: the slide starts
+  // as the hole clears the spindle top (0.0115 m = 72% of LIFT, at p = 0.2) while the lift is still finishing
+  const lift = ease(w.p / 0.3), slide = ease((w.p - 0.2) / 0.8);
   return [SLIDE_DIR[0] * SLIDE * slide, SLIDE_DIR[1] * SLIDE * slide, LIFT * lift, 0.05 * Math.sin(Math.PI * slide) * lift];
+}
+
+// ---------- deck readout: the red 7-segment display beside the buttons, and the green START/STOP light ----------
+// While a record loads it shows how much is in (%); while the size is unknown or the engine warms up, a dash runs
+// across; once playing, the speed (33.3 / 45.0); powered off and idle, it is dark.
+const SEG = { 0: 0x3F, 1: 0x06, 2: 0x5B, 3: 0x4F, 4: 0x66, 5: 0x6D, 6: 0x7D, 7: 0x07, 8: 0x7F, 9: 0x6F, '-': 0x40, ' ': 0 };
+const GREEN = [0.2, 1.0, 0.35];
+function readout(now) {
+  const L = window.__load, loading = L && !L.done && now - (L.t0 || now) > 150;
+  if (loading && L.total > 0) {
+    const s = String(Math.min(99, Math.floor(100 * L.got / L.total))).padStart(3, ' ');
+    return [...s].map((c) => SEG[c]);
+  }
+  if (loading || (S.on && !S.started)) { const k = Math.floor(now / 140) % 3; return [0, 1, 2].map((i) => (i === k ? SEG['-'] : 0)); }
+  if (!S.started) return [0, 0, 0];
+  const s = (Math.round(S.rpm * 10) / 10).toFixed(1).replace('.', '');      // "333" or "450", the point after the 2nd digit
+  return [SEG[s[0]], SEG[s[1]] | 0x80, SEG[s[2]]];
+}
+function startLed(now) {
+  const k = !S.on ? 0.2 + 0.8 * (0.5 + 0.5 * Math.sin(now / 1000 * 3.2))   // waiting to be pressed: breathing
+    : !S.started ? (Math.floor(now / 250) % 2 ? 1 : 0.15)                  // warming up: blinking
+    : S.motor ? 1 : 0.1;                                                   // motor on / standby
+  return GREEN.map((v) => v * 2.2 * k);
 }
 
 // ---------- frame loop ----------
@@ -622,6 +669,8 @@ function tick() {
   let discOff = null; guard('record change', () => { discOff = stepSwap(fdt); });
   S.zoom += (S.zoomT - S.zoom) * 0.12;
   S.lever = (S.lever ?? 1) + ((S.cue ? 1 : 0) - (S.lever ?? 1)) * Math.min(1, fdt * 14);   // the cue lever follows the lift bar
+  S.press ||= { start: 0, speed: 0 };            // the deck buttons sink while held
+  for (const k in S.press) S.press[k] += ((drag?.type === 'button' && drag.tap && drag.btn === k ? 1 : 0) - S.press[k]) * Math.min(1, fdt * 30);
   if (frame % 6 === 0 && S.on && !S.started) powerMsg();
   if (S.resetting) {
     S.az += (AZ0 - S.az) * 0.12; S.el += (EL0 - S.el) * 0.12;
@@ -635,6 +684,7 @@ function tick() {
   guard('render', () => {
     if (OG) renderer.draw({ thp: 2.2, al: alphaForRadius(0.108), zt: 0, zoom: 0, az: -0.5, el: 0.6, motor: true, rpm: 33.3333, bare: true, dist: 1.1, at: [0.021, -0.07, -0.093], ...window.__og });   // deck high in the frame: X overlays the bottom
     else renderer.draw({ thp: t ? t.thp + t.wp * dt : 0, al: t ? t.al : ALPHA_REST, zt: t ? t.zb + t.ze : 5e-3, zoom: S.zoom, az: S.az, el: S.el, motor: S.motor, rpm: S.rpm, discOff, lever: S.lever,
+      press: S.press, startLed: startLed(now), seg: readout(now),
       ...(behindModal && { res: 0.4, keepShadow: true }) });
   });
   if (frame++ % 2 === 0 && S.hudOn && !behindModal) guard('groove view', drawScope);

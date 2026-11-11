@@ -26,6 +26,29 @@ function vinylTint(v) {
   return [lin(0), lin(2), lin(4), Math.max(0, Math.min(1, +(v?.clear ?? 0)))];
 }
 const BLACK = [0.012, 0.012, 0.013], CHROME = [0.62, 0.63, 0.66], AMBER = [1.0, 0.55, 0.12];
+// The two small buttons front left (x0, y0, x1, y1, top). start: powers the deck on, then starts and stops the
+// motor (green light); speed: 33 / 45 (amber light at 45). Each sinks by BTN_TRAVEL when pressed.
+// Where the old big button was: beside the strobe, ~1 cm in from the front edge of the plate (y -0.188).
+export const DECK_BTNS = { start: [-0.128, -0.177, -0.106, -0.165, DECK_Z + 0.003], speed: [-0.100, -0.177, -0.078, -0.165, DECK_Z + 0.003] };
+const BTN_TRAVEL = 0.0014;
+// Red 7-segment readout front right, beside the pitch slider and under its light: 3 digits, each 7 segments
+// (a..g = bits 0..6) and a point (bit 7).
+const SEG_WIN = [0.1945, -0.1660, 0.2320, -0.1500];   // the window: x0, y0, x1, y1 (slot starts at x 0.2385)
+const SEG_N = 3, SEG_W = 0.0056, SEG_H = 0.0094, SEG_T = 0.0011, SEG_PITCH = 0.0098, SEG_Z = DECK_Z + 0.0022;
+const SEG_X = SEG_WIN[0] + 0.0047, SEG_Y = SEG_WIN[1] + 0.0033;   // first digit's lower-left corner
+const SEG_ON = [3.2, 0.16, 0.07], SEG_OFF_COL = [0.035, 0.006, 0.005], SEG_ON_COL = [0.5, 0.03, 0.02];
+function segmentBoxes() {                         // [digit][segment] -> box, in world space
+  const W = SEG_W, H = SEG_H, t = SEG_T, g = 0.00025, z0 = SEG_Z, z1 = SEG_Z + 0.0002, out = [];
+  for (let i = 0; i < SEG_N; i++) {
+    const x = SEG_X + i * SEG_PITCH, y = SEG_Y, sk = 0.0009;   // sk: a slight forward slant, like the real thing
+    const hz = (yy) => [x + t / 2 + g + sk * yy / H, y + yy - t / 2, x + W - t / 2 - g + sk * yy / H, y + yy + t / 2];
+    const vt = (xx, ya, yb) => [x + xx - t / 2 + sk * (ya + yb) / 2 / H, y + ya + g, x + xx + t / 2 + sk * (ya + yb) / 2 / H, y + yb - g];
+    const r = [hz(H), vt(W, H / 2, H), vt(W, 0, H / 2), hz(0), vt(0, 0, H / 2), vt(0, H / 2, H), hz(H / 2),
+      [x + W + 0.0006, y - t / 2, x + W + 0.0006 + t, y + t / 2]];
+    out.push(r.map(([a, b, c, d]) => G.box(a, b, z0, c, d, z1)));
+  }
+  return out;
+}
 // cue lever: a handle hinged on its post beside the arm base. Modelled raised (needle up); it tips down by LEVER_DROP.
 const LEVER_B = [PIVOT_X + 0.042, PIVOT_Y - 0.046, -0.016], LEVER_TIP = [PIVOT_X + 0.056, PIVOT_Y - 0.058, -0.004];
 const LEVER_PHI = Math.atan2(LEVER_TIP[1] - LEVER_B[1], LEVER_TIP[0] - LEVER_B[0]), LEVER_DROP = 0.42;
@@ -52,13 +75,16 @@ export class Renderer {
       edge: m(G.cyl(R_DISC, R_DISC, -0.0013, 0, MOBILE ? 96 : 128, false)), disc: m(G.annulus(0.0036, R_DISC, DISC_RING, DISC_ARC)),
       strobe: m(G.merge(at(L([[0.019, DECK_Z], [0.019, -0.006], [0.0175, -0.0045], [0, -0.0045]], 32), STROBE[0], STROBE[1]))),
       lens: m(G.box(-0.0015, -0.006, -0.018, 0.0015, 0.006, -0.008)),
-      buttons: m(G.merge(G.rbox(-0.139, -0.184, -0.097, -0.158, DECK_Z, DECK_Z + 0.004, 0.003, 0.0008),
-        G.rbox(-0.088, -0.186, -0.066, -0.174, DECK_Z, DECK_Z + 0.003, 0.002, 0.0006), G.rbox(-0.060, -0.186, -0.038, -0.174, DECK_Z, DECK_Z + 0.003, 0.002, 0.0006),
+      startBtn: m(G.rbox(...DECK_BTNS.start.slice(0, 4), DECK_Z - BTN_TRAVEL, DECK_BTNS.start[4], 0.002, 0.0006)),
+      speedBtn: m(G.rbox(...DECK_BTNS.speed.slice(0, 4), DECK_Z - BTN_TRAVEL, DECK_BTNS.speed[4], 0.002, 0.0006)),
+      segWin: m(G.rbox(SEG_WIN[0], SEG_WIN[1], SEG_WIN[2], SEG_WIN[3], DECK_Z, SEG_Z, 0.0015, 0.0004)),
+      buttons: m(G.merge(
         G.rbox(0.2335, -0.118, 0.2545, -0.102, DECK_Z, DECK_Z + 0.009, 0.002, 0.001),
         G.rbox(-0.125, 0.172, -0.085, 0.1885, DECK_Z, DECK_Z + 0.011, 0.002, 0.001), G.rbox(0.130, 0.172, 0.170, 0.1885, DECK_Z, DECK_Z + 0.011, 0.002, 0.001))),
       slot: m(G.rbox(0.2385, -0.170, 0.2495, -0.050, DECK_Z, DECK_Z + 0.0005, 0.002, 0.0002)),
-      ledStart: m(G.merge(at(led, -0.132, -0.1635, DECK_Z + 0.004))), led33: m(G.merge(at(led, -0.084, -0.180, DECK_Z + 0.003))),
-      led45: m(G.merge(at(led, -0.056, -0.180, DECK_Z + 0.003))), ledPitch: m(G.merge(at(led, 0.229, -0.110, DECK_Z))),
+      // each light near the left end of its button, centred on it front to back
+      ledStart: m(G.merge(at(led, DECK_BTNS.start[0] + 0.004, (DECK_BTNS.start[1] + DECK_BTNS.start[3]) / 2, DECK_BTNS.start[4]))),
+      led45: m(G.merge(at(led, DECK_BTNS.speed[0] + 0.004, (DECK_BTNS.speed[1] + DECK_BTNS.speed[3]) / 2, DECK_BTNS.speed[4]))), ledPitch: m(G.merge(at(led, 0.229, -0.110, DECK_Z))),
       tower: m(G.merge(at(L([[0.034, DECK_Z], [0.034, -0.0195], [0.031, -0.018], [0.021, -0.018], [0.021, 0.008], [0.0185, 0.010], [0.0185, 0.045], [0.017, 0.0465], [0, 0.0465]], 48), PIVOT_X, PIVOT_Y),
         at(L([[0.0095, DECK_Z], [0.0095, -0.012], [0.0085, -0.011], [0, -0.011]], 24), PIVOT_X + 0.047, PIVOT_Y + 0.012),
         at(L([[0.006, DECK_Z], [0.006, -0.015], [0, -0.015]], 20), PIVOT_X + 0.042, PIVOT_Y - 0.046),
@@ -78,6 +104,7 @@ export class Renderer {
         G.box(-0.0225, -0.0068, -0.0246, 0.0035, 0.0068, -0.0142))),
       holder: m(G.box(-0.0075, -0.0052, -0.0272, 0.0050, 0.0052, -0.0246)),
     };
+    this.segs = segmentBoxes().map((d) => d.map(m));
     this.tex = { lut: gl.createTexture(), vis: gl.createTexture(), label: gl.createTexture(), shadow: gl.createTexture() };
     gl.bindTexture(gl.TEXTURE_2D, this.tex.shadow);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.DEPTH_COMPONENT24, SHADOW, SHADOW, 0, gl.DEPTH_COMPONENT, gl.UNSIGNED_INT, null);
@@ -95,8 +122,26 @@ export class Renderer {
     gl.enable(gl.DEPTH_TEST);
   }
 
+  // Drawing a label (label.js) takes tens of ms: keep the last few, keyed by what is printed on them, so a change
+  // that puts the same label back (the real record replacing its preview) costs nothing, and a flip can draw the
+  // other side's label before the disc starts to move (prepare()) instead of in the frame it turns edge-on.
+  labelCanvas(titles, side = 'A', art = null) {
+    const ready = !!(art && (art.naturalWidth || art.width));
+    const key = `${side}\u0000${ready ? art.src || 'art' : ''}\u0000${titles.join('\u0001')}`;
+    const cache = (this.labels ||= new Map());
+    let c = cache.get(key);
+    if (c) cache.delete(key);
+    else c = drawLabel(titles, side, art);                // the artwork is in label.js
+    cache.set(key, c);                                     // most recent last
+    if (cache.size > 4) cache.delete(cache.keys().next().value);
+    return { c, key };
+  }
+  prepare(rec) { this.labelCanvas(rec.tracks.map((t) => t.title || 'Untitled'), rec.side || 'A', rec.art); }
+
   setLabel(titles, side, art) {
-    const c = drawLabel(titles, side, art);                 // the artwork is in label.js
+    const { c, key } = this.labelCanvas(titles, side, art);
+    if (key === this.labelKey) return;                     // already on the texture
+    this.labelKey = key;
     const gl = this.gl;
     gl.bindTexture(gl.TEXTURE_2D, this.tex.label);
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
@@ -114,10 +159,15 @@ export class Renderer {
     gl.bindTexture(gl.TEXTURE_2D, this.tex.lut);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.R32F, 2048, 1, 0, gl.RED, gl.FLOAT, lut);
     for (const p of [gl.TEXTURE_MIN_FILTER, gl.TEXTURE_MAG_FILTER]) gl.texParameteri(gl.TEXTURE_2D, p, gl.NEAREST);
-    gl.bindTexture(gl.TEXTURE_2D, this.tex.vis);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.R8, vis.cols, vis.rows, 0, gl.RED, gl.UNSIGNED_BYTE, vis.data);
-    for (const p of [gl.TEXTURE_MIN_FILTER, gl.TEXTURE_MAG_FILTER]) gl.texParameteri(gl.TEXTURE_2D, p, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    // the preview and the real record share the downloaded record.vis: upload it once
+    const d = vis.data, last = this.visSrc;
+    if (!last || last.buffer !== d.buffer || last.off !== d.byteOffset || last.len !== d.length || last.cols !== vis.cols || last.rows !== vis.rows) {
+      this.visSrc = { buffer: d.buffer, off: d.byteOffset, len: d.length, cols: vis.cols, rows: vis.rows };
+      gl.bindTexture(gl.TEXTURE_2D, this.tex.vis);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.R8, vis.cols, vis.rows, 0, gl.RED, gl.UNSIGNED_BYTE, d);
+      for (const p of [gl.TEXTURE_MIN_FILTER, gl.TEXTURE_MAG_FILTER]) gl.texParameteri(gl.TEXTURE_2D, p, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    }
     const warp = new Float32Array(9), scr = new Float32Array(48);
     (rec.warp || []).slice(0, 3).forEach((w, i) => warp.set([w.k, w.amp, w.ph], i * 3));
     (rec.scratches || []).slice(0, 12).forEach((s, i) => scr.set([s.r0, s.r1, s.phi0, s.phi1], i * 4));
@@ -138,6 +188,17 @@ export class Renderer {
     const v = G.lookAt(eye, at);
     this.cam = { eye, asp, ...v, vp: G.mul(G.perspective(FOV, asp, lerp(0.05, 0.004, zi), 150), v.m) };
     return this.cam;
+  }
+
+  // is the pointer on the START/STOP button? pad: extra margin in metres (fingers are bigger than cursors)
+  // which deck button ('start' | 'speed') is under the pointer, or null. The two sit 6 mm apart: the pad is halved
+  // between them so a fat finger still lands on one.
+  deckButton(clientX, clientY, pad = 0) {
+    for (const [name, [x0, y0, x1, y1, z]] of Object.entries(DECK_BTNS)) {
+      const p = this.pick(clientX, clientY, z), px = Math.min(pad, 0.0028);
+      if (p && p[0] > x0 - px && p[0] < x1 + px && p[1] > y0 - pad && p[1] < y1 + pad) return name;
+    }
+    return null;
   }
 
   // world (x, y) on the horizontal plane at height z under a pointer position
@@ -183,8 +244,9 @@ export class Renderer {
     const arm = G.chain(G.T(PIVOT_X, PIVOT_Y, PIVOT_H), G.Rz(st.al), G.Ry(-Math.asin(Math.max(-0.2, Math.min(0.2, st.zt / ARM_LE)))));
     const head = G.chain(arm, G.T(ARM_LE, 0, 0), G.Rz(-ARM_BETA));
     const leverM = G.chain(G.T(...LEVER_B), G.Rz(LEVER_PHI), G.Ry(LEVER_DROP * (1 - (st.lever ?? 1))), G.Rz(-LEVER_PHI), G.T(-LEVER_B[0], -LEVER_B[1], -LEVER_B[2]));
+    const startM = G.T(0, 0, -BTN_TRAVEL * (st.press?.start ?? 0)), speedM = G.T(0, 0, -BTN_TRAVEL * (st.press?.speed ?? 0));
     const lensM = G.chain(G.T(STROBE[0] + 0.7026 * 0.0185, STROBE[1] + 0.7115 * 0.0185, 0), G.Rz(0.7917));
-    const on = st.motor ? 1 : 0, r33 = st.rpm < 40 || st.rpm > 70, r45 = st.rpm > 40, off = [0, 0, 0];
+    const on = st.motor ? 1 : 0, r45 = st.rpm > 40, off = [0, 0, 0];
     const glow = (k, col = AMBER) => col.map((v) => v * 2.2 * k);
     // [mesh, model, albedo, roughness, metalness, mode, emissive]
     const items = [
@@ -194,8 +256,11 @@ export class Renderer {
       [m.spindle, I, CHROME, 0.14, 1, 1, off],
       [m.strobe, I, [0.02, 0.02, 0.022], 0.4, 0.5, 0, off], [m.lens, lensM, [0.15, 0.01, 0.01], 0.3, 0, 0, [2.4 * on, 0.16 * on, 0.05 * on]],
       [m.buttons, I, [0.028, 0.028, 0.030], 0.42, 0.3, 0, off], [m.slot, I, [0.004, 0.004, 0.004], 0.25, 0, 0, off],
-      [m.ledStart, I, [0.05, 0.03, 0.01], 0.3, 0, 0, glow(on)], [m.led33, I, [0.05, 0.03, 0.01], 0.3, 0, 0, glow(r33 ? 1 : 0)],
-      [m.led45, I, [0.05, 0.03, 0.01], 0.3, 0, 0, glow(r45 ? 1 : 0)], [m.ledPitch, I, [0.01, 0.05, 0.02], 0.3, 0, 0, glow(1, [0.2, 1.0, 0.35])],
+      [m.startBtn, startM, [0.028, 0.028, 0.030], 0.42, 0.3, 0, off], [m.speedBtn, speedM, [0.028, 0.028, 0.030], 0.42, 0.3, 0, off],
+      [m.ledStart, startM, [0.01, 0.05, 0.02], 0.3, 0, 0, st.startLed ?? glow(on, [0.2, 1.0, 0.35])],   // green: power / motor
+      [m.segWin, I, [0.016, 0.003, 0.003], 0.12, 0, 0, off],   // smoked red window
+      ...this.segs.flatMap((d, i) => d.map((s, b) => { const lit = ((st.seg?.[i] ?? 0) >> b) & 1; return [s, I, lit ? SEG_ON_COL : SEG_OFF_COL, 0.3, 0, 0, lit ? SEG_ON : off]; })),
+      [m.led45, speedM, [0.05, 0.03, 0.01], 0.3, 0, 0, glow(r45 ? 1 : 0)], [m.ledPitch, I, [0.01, 0.05, 0.02], 0.3, 0, 0, glow(1, [0.2, 1.0, 0.35])],
       [m.tower, I, [0.020, 0.020, 0.022], 0.38, 0.6, 0, off], [m.towerCap, I, CHROME, 0.16, 1, 0, off], [m.lever, leverM, CHROME, 0.16, 1, 0, off],
       [m.tube, arm, [0.30, 0.30, 0.32], 0.16, 1, 0, off], [m.weight, arm, [0.022, 0.022, 0.024], 0.42, 0.7, 0, off], [m.dial, arm, CHROME, 0.28, 1, 0, off],
       [m.collar, head, CHROME, 0.2, 1, 0, off], [m.shell, head, [0.014, 0.014, 0.015], 0.4, 0.2, 0, off], [m.holder, head, [0.80, 0.36, 0.05], 0.42, 0, 0, off],
