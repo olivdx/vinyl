@@ -835,6 +835,65 @@
    ]
   },
   {
+   "id": "y6u",
+   "title": "Y6U",
+   "by": "Rhymastic",
+   "cover": "covers/y6u.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "y6u-a",
+     "album": "y6u",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/y6u/a/",
+     "tracks": [
+      {
+       "title": "Y6u",
+       "by": "Rhymastic",
+       "len": 233
+      },
+      {
+       "title": "Líu La Líu Lo",
+       "by": "Rhymastic",
+       "len": 185
+      },
+      {
+       "title": "Side Effects (Feat. B-wine)",
+       "by": "Rhymastic",
+       "len": 274
+      }
+     ]
+    },
+    {
+     "id": "y6u-b",
+     "album": "y6u",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/y6u/b/",
+     "tracks": [
+      {
+       "title": "Ngổn Ngang",
+       "by": "Rhymastic",
+       "len": 195
+      },
+      {
+       "title": "Vẫn Yêu",
+       "by": "Rhymastic",
+       "len": 182
+      },
+      {
+       "title": "Thêm Đứa Nữa",
+       "by": "Rhymastic",
+       "len": 207
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "ben-xuan",
    "title": "Bến Xuân",
    "by": "Bến Xuân",
@@ -1280,6 +1339,95 @@
        "title": "I Feel It Coming",
        "by": "The Weeknd",
        "len": 269
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ai",
+   "title": "Ái",
+   "by": "tlinh",
+   "cover": "covers/ai.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "ai-a",
+     "album": "ai",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/ai/a/",
+     "tracks": [
+      {
+       "title": "tình yêu có nghĩa là gì?",
+       "by": "tlinh",
+       "len": 134
+      },
+      {
+       "title": "người đẹp ngủ",
+       "by": "tlinh",
+       "len": 216
+      },
+      {
+       "title": "người điên",
+       "by": "tlinh",
+       "len": 147
+      },
+      {
+       "title": "kho báu đánh rơi",
+       "by": "tlinh feat. GREY D",
+       "len": 200
+      },
+      {
+       "title": "ái",
+       "by": "tlinh",
+       "len": 67
+      },
+      {
+       "title": "làm lành chữa tình",
+       "by": "tlinh",
+       "len": 206
+      },
+      {
+       "title": "thế giới thần tiên",
+       "by": "tlinh",
+       "len": 171
+      }
+     ]
+    },
+    {
+     "id": "ai-b",
+     "album": "ai",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/ai/b/",
+     "tracks": [
+      {
+       "title": "những đốm sáng",
+       "by": "tlinh",
+       "len": 244
+      },
+      {
+       "title": "nữ siêu anh hùng",
+       "by": "tlinh",
+       "len": 211
+      },
+      {
+       "title": "ghệ iu dấu của em ơi",
+       "by": "tlinh, 2pillz, WOKEUP",
+       "len": 205
+      },
+      {
+       "title": "nếu lúc đó",
+       "by": "tlinh, 2pillz",
+       "len": 264
+      },
+      {
+       "title": "kết thúc = mở đầu",
+       "by": "tlinh",
+       "len": 57
       }
      ]
     }
