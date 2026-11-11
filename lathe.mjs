@@ -165,7 +165,7 @@ function albumPlans() {
   return dirs.map((name) => {
     const dir = join(albumsDir, name), files = readdirSync(dir), over = existsSync(join(dir, 'album.json')) ? JSON.parse(readFileSync(join(dir, 'album.json'), 'utf8')) : {};
     const songs = files.filter((f) => AUDIO.test(f)).map((f) => ({ file: f, ...probe(join(dir, f)) }))
-      .sort((a, b) => (a.track || 1e9) - (b.track || 1e9) || a.file.localeCompare(b.file));
+      .sort((a, b) => (a.track || 1e9) - (b.track || 1e9) || a.file.localeCompare(b.file, undefined, { numeric: true }));
     if (!songs.length) return null;
     const total = songs.reduce((a, t) => a + t.len, 0), n = over.sides || Math.max(2, 2 * Math.ceil(total / SIDE_MAX / 2));
     const id = slug(over.id || name), coverFile = files.find((f) => /^cover\.(jpe?g|png)$/i.test(f));

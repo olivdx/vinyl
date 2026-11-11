@@ -613,14 +613,14 @@
      "dir": "assets/christmas/a/",
      "tracks": [
       {
+       "title": "Snowman",
+       "by": "Sia",
+       "len": 166
+      },
+      {
        "title": "Feliz Navidad",
        "by": "José Feliciano",
        "len": 182
-      },
-      {
-       "title": "Holly Jolly Christmas",
-       "by": "Michael Bublé",
-       "len": 120
       },
       {
        "title": "Last Christmas",
@@ -638,6 +638,11 @@
      "dir": "assets/christmas/b/",
      "tracks": [
       {
+       "title": "Holly Jolly Christmas",
+       "by": "Michael Bublé",
+       "len": 120
+      },
+      {
        "title": "Santa Claus Is Coming To Town",
        "by": "Lady Gaga",
        "len": 120
@@ -646,11 +651,184 @@
        "title": "Santa Tell Me",
        "by": "Ariana Grande",
        "len": 204
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "em-va-trinh",
+   "title": "Em Và Trịnh",
+   "by": "Bùi Lan Hương",
+   "cover": "covers/em-va-trinh.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "em-va-trinh-a",
+     "album": "em-va-trinh",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/em-va-trinh/a/",
+     "tracks": [
+      {
+       "title": "Mưa Hồng",
+       "by": "Bùi Lan Hương",
+       "len": 217
       },
       {
-       "title": "Snowman",
-       "by": "Sia",
-       "len": 166
+       "title": "Còn Tuổi Nào Cho Em",
+       "by": "Bùi Lan Hương",
+       "len": 155
+      },
+      {
+       "title": "Tình Sầu",
+       "by": "Avin Lu",
+       "len": 121
+      }
+     ]
+    },
+    {
+     "id": "em-va-trinh-b",
+     "album": "em-va-trinh",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/em-va-trinh/b/",
+     "tracks": [
+      {
+       "title": "Hạ Trắng",
+       "by": "Bùi Lan Hương",
+       "len": 119
+      },
+      {
+       "title": "Nhìn Những Mùa Thu Đi (Em Và Trịnh Original Soundtrack)",
+       "by": "Bùi Lan Hương",
+       "len": 124
+      },
+      {
+       "title": "Ngày Chưa Giông Bão (Người Bất Tử Ost)",
+       "by": "Bùi Lan Hương",
+       "len": 212
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pillzcasso",
+   "title": "PILLZCASSO",
+   "by": "2pillz",
+   "cover": "covers/pillzcasso.jpg",
+   "discs": 2,
+   "sides": [
+    {
+     "id": "pillzcasso-a",
+     "album": "pillzcasso",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/pillzcasso/a/",
+     "tracks": [
+      {
+       "title": "THÁC NÌNG",
+       "by": "2pillz, MONO & GREY D",
+       "len": 284
+      },
+      {
+       "title": "ĐƯA EM VÀO TRÒNG",
+       "by": "2pillz, GDucky & tlinh",
+       "len": 247
+      },
+      {
+       "title": "ĐẾN LÚC NÀY THÌ...",
+       "by": "2pillz & tlinh",
+       "len": 222
+      }
+     ]
+    },
+    {
+     "id": "pillzcasso-b",
+     "album": "pillzcasso",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/pillzcasso/b/",
+     "tracks": [
+      {
+       "title": "BƯỚC ĐI/NÁN LẠI?",
+       "by": "2pillz & Văn Mai Hương",
+       "len": 235
+      },
+      {
+       "title": "LÁ THU VÀNG RƠI MANG TÌNH YÊU TỚI",
+       "by": "2pillz & Phương Dung",
+       "len": 152
+      },
+      {
+       "title": "NGHĨ MỘT TÍ",
+       "by": "2pillz & Orange",
+       "len": 177
+      },
+      {
+       "title": "GET YOU OUT OF MY MIND",
+       "by": "2pillz",
+       "len": 223
+      }
+     ]
+    },
+    {
+     "id": "pillzcasso-c",
+     "album": "pillzcasso",
+     "disc": 2,
+     "side": "C",
+     "title": "Side C",
+     "dir": "assets/pillzcasso/c/",
+     "tracks": [
+      {
+       "title": "CHỈ MỘT CÂU THẦN CHÚ",
+       "by": "2pillz & NeeNee",
+       "len": 210
+      },
+      {
+       "title": "KIỀM CHẾ ĐÔI TAY ĐI NÀO",
+       "by": "2pillz & Vũ Phụng Tiên",
+       "len": 238
+      },
+      {
+       "title": "NOBODY BUT YOU",
+       "by": "2pillz",
+       "len": 245
+      }
+     ]
+    },
+    {
+     "id": "pillzcasso-d",
+     "album": "pillzcasso",
+     "disc": 2,
+     "side": "D",
+     "title": "Side D",
+     "dir": "assets/pillzcasso/d/",
+     "tracks": [
+      {
+       "title": "GIẤC DU MIÊN",
+       "by": "2pillz, GREY D & NeeNee",
+       "len": 292
+      },
+      {
+       "title": "MỘT KHI NÓI YÊU MỌI CHUYỆN CHẤM HẾT",
+       "by": "2pillz, WOKEUP & Vũ Phụng Tiên",
+       "len": 204
+      },
+      {
+       "title": "NGỪI ĐẸP ƠII",
+       "by": "2pillz & tlinh",
+       "len": 250
+      },
+      {
+       "title": "CHẲNG AI VẬY",
+       "by": "2pillz & Kay Châu Anh",
+       "len": 188
       }
      ]
     }

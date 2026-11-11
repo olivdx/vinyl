@@ -26,6 +26,24 @@ function vinylTint(v) {
   return [lin(0), lin(2), lin(4), Math.max(0, Math.min(1, +(v?.clear ?? 0)))];
 }
 const BLACK = [0.012, 0.012, 0.013], CHROME = [0.62, 0.63, 0.66], AMBER = [1.0, 0.55, 0.12];
+// Printed legend on the deck plate: the text is rasterised to a canvas and each run of inked pixels in a row becomes a
+// flat strip lying at height z, centred on (cx, cy); h is the height of the text line in metres.
+function printText(text, cx, cy, h, z) {
+  const PX = 48, c = document.createElement('canvas'), x = c.getContext('2d');
+  const font = () => { x.font = `600 ${PX}px Helvetica, Arial, sans-serif`; x.letterSpacing = '6px'; };
+  font(); c.width = Math.ceil(x.measureText(text).width) + 8; c.height = Math.ceil(PX * 1.2);
+  font(); x.fillStyle = '#fff'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(text, c.width / 2, c.height / 2);
+  const d = x.getImageData(0, 0, c.width, c.height).data, s = h / c.height, v = [];
+  const X = (i) => cx + (i - c.width / 2) * s, Y = (j) => cy + (c.height / 2 - j) * s, n = [0, 0, 1];
+  for (let j = 0; j < c.height; j++) for (let i = 0; i < c.width; i++) {
+    if (d[(j * c.width + i) * 4 + 3] < 128) continue;
+    let k = i; while (k + 1 < c.width && d[(j * c.width + k + 1) * 4 + 3] >= 128) k++;
+    const x0 = X(i), x1 = X(k + 1), y0 = Y(j + 1), y1 = Y(j);
+    v.push(x0, y0, z, ...n, x1, y0, z, ...n, x1, y1, z, ...n, x0, y0, z, ...n, x1, y1, z, ...n, x0, y1, z, ...n);
+    i = k;
+  }
+  return new Float32Array(v);
+}
 // The two small buttons front left (x0, y0, x1, y1, top). start: powers the deck on, then starts and stops the
 // motor (green light); speed: 33 / 45 (amber light at 45). Each sinks by BTN_TRAVEL when pressed.
 // Where the old big button was: beside the strobe, ~1 cm in from the front edge of the plate (y -0.188).
@@ -82,6 +100,11 @@ export class Renderer {
         G.rbox(0.2335, -0.118, 0.2545, -0.102, DECK_Z, DECK_Z + 0.009, 0.002, 0.001),
         G.rbox(-0.125, 0.172, -0.085, 0.1885, DECK_Z, DECK_Z + 0.011, 0.002, 0.001), G.rbox(0.130, 0.172, 0.170, 0.1885, DECK_Z, DECK_Z + 0.011, 0.002, 0.001))),
       slot: m(G.rbox(0.2385, -0.170, 0.2495, -0.050, DECK_Z, DECK_Z + 0.0005, 0.002, 0.0002)),
+      // legends printed on the plate under the two buttons
+      print: m(G.merge(...[['start', 'START·STOP'], ['speed', '33 / 45']].map(([k, t]) => {
+        const [x0, y0, x1] = DECK_BTNS[k];
+        return [printText(t, 0, 0, 0.0024, 0), [(x0 + x1) / 2, y0 - 0.0035, DECK_Z + 0.0001]];
+      }))),
       // each light near the left end of its button, centred on it front to back
       ledStart: m(G.merge(at(led, DECK_BTNS.start[0] + 0.004, (DECK_BTNS.start[1] + DECK_BTNS.start[3]) / 2, DECK_BTNS.start[4]))),
       led45: m(G.merge(at(led, DECK_BTNS.speed[0] + 0.004, (DECK_BTNS.speed[1] + DECK_BTNS.speed[3]) / 2, DECK_BTNS.speed[4]))), ledPitch: m(G.merge(at(led, 0.229, -0.110, DECK_Z))),
@@ -256,6 +279,7 @@ export class Renderer {
       [m.spindle, I, CHROME, 0.14, 1, 1, off],
       [m.strobe, I, [0.02, 0.02, 0.022], 0.4, 0.5, 0, off], [m.lens, lensM, [0.15, 0.01, 0.01], 0.3, 0, 0, [2.4 * on, 0.16 * on, 0.05 * on]],
       [m.buttons, I, [0.028, 0.028, 0.030], 0.42, 0.3, 0, off], [m.slot, I, [0.004, 0.004, 0.004], 0.25, 0, 0, off],
+      [m.print, I, [0.30, 0.30, 0.31], 0.6, 0, 0, off],
       [m.startBtn, startM, [0.028, 0.028, 0.030], 0.42, 0.3, 0, off], [m.speedBtn, speedM, [0.028, 0.028, 0.030], 0.42, 0.3, 0, off],
       [m.ledStart, startM, [0.01, 0.05, 0.02], 0.3, 0, 0, st.startLed ?? glow(on, [0.2, 1.0, 0.35])],   // green: power / motor
       [m.segWin, I, [0.016, 0.003, 0.003], 0.12, 0, 0, off],   // smoked red window
