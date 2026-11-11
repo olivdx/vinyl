@@ -149,6 +149,14 @@ dialog.albums .close:hover { color: var(--fg); }
 .album-view .song .t i { font-style: normal; color: var(--dim); margin-left: 6px; }
 .album-view .song .l { color: var(--dim); font-variant-numeric: tabular-nums; }
 .album-view .song[aria-current=true] .t, .album-view .song[aria-current=true] .n { color: var(--acc); }
+.album-view .side li { display: flex; align-items: center; gap: 2px; }
+.album-view .side li .song { flex: 1; min-width: 0; }
+.album-view .share { all: unset; box-sizing: border-box; flex: 0 0 26px; height: 26px; display: grid; place-items: center; border-radius: 7px; color: var(--dim); cursor: pointer; opacity: 0; transition: opacity .12s ease, background .12s ease, color .12s ease; }
+.album-view .share svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.album-view .side li:hover .share, .album-view .share:focus-visible, .album-view .share[data-copied] { opacity: 1; }
+.album-view .share:hover, .album-view .share:focus-visible { background: rgba(255,255,255,.07); color: inherit; }
+.album-view .share[data-copied] { color: var(--acc); }
+@media (hover: none) { .album-view .share { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .album-view .side[aria-current=true]::after { animation: none; } }
 dialog.albums .credit { margin: 18px 0 0; padding-top: 12px; border-top: 1px solid var(--line); color: var(--dim); font-size: 11px; line-height: 1.6; }
 dialog.albums .credit a { color: var(--soft); }

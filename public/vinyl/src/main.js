@@ -384,7 +384,11 @@ function flip() {
   if (other) { S.cueTrack = null; pickRecord(other); }
 }
 $('b-flip').addEventListener('click', flip);
-pickRecord(SIDES.find((r) => r.id === (window.__boot?.id || 'side-a')) || SIDES[0]);   // the record on the platter when the page opens
+// the record on the platter when the page opens: a shared song's side (/s/<side>/<n>, needle at song n), else side A
+const shared = /^\/s\/([^/]+)\/(\d+)\/?$/.exec(location.pathname);
+const sharedSide = shared && SIDES.find((r) => r.id === decodeURIComponent(shared[1]));
+if (sharedSide && sharedSide.tracks?.[+shared[2] - 1]) playSong(sharedSide.id, +shared[2] - 1);
+else pickRecord(SIDES.find((r) => r.id === (window.__boot?.id || 'side-a')) || SIDES[0]);
 $('f-audio').addEventListener('change', (e) => cutFiles(e.target.files));
 addEventListener('dragover', (e) => e.preventDefault());
 addEventListener('drop', (e) => { e.preventDefault(); cutFiles(e.dataTransfer.files); });

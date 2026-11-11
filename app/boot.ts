@@ -7,6 +7,8 @@ export const BOOT_SCRIPT = `
   var libBase = window.__ALBUMS_URL ? window.__ALBUMS_URL.replace(/\\/?$/, '/') : '/vinyl/';
   var id = 'side-a', dir = '/vinyl/assets/' + id + '/', b = window.__boot = { id: id, dir: dir, got: 0, total: 0 };
   b.lib = fetch(libBase + 'library.json', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : { albums: [] }; }).catch(function () { return { albums: [] }; });
+  // a shared song (/s/<side>/<n>, app/s/[side]/[track]) opens on its own side: main.js fetches that one, not side-a
+  if (/^\\/s\\/[^/]+\\/\\d+\\/?$/.test(location.pathname)) { b.dir = null; return frame0(); }
   b.man = fetch(dir + 'record.json').then(function (r) { if (!r.ok) throw new Error('no precompiled record'); return r.json(); });
   b.vis = fetch(dir + 'record.vis').then(function (r) { if (!r.ok) throw new Error('no precompiled record'); return r.arrayBuffer(); });
   b.audio = fetch(dir + 'record.flac').then(function (r) {
@@ -22,6 +24,10 @@ export const BOOT_SCRIPT = `
   // Progress bar. window.__load is whatever is loading right now: { got, total, done }. It is driven from
   // here so it moves before the modules have loaded; it only appears if a load takes more than 300 ms.
   b.t0 = performance.now(); window.__load = b;
+  frame0();
+})();
+// Progress bar loop (also runs for a shared song, which starts with nothing loading yet).
+function frame0() {
   var root = document.documentElement;
   (function frame() {
     var h = window.__load, el = document.getElementById('loader');
@@ -37,5 +43,5 @@ export const BOOT_SCRIPT = `
     }
     requestAnimationFrame(frame);
   })();
-})();
+}
 `;
