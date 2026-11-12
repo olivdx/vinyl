@@ -1,931 +1,6 @@
 {
  "albums": [
   {
-   "id": "christmas",
-   "title": "Christmas",
-   "by": "Various artists",
-   "cover": "covers/christmas.jpg",
-   "discs": 1,
-   "sides": [
-    {
-     "id": "christmas-a",
-     "album": "christmas",
-     "disc": 1,
-     "side": "A",
-     "title": "Side A",
-     "dir": "assets/christmas/a/",
-     "tracks": [
-      {
-       "title": "Snowman",
-       "by": "Sia",
-       "len": 166
-      },
-      {
-       "title": "Feliz Navidad",
-       "by": "José Feliciano",
-       "len": 182
-      },
-      {
-       "title": "Last Christmas",
-       "by": "Meghan Trainor",
-       "len": 244
-      }
-     ]
-    },
-    {
-     "id": "christmas-b",
-     "album": "christmas",
-     "disc": 1,
-     "side": "B",
-     "title": "Side B",
-     "dir": "assets/christmas/b/",
-     "tracks": [
-      {
-       "title": "Holly Jolly Christmas",
-       "by": "Michael Bublé",
-       "len": 120
-      },
-      {
-       "title": "Santa Claus Is Coming To Town",
-       "by": "Lady Gaga",
-       "len": 120
-      },
-      {
-       "title": "Santa Tell Me",
-       "by": "Ariana Grande",
-       "len": 204
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "cai-thu-hai",
-   "title": "Cái Thứ Hai",
-   "by": "Thắng",
-   "cover": "covers/cai-thu-hai.jpg",
-   "discs": 1,
-   "sides": [
-    {
-     "id": "cai-thu-hai-a",
-     "album": "cai-thu-hai",
-     "disc": 1,
-     "side": "A",
-     "title": "Side A",
-     "dir": "assets/cai-thu-hai/a/",
-     "tracks": [
-      {
-       "title": "Khóc Đấy",
-       "by": "Thắng",
-       "len": 227
-      },
-      {
-       "title": "Bút Chì Bạc",
-       "by": "Thắng",
-       "len": 187
-      },
-      {
-       "title": "Hoá Ra Là",
-       "by": "Thắng, Wala",
-       "len": 201
-      },
-      {
-       "title": "Gội Đầu (với Hà Lê)",
-       "by": "Thắng, Hà Lê",
-       "len": 265
-      },
-      {
-       "title": "100%",
-       "by": "Thắng",
-       "len": 176
-      },
-      {
-       "title": "Căn Gác Lặng",
-       "by": "Thắng",
-       "len": 151
-      }
-     ]
-    },
-    {
-     "id": "cai-thu-hai-b",
-     "album": "cai-thu-hai",
-     "disc": 1,
-     "side": "B",
-     "title": "Side B",
-     "dir": "assets/cai-thu-hai/b/",
-     "tracks": [
-      {
-       "title": "Đồng Ý",
-       "by": "Thắng",
-       "len": 157
-      },
-      {
-       "title": "60m Vuông",
-       "by": "Thắng",
-       "len": 147
-      },
-      {
-       "title": "Nấu Con Beat",
-       "by": "Thắng, Wala",
-       "len": 200
-      },
-      {
-       "title": "Rất",
-       "by": "Thắng, SUNI, Pixel Neko",
-       "len": 200
-      },
-      {
-       "title": "Sáng ra chỉ cần",
-       "by": "Kế Phúc",
-       "len": 209
-      },
-      {
-       "title": "Tình Nhân Muôn Kiếp",
-       "by": "Thắng",
-       "len": 238
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "em-va-trinh",
-   "title": "Em Và Trịnh",
-   "by": "Bùi Lan Hương",
-   "cover": "covers/em-va-trinh.jpg",
-   "discs": 1,
-   "sides": [
-    {
-     "id": "em-va-trinh-a",
-     "album": "em-va-trinh",
-     "disc": 1,
-     "side": "A",
-     "title": "Side A",
-     "dir": "assets/em-va-trinh/a/",
-     "tracks": [
-      {
-       "title": "Mưa Hồng",
-       "by": "Bùi Lan Hương",
-       "len": 217
-      },
-      {
-       "title": "Còn Tuổi Nào Cho Em",
-       "by": "Bùi Lan Hương",
-       "len": 155
-      },
-      {
-       "title": "Tình Sầu",
-       "by": "Avin Lu",
-       "len": 121
-      }
-     ]
-    },
-    {
-     "id": "em-va-trinh-b",
-     "album": "em-va-trinh",
-     "disc": 1,
-     "side": "B",
-     "title": "Side B",
-     "dir": "assets/em-va-trinh/b/",
-     "tracks": [
-      {
-       "title": "Hạ Trắng",
-       "by": "Bùi Lan Hương",
-       "len": 119
-      },
-      {
-       "title": "Nhìn Những Mùa Thu Đi (Em Và Trịnh Original Soundtrack)",
-       "by": "Bùi Lan Hương",
-       "len": 124
-      },
-      {
-       "title": "Ngày Chưa Giông Bão (Người Bất Tử Ost)",
-       "by": "Bùi Lan Hương",
-       "len": 212
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "pillzcasso",
-   "title": "PILLZCASSO",
-   "by": "2pillz",
-   "cover": "covers/pillzcasso.jpg",
-   "discs": 2,
-   "sides": [
-    {
-     "id": "pillzcasso-a",
-     "album": "pillzcasso",
-     "disc": 1,
-     "side": "A",
-     "title": "Side A",
-     "dir": "assets/pillzcasso/a/",
-     "tracks": [
-      {
-       "title": "THÁC NÌNG",
-       "by": "2pillz, MONO & GREY D",
-       "len": 284
-      },
-      {
-       "title": "ĐƯA EM VÀO TRÒNG",
-       "by": "2pillz, GDucky & tlinh",
-       "len": 247
-      },
-      {
-       "title": "ĐẾN LÚC NÀY THÌ...",
-       "by": "2pillz & tlinh",
-       "len": 222
-      }
-     ]
-    },
-    {
-     "id": "pillzcasso-b",
-     "album": "pillzcasso",
-     "disc": 1,
-     "side": "B",
-     "title": "Side B",
-     "dir": "assets/pillzcasso/b/",
-     "tracks": [
-      {
-       "title": "BƯỚC ĐI/NÁN LẠI?",
-       "by": "2pillz & Văn Mai Hương",
-       "len": 235
-      },
-      {
-       "title": "LÁ THU VÀNG RƠI MANG TÌNH YÊU TỚI",
-       "by": "2pillz & Phương Dung",
-       "len": 152
-      },
-      {
-       "title": "NGHĨ MỘT TÍ",
-       "by": "2pillz & Orange",
-       "len": 177
-      },
-      {
-       "title": "GET YOU OUT OF MY MIND",
-       "by": "2pillz",
-       "len": 223
-      }
-     ]
-    },
-    {
-     "id": "pillzcasso-c",
-     "album": "pillzcasso",
-     "disc": 2,
-     "side": "C",
-     "title": "Side C",
-     "dir": "assets/pillzcasso/c/",
-     "tracks": [
-      {
-       "title": "CHỈ MỘT CÂU THẦN CHÚ",
-       "by": "2pillz & NeeNee",
-       "len": 210
-      },
-      {
-       "title": "KIỀM CHẾ ĐÔI TAY ĐI NÀO",
-       "by": "2pillz & Vũ Phụng Tiên",
-       "len": 238
-      },
-      {
-       "title": "NOBODY BUT YOU",
-       "by": "2pillz",
-       "len": 245
-      }
-     ]
-    },
-    {
-     "id": "pillzcasso-d",
-     "album": "pillzcasso",
-     "disc": 2,
-     "side": "D",
-     "title": "Side D",
-     "dir": "assets/pillzcasso/d/",
-     "tracks": [
-      {
-       "title": "GIẤC DU MIÊN",
-       "by": "2pillz, GREY D & NeeNee",
-       "len": 292
-      },
-      {
-       "title": "MỘT KHI NÓI YÊU MỌI CHUYỆN CHẤM HẾT",
-       "by": "2pillz, WOKEUP & Vũ Phụng Tiên",
-       "len": 204
-      },
-      {
-       "title": "NGỪI ĐẸP ƠII",
-       "by": "2pillz & tlinh",
-       "len": 250
-      },
-      {
-       "title": "CHẲNG AI VẬY",
-       "by": "2pillz & Kay Châu Anh",
-       "len": 188
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "y6u",
-   "title": "Y6U",
-   "by": "Rhymastic",
-   "cover": "covers/y6u.jpg",
-   "discs": 1,
-   "sides": [
-    {
-     "id": "y6u-a",
-     "album": "y6u",
-     "disc": 1,
-     "side": "A",
-     "title": "Side A",
-     "dir": "assets/y6u/a/",
-     "tracks": [
-      {
-       "title": "Y6u",
-       "by": "Rhymastic",
-       "len": 233
-      },
-      {
-       "title": "Líu La Líu Lo",
-       "by": "Rhymastic",
-       "len": 185
-      },
-      {
-       "title": "Side Effects (Feat. B-wine)",
-       "by": "Rhymastic",
-       "len": 274
-      }
-     ]
-    },
-    {
-     "id": "y6u-b",
-     "album": "y6u",
-     "disc": 1,
-     "side": "B",
-     "title": "Side B",
-     "dir": "assets/y6u/b/",
-     "tracks": [
-      {
-       "title": "Ngổn Ngang",
-       "by": "Rhymastic",
-       "len": 195
-      },
-      {
-       "title": "Vẫn Yêu",
-       "by": "Rhymastic",
-       "len": 182
-      },
-      {
-       "title": "Thêm Đứa Nữa",
-       "by": "Rhymastic",
-       "len": 207
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "ben-xuan",
-   "title": "Bến Xuân",
-   "by": "Bến Xuân",
-   "cover": "covers/ben-xuan.jpg",
-   "discs": 2,
-   "sides": [
-    {
-     "id": "ben-xuan-a",
-     "album": "ben-xuan",
-     "disc": 1,
-     "side": "A",
-     "title": "Side A",
-     "dir": "assets/ben-xuan/a/",
-     "tracks": [
-      {
-       "title": "Còn thương rau đắng mọc sau hè",
-       "by": "Bến Xuân",
-       "len": 370
-      },
-      {
-       "title": "Bến xuân",
-       "by": "Bến Xuân",
-       "len": 353
-      }
-     ]
-    },
-    {
-     "id": "ben-xuan-b",
-     "album": "ben-xuan",
-     "disc": 1,
-     "side": "B",
-     "title": "Side B",
-     "dir": "assets/ben-xuan/b/",
-     "tracks": [
-      {
-       "title": "Anh cho em mùa xuân",
-       "by": "Bến Xuân",
-       "len": 348
-      },
-      {
-       "title": "Lắng nghe mùa xuân về",
-       "by": "Bến Xuân",
-       "len": 266
-      }
-     ]
-    },
-    {
-     "id": "ben-xuan-c",
-     "album": "ben-xuan",
-     "disc": 2,
-     "side": "C",
-     "title": "Side C",
-     "dir": "assets/ben-xuan/c/",
-     "tracks": [
-      {
-       "title": "Mộng chiều xuân",
-       "by": "Bến Xuân",
-       "len": 239
-      },
-      {
-       "title": "Gái xuân",
-       "by": "Bến Xuân",
-       "len": 291
-      }
-     ]
-    },
-    {
-     "id": "ben-xuan-d",
-     "album": "ben-xuan",
-     "disc": 2,
-     "side": "D",
-     "title": "Side D",
-     "dir": "assets/ben-xuan/d/",
-     "tracks": [
-      {
-       "title": "Mùa xuân đầu tiên",
-       "by": "Bến Xuân",
-       "len": 347
-      },
-      {
-       "title": "Tình hoài thương",
-       "by": "Bến Xuân",
-       "len": 413
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "mck",
-   "title": "HVL",
-   "by": "RPT MCK",
-   "cover": "covers/mck.jpg",
-   "discs": 3,
-   "sides": [
-    {
-     "id": "mck-a",
-     "album": "mck",
-     "disc": 1,
-     "side": "A",
-     "title": "Side A",
-     "dir": "assets/mck/a/",
-     "tracks": [
-      {
-       "title": "Elegie",
-       "by": "RPT MCK",
-       "len": 87
-      },
-      {
-       "title": "IDK",
-       "by": "RPT MCK",
-       "len": 196
-      },
-      {
-       "title": "Wtf Bby I'm Lit",
-       "by": "RPT MCK",
-       "len": 167
-      },
-      {
-       "title": "Anh Không Muốn Nó Dễ Dàng",
-       "by": "RPT MCK",
-       "len": 165
-      },
-      {
-       "title": "Baby (feat. marzuz)",
-       "by": "RPT MCK, marzuz",
-       "len": 173
-      },
-      {
-       "title": "Yêu Anh Giết Anh",
-       "by": "RPT MCK",
-       "len": 165
-      }
-     ]
-    },
-    {
-     "id": "mck-b",
-     "album": "mck",
-     "disc": 1,
-     "side": "B",
-     "title": "Side B",
-     "dir": "assets/mck/b/",
-     "tracks": [
-      {
-       "title": "Mắt Môi Tay Chân (feat. Tage)",
-       "by": "RPT MCK, Tage",
-       "len": 192
-      },
-      {
-       "title": "Đao Của Anh Vừa",
-       "by": "RPT MCK",
-       "len": 124
-      },
-      {
-       "title": "Là Gì Của Nhau",
-       "by": "RPT MCK",
-       "len": 143
-      },
-      {
-       "title": "Night In Prague",
-       "by": "RPT MCK",
-       "len": 214
-      },
-      {
-       "title": "Một Cái Ôm",
-       "by": "RPT MCK",
-       "len": 202
-      }
-     ]
-    },
-    {
-     "id": "mck-c",
-     "album": "mck",
-     "disc": 2,
-     "side": "C",
-     "title": "Side C",
-     "dir": "assets/mck/c/",
-     "tracks": [
-      {
-       "title": "Liệm",
-       "by": "RPT MCK",
-       "len": 233
-      },
-      {
-       "title": "Nếu Như Ta Chẳng Còn (feat. A$AP Ướt Mi)",
-       "by": "RPT MCK, A$AP Ướt Mi",
-       "len": 318
-      },
-      {
-       "title": "Ai Mới Là Kẻ Xấu Xa",
-       "by": "RPT MCK",
-       "len": 192
-      },
-      {
-       "title": "Slippery (feat. Tùng Dương)",
-       "by": "RPT MCK, Tùng Dương",
-       "len": 215
-      }
-     ]
-    },
-    {
-     "id": "mck-d",
-     "album": "mck",
-     "disc": 2,
-     "side": "D",
-     "title": "Side D",
-     "dir": "assets/mck/d/",
-     "tracks": [
-      {
-       "title": "Intenpol",
-       "by": "RPT MCK",
-       "len": 54
-      },
-      {
-       "title": "Tây Thi",
-       "by": "RPT MCK",
-       "len": 104
-      },
-      {
-       "title": "Hút và Hút",
-       "by": "RPT MCK",
-       "len": 135
-      },
-      {
-       "title": "Dưa Chua",
-       "by": "RPT MCK",
-       "len": 182
-      },
-      {
-       "title": "Xa Xôi (feat. Obito)",
-       "by": "RPT MCK, Obito",
-       "len": 218
-      },
-      {
-       "title": "Che Phủ",
-       "by": "RPT MCK",
-       "len": 155
-      }
-     ]
-    },
-    {
-     "id": "mck-e",
-     "album": "mck",
-     "disc": 3,
-     "side": "E",
-     "title": "Side E",
-     "dir": "assets/mck/e/",
-     "tracks": [
-      {
-       "title": "Oanh M = Thuoc",
-       "by": "RPT MCK",
-       "len": 204
-      },
-      {
-       "title": "Ghet Xog Lai Thik",
-       "by": "RPT MCK",
-       "len": 113
-      },
-      {
-       "title": "Nhìn Kẻ Thù Của Tao",
-       "by": "RPT MCK",
-       "len": 234
-      },
-      {
-       "title": "Envy (feat. THANHDRAW)",
-       "by": "RPT MCK, THANHDRAW",
-       "len": 235
-      },
-      {
-       "title": "Cảm Ơn",
-       "by": "RPT MCK",
-       "len": 159
-      }
-     ]
-    },
-    {
-     "id": "mck-f",
-     "album": "mck",
-     "disc": 3,
-     "side": "F",
-     "title": "Side F",
-     "dir": "assets/mck/f/",
-     "tracks": [
-      {
-       "title": "Không Cần Lo Cho Tao",
-       "by": "RPT MCK",
-       "len": 156
-      },
-      {
-       "title": "Huh (feat. RPT Orijinn & THANHDRAW)",
-       "by": "RPT MCK, RPT Orijinn, THANHDRAW",
-       "len": 252
-      },
-      {
-       "title": "Nguyễn Văn Mười",
-       "by": "RPT MCK",
-       "len": 242
-      },
-      {
-       "title": "Thịt Lợn",
-       "by": "RPT MCK",
-       "len": 228
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "starboy",
-   "title": "Starboy (Explicit Version)",
-   "by": "The Weeknd",
-   "vinyl": {
-    "color": "#f0566e",
-    "clear": 0.75
-   },
-   "cover": "covers/starboy.jpg",
-   "discs": 2,
-   "sides": [
-    {
-     "id": "starboy-a",
-     "album": "starboy",
-     "disc": 1,
-     "side": "A",
-     "title": "Side A",
-     "dir": "assets/starboy/a/",
-     "tracks": [
-      {
-       "title": "Starboy",
-       "by": "The Weeknd",
-       "len": 230
-      },
-      {
-       "title": "Party Monster",
-       "by": "The Weeknd",
-       "len": 249
-      },
-      {
-       "title": "False Alarm",
-       "by": "The Weeknd",
-       "len": 220
-      },
-      {
-       "title": "Reminder",
-       "by": "The Weeknd",
-       "len": 219
-      }
-     ]
-    },
-    {
-     "id": "starboy-b",
-     "album": "starboy",
-     "disc": 1,
-     "side": "B",
-     "title": "Side B",
-     "dir": "assets/starboy/b/",
-     "tracks": [
-      {
-       "title": "Rockin’",
-       "by": "The Weeknd",
-       "len": 233
-      },
-      {
-       "title": "Secrets",
-       "by": "The Weeknd",
-       "len": 266
-      },
-      {
-       "title": "True Colors",
-       "by": "The Weeknd",
-       "len": 206
-      },
-      {
-       "title": "Stargirl Interlude",
-       "by": "The Weeknd",
-       "len": 112
-      },
-      {
-       "title": "Sidewalks",
-       "by": "The Weeknd",
-       "len": 231
-      }
-     ]
-    },
-    {
-     "id": "starboy-c",
-     "album": "starboy",
-     "disc": 2,
-     "side": "C",
-     "title": "Side C",
-     "dir": "assets/starboy/c/",
-     "tracks": [
-      {
-       "title": "Six Feet Under",
-       "by": "The Weeknd",
-       "len": 238
-      },
-      {
-       "title": "Love To Lay",
-       "by": "The Weeknd",
-       "len": 223
-      },
-      {
-       "title": "A Lonely Night",
-       "by": "The Weeknd",
-       "len": 220
-      },
-      {
-       "title": "Attention",
-       "by": "The Weeknd",
-       "len": 198
-      },
-      {
-       "title": "Ordinary Life",
-       "by": "The Weeknd",
-       "len": 222
-      }
-     ]
-    },
-    {
-     "id": "starboy-d",
-     "album": "starboy",
-     "disc": 2,
-     "side": "D",
-     "title": "Side D",
-     "dir": "assets/starboy/d/",
-     "tracks": [
-      {
-       "title": "Nothing Without You",
-       "by": "The Weeknd",
-       "len": 199
-      },
-      {
-       "title": "All I Know",
-       "by": "The Weeknd",
-       "len": 321
-      },
-      {
-       "title": "Die For You",
-       "by": "The Weeknd",
-       "len": 260
-      },
-      {
-       "title": "I Feel It Coming",
-       "by": "The Weeknd",
-       "len": 269
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "ai",
-   "title": "Ái",
-   "by": "tlinh",
-   "cover": "covers/ai.jpg",
-   "discs": 1,
-   "sides": [
-    {
-     "id": "ai-a",
-     "album": "ai",
-     "disc": 1,
-     "side": "A",
-     "title": "Side A",
-     "dir": "assets/ai/a/",
-     "tracks": [
-      {
-       "title": "tình yêu có nghĩa là gì?",
-       "by": "tlinh",
-       "len": 134
-      },
-      {
-       "title": "người đẹp ngủ",
-       "by": "tlinh",
-       "len": 216
-      },
-      {
-       "title": "người điên",
-       "by": "tlinh",
-       "len": 147
-      },
-      {
-       "title": "kho báu đánh rơi",
-       "by": "tlinh feat. GREY D",
-       "len": 200
-      },
-      {
-       "title": "ái",
-       "by": "tlinh",
-       "len": 67
-      },
-      {
-       "title": "làm lành chữa tình",
-       "by": "tlinh",
-       "len": 206
-      },
-      {
-       "title": "thế giới thần tiên",
-       "by": "tlinh",
-       "len": 171
-      }
-     ]
-    },
-    {
-     "id": "ai-b",
-     "album": "ai",
-     "disc": 1,
-     "side": "B",
-     "title": "Side B",
-     "dir": "assets/ai/b/",
-     "tracks": [
-      {
-       "title": "những đốm sáng",
-       "by": "tlinh",
-       "len": 244
-      },
-      {
-       "title": "nữ siêu anh hùng",
-       "by": "tlinh",
-       "len": 211
-      },
-      {
-       "title": "ghệ iu dấu của em ơi",
-       "by": "tlinh, 2pillz, WOKEUP",
-       "len": 205
-      },
-      {
-       "title": "nếu lúc đó",
-       "by": "tlinh, 2pillz",
-       "len": 264
-      },
-      {
-       "title": "kết thúc = mở đầu",
-       "by": "tlinh",
-       "len": 57
-      }
-     ]
-    }
-   ]
-  },
-  {
    "id": "bao-tang-cua-nuoi-tiec",
    "title": "Nếu Những Tiếc Nuối",
    "by": "Vũ.",
@@ -1576,6 +651,990 @@
        "title": "Tương Tư Để Dành",
        "by": "OSAD, Onionn.",
        "len": 242
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "christmas",
+   "title": "Christmas",
+   "by": "Various artists",
+   "cover": "covers/christmas.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "christmas-a",
+     "album": "christmas",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/christmas/a/",
+     "tracks": [
+      {
+       "title": "Snowman",
+       "by": "Sia",
+       "len": 166
+      },
+      {
+       "title": "Feliz Navidad",
+       "by": "José Feliciano",
+       "len": 182
+      },
+      {
+       "title": "Last Christmas",
+       "by": "Meghan Trainor",
+       "len": 244
+      }
+     ]
+    },
+    {
+     "id": "christmas-b",
+     "album": "christmas",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/christmas/b/",
+     "tracks": [
+      {
+       "title": "Holly Jolly Christmas",
+       "by": "Michael Bublé",
+       "len": 120
+      },
+      {
+       "title": "Santa Claus Is Coming To Town",
+       "by": "Lady Gaga",
+       "len": 120
+      },
+      {
+       "title": "Santa Tell Me",
+       "by": "Ariana Grande",
+       "len": 204
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "cai-thu-hai",
+   "title": "Cái Thứ Hai",
+   "by": "Thắng",
+   "cover": "covers/cai-thu-hai.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "cai-thu-hai-a",
+     "album": "cai-thu-hai",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/cai-thu-hai/a/",
+     "tracks": [
+      {
+       "title": "Khóc Đấy",
+       "by": "Thắng",
+       "len": 227
+      },
+      {
+       "title": "Bút Chì Bạc",
+       "by": "Thắng",
+       "len": 187
+      },
+      {
+       "title": "Hoá Ra Là",
+       "by": "Thắng, Wala",
+       "len": 201
+      },
+      {
+       "title": "Gội Đầu (với Hà Lê)",
+       "by": "Thắng, Hà Lê",
+       "len": 265
+      },
+      {
+       "title": "100%",
+       "by": "Thắng",
+       "len": 176
+      },
+      {
+       "title": "Căn Gác Lặng",
+       "by": "Thắng",
+       "len": 151
+      }
+     ]
+    },
+    {
+     "id": "cai-thu-hai-b",
+     "album": "cai-thu-hai",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/cai-thu-hai/b/",
+     "tracks": [
+      {
+       "title": "Đồng Ý",
+       "by": "Thắng",
+       "len": 157
+      },
+      {
+       "title": "60m Vuông",
+       "by": "Thắng",
+       "len": 147
+      },
+      {
+       "title": "Nấu Con Beat",
+       "by": "Thắng, Wala",
+       "len": 200
+      },
+      {
+       "title": "Rất",
+       "by": "Thắng, SUNI, Pixel Neko",
+       "len": 200
+      },
+      {
+       "title": "Sáng ra chỉ cần",
+       "by": "Kế Phúc",
+       "len": 209
+      },
+      {
+       "title": "Tình Nhân Muôn Kiếp",
+       "by": "Thắng",
+       "len": 238
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "em-va-trinh",
+   "title": "Em Và Trịnh",
+   "by": "Bùi Lan Hương",
+   "cover": "covers/em-va-trinh.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "em-va-trinh-a",
+     "album": "em-va-trinh",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/em-va-trinh/a/",
+     "tracks": [
+      {
+       "title": "Mưa Hồng",
+       "by": "Bùi Lan Hương",
+       "len": 217
+      },
+      {
+       "title": "Còn Tuổi Nào Cho Em",
+       "by": "Bùi Lan Hương",
+       "len": 155
+      },
+      {
+       "title": "Tình Sầu",
+       "by": "Avin Lu",
+       "len": 121
+      }
+     ]
+    },
+    {
+     "id": "em-va-trinh-b",
+     "album": "em-va-trinh",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/em-va-trinh/b/",
+     "tracks": [
+      {
+       "title": "Hạ Trắng",
+       "by": "Bùi Lan Hương",
+       "len": 119
+      },
+      {
+       "title": "Nhìn Những Mùa Thu Đi (Em Và Trịnh Original Soundtrack)",
+       "by": "Bùi Lan Hương",
+       "len": 124
+      },
+      {
+       "title": "Ngày Chưa Giông Bão (Người Bất Tử Ost)",
+       "by": "Bùi Lan Hương",
+       "len": 212
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pillzcasso",
+   "title": "PILLZCASSO",
+   "by": "2pillz",
+   "cover": "covers/pillzcasso.jpg",
+   "discs": 2,
+   "sides": [
+    {
+     "id": "pillzcasso-a",
+     "album": "pillzcasso",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/pillzcasso/a/",
+     "tracks": [
+      {
+       "title": "THÁC NÌNG",
+       "by": "2pillz, MONO & GREY D",
+       "len": 284
+      },
+      {
+       "title": "ĐƯA EM VÀO TRÒNG",
+       "by": "2pillz, GDucky & tlinh",
+       "len": 247
+      },
+      {
+       "title": "ĐẾN LÚC NÀY THÌ...",
+       "by": "2pillz & tlinh",
+       "len": 222
+      }
+     ]
+    },
+    {
+     "id": "pillzcasso-b",
+     "album": "pillzcasso",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/pillzcasso/b/",
+     "tracks": [
+      {
+       "title": "BƯỚC ĐI/NÁN LẠI?",
+       "by": "2pillz & Văn Mai Hương",
+       "len": 235
+      },
+      {
+       "title": "LÁ THU VÀNG RƠI MANG TÌNH YÊU TỚI",
+       "by": "2pillz & Phương Dung",
+       "len": 152
+      },
+      {
+       "title": "NGHĨ MỘT TÍ",
+       "by": "2pillz & Orange",
+       "len": 177
+      },
+      {
+       "title": "GET YOU OUT OF MY MIND",
+       "by": "2pillz",
+       "len": 223
+      }
+     ]
+    },
+    {
+     "id": "pillzcasso-c",
+     "album": "pillzcasso",
+     "disc": 2,
+     "side": "C",
+     "title": "Side C",
+     "dir": "assets/pillzcasso/c/",
+     "tracks": [
+      {
+       "title": "CHỈ MỘT CÂU THẦN CHÚ",
+       "by": "2pillz & NeeNee",
+       "len": 210
+      },
+      {
+       "title": "KIỀM CHẾ ĐÔI TAY ĐI NÀO",
+       "by": "2pillz & Vũ Phụng Tiên",
+       "len": 238
+      },
+      {
+       "title": "NOBODY BUT YOU",
+       "by": "2pillz",
+       "len": 245
+      }
+     ]
+    },
+    {
+     "id": "pillzcasso-d",
+     "album": "pillzcasso",
+     "disc": 2,
+     "side": "D",
+     "title": "Side D",
+     "dir": "assets/pillzcasso/d/",
+     "tracks": [
+      {
+       "title": "GIẤC DU MIÊN",
+       "by": "2pillz, GREY D & NeeNee",
+       "len": 292
+      },
+      {
+       "title": "MỘT KHI NÓI YÊU MỌI CHUYỆN CHẤM HẾT",
+       "by": "2pillz, WOKEUP & Vũ Phụng Tiên",
+       "len": 204
+      },
+      {
+       "title": "NGỪI ĐẸP ƠII",
+       "by": "2pillz & tlinh",
+       "len": 250
+      },
+      {
+       "title": "CHẲNG AI VẬY",
+       "by": "2pillz & Kay Châu Anh",
+       "len": 188
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "trai-tim-ua-tan",
+   "title": "Trái Tim Úa Tàn",
+   "by": "Sơn Tùng M-TP",
+   "cover": "covers/trai-tim-ua-tan.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "trai-tim-ua-tan-a",
+     "album": "trai-tim-ua-tan",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/trai-tim-ua-tan/a/",
+     "tracks": [
+      {
+       "title": "Chạy Ngay Đi (Onionn Remix)",
+       "by": "Sơn Tùng M-TP, Onionn",
+       "len": 230
+      },
+      {
+       "title": "Chúng Ta Không Thuộc Về Nhau",
+       "by": "Sơn Tùng M-TP",
+       "len": 233
+      },
+      {
+       "title": "Có Chắc Yêu Là Đây",
+       "by": "Sơn Tùng M-TP",
+       "len": 202
+      }
+     ]
+    },
+    {
+     "id": "trai-tim-ua-tan-b",
+     "album": "trai-tim-ua-tan",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/trai-tim-ua-tan/b/",
+     "tracks": [
+      {
+       "title": "Đừng Làm Trái Tim Anh Đau",
+       "by": "Sơn Tùng M-TP",
+       "len": 279
+      },
+      {
+       "title": "Khuôn Mặt Đáng Thương",
+       "by": "Sơn Tùng M-TP",
+       "len": 257
+      },
+      {
+       "title": "Muộn Rồi Mà Sao Còn",
+       "by": "Sơn Tùng M-TP",
+       "len": 276
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "y6u",
+   "title": "Y6U",
+   "by": "Rhymastic",
+   "cover": "covers/y6u.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "y6u-a",
+     "album": "y6u",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/y6u/a/",
+     "tracks": [
+      {
+       "title": "Y6u",
+       "by": "Rhymastic",
+       "len": 233
+      },
+      {
+       "title": "Líu La Líu Lo",
+       "by": "Rhymastic",
+       "len": 185
+      },
+      {
+       "title": "Side Effects (Feat. B-wine)",
+       "by": "Rhymastic",
+       "len": 274
+      }
+     ]
+    },
+    {
+     "id": "y6u-b",
+     "album": "y6u",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/y6u/b/",
+     "tracks": [
+      {
+       "title": "Ngổn Ngang",
+       "by": "Rhymastic",
+       "len": 195
+      },
+      {
+       "title": "Vẫn Yêu",
+       "by": "Rhymastic",
+       "len": 182
+      },
+      {
+       "title": "Thêm Đứa Nữa",
+       "by": "Rhymastic",
+       "len": 207
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ben-xuan",
+   "title": "Bến Xuân",
+   "by": "Bến Xuân",
+   "cover": "covers/ben-xuan.jpg",
+   "discs": 2,
+   "sides": [
+    {
+     "id": "ben-xuan-a",
+     "album": "ben-xuan",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/ben-xuan/a/",
+     "tracks": [
+      {
+       "title": "Còn thương rau đắng mọc sau hè",
+       "by": "Bến Xuân",
+       "len": 370
+      },
+      {
+       "title": "Bến xuân",
+       "by": "Bến Xuân",
+       "len": 353
+      }
+     ]
+    },
+    {
+     "id": "ben-xuan-b",
+     "album": "ben-xuan",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/ben-xuan/b/",
+     "tracks": [
+      {
+       "title": "Anh cho em mùa xuân",
+       "by": "Bến Xuân",
+       "len": 348
+      },
+      {
+       "title": "Lắng nghe mùa xuân về",
+       "by": "Bến Xuân",
+       "len": 266
+      }
+     ]
+    },
+    {
+     "id": "ben-xuan-c",
+     "album": "ben-xuan",
+     "disc": 2,
+     "side": "C",
+     "title": "Side C",
+     "dir": "assets/ben-xuan/c/",
+     "tracks": [
+      {
+       "title": "Mộng chiều xuân",
+       "by": "Bến Xuân",
+       "len": 239
+      },
+      {
+       "title": "Gái xuân",
+       "by": "Bến Xuân",
+       "len": 291
+      }
+     ]
+    },
+    {
+     "id": "ben-xuan-d",
+     "album": "ben-xuan",
+     "disc": 2,
+     "side": "D",
+     "title": "Side D",
+     "dir": "assets/ben-xuan/d/",
+     "tracks": [
+      {
+       "title": "Mùa xuân đầu tiên",
+       "by": "Bến Xuân",
+       "len": 347
+      },
+      {
+       "title": "Tình hoài thương",
+       "by": "Bến Xuân",
+       "len": 413
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "mck",
+   "title": "HVL",
+   "by": "RPT MCK",
+   "cover": "covers/mck.jpg",
+   "discs": 3,
+   "sides": [
+    {
+     "id": "mck-a",
+     "album": "mck",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/mck/a/",
+     "tracks": [
+      {
+       "title": "Elegie",
+       "by": "RPT MCK",
+       "len": 87
+      },
+      {
+       "title": "IDK",
+       "by": "RPT MCK",
+       "len": 196
+      },
+      {
+       "title": "Wtf Bby I'm Lit",
+       "by": "RPT MCK",
+       "len": 167
+      },
+      {
+       "title": "Anh Không Muốn Nó Dễ Dàng",
+       "by": "RPT MCK",
+       "len": 165
+      },
+      {
+       "title": "Baby (feat. marzuz)",
+       "by": "RPT MCK, marzuz",
+       "len": 173
+      },
+      {
+       "title": "Yêu Anh Giết Anh",
+       "by": "RPT MCK",
+       "len": 165
+      }
+     ]
+    },
+    {
+     "id": "mck-b",
+     "album": "mck",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/mck/b/",
+     "tracks": [
+      {
+       "title": "Mắt Môi Tay Chân (feat. Tage)",
+       "by": "RPT MCK, Tage",
+       "len": 192
+      },
+      {
+       "title": "Đao Của Anh Vừa",
+       "by": "RPT MCK",
+       "len": 124
+      },
+      {
+       "title": "Là Gì Của Nhau",
+       "by": "RPT MCK",
+       "len": 143
+      },
+      {
+       "title": "Night In Prague",
+       "by": "RPT MCK",
+       "len": 214
+      },
+      {
+       "title": "Một Cái Ôm",
+       "by": "RPT MCK",
+       "len": 202
+      }
+     ]
+    },
+    {
+     "id": "mck-c",
+     "album": "mck",
+     "disc": 2,
+     "side": "C",
+     "title": "Side C",
+     "dir": "assets/mck/c/",
+     "tracks": [
+      {
+       "title": "Liệm",
+       "by": "RPT MCK",
+       "len": 233
+      },
+      {
+       "title": "Nếu Như Ta Chẳng Còn (feat. A$AP Ướt Mi)",
+       "by": "RPT MCK, A$AP Ướt Mi",
+       "len": 318
+      },
+      {
+       "title": "Ai Mới Là Kẻ Xấu Xa",
+       "by": "RPT MCK",
+       "len": 192
+      },
+      {
+       "title": "Slippery (feat. Tùng Dương)",
+       "by": "RPT MCK, Tùng Dương",
+       "len": 215
+      }
+     ]
+    },
+    {
+     "id": "mck-d",
+     "album": "mck",
+     "disc": 2,
+     "side": "D",
+     "title": "Side D",
+     "dir": "assets/mck/d/",
+     "tracks": [
+      {
+       "title": "Intenpol",
+       "by": "RPT MCK",
+       "len": 54
+      },
+      {
+       "title": "Tây Thi",
+       "by": "RPT MCK",
+       "len": 104
+      },
+      {
+       "title": "Hút và Hút",
+       "by": "RPT MCK",
+       "len": 135
+      },
+      {
+       "title": "Dưa Chua",
+       "by": "RPT MCK",
+       "len": 182
+      },
+      {
+       "title": "Xa Xôi (feat. Obito)",
+       "by": "RPT MCK, Obito",
+       "len": 218
+      },
+      {
+       "title": "Che Phủ",
+       "by": "RPT MCK",
+       "len": 155
+      }
+     ]
+    },
+    {
+     "id": "mck-e",
+     "album": "mck",
+     "disc": 3,
+     "side": "E",
+     "title": "Side E",
+     "dir": "assets/mck/e/",
+     "tracks": [
+      {
+       "title": "Oanh M = Thuoc",
+       "by": "RPT MCK",
+       "len": 204
+      },
+      {
+       "title": "Ghet Xog Lai Thik",
+       "by": "RPT MCK",
+       "len": 113
+      },
+      {
+       "title": "Nhìn Kẻ Thù Của Tao",
+       "by": "RPT MCK",
+       "len": 234
+      },
+      {
+       "title": "Envy (feat. THANHDRAW)",
+       "by": "RPT MCK, THANHDRAW",
+       "len": 235
+      },
+      {
+       "title": "Cảm Ơn",
+       "by": "RPT MCK",
+       "len": 159
+      }
+     ]
+    },
+    {
+     "id": "mck-f",
+     "album": "mck",
+     "disc": 3,
+     "side": "F",
+     "title": "Side F",
+     "dir": "assets/mck/f/",
+     "tracks": [
+      {
+       "title": "Không Cần Lo Cho Tao",
+       "by": "RPT MCK",
+       "len": 156
+      },
+      {
+       "title": "Huh (feat. RPT Orijinn & THANHDRAW)",
+       "by": "RPT MCK, RPT Orijinn, THANHDRAW",
+       "len": 252
+      },
+      {
+       "title": "Nguyễn Văn Mười",
+       "by": "RPT MCK",
+       "len": 242
+      },
+      {
+       "title": "Thịt Lợn",
+       "by": "RPT MCK",
+       "len": 228
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "starboy",
+   "title": "Starboy (Explicit Version)",
+   "by": "The Weeknd",
+   "vinyl": {
+    "color": "#f0566e",
+    "clear": 0.75
+   },
+   "cover": "covers/starboy.jpg",
+   "discs": 2,
+   "sides": [
+    {
+     "id": "starboy-a",
+     "album": "starboy",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/starboy/a/",
+     "tracks": [
+      {
+       "title": "Starboy",
+       "by": "The Weeknd",
+       "len": 230
+      },
+      {
+       "title": "Party Monster",
+       "by": "The Weeknd",
+       "len": 249
+      },
+      {
+       "title": "False Alarm",
+       "by": "The Weeknd",
+       "len": 220
+      },
+      {
+       "title": "Reminder",
+       "by": "The Weeknd",
+       "len": 219
+      }
+     ]
+    },
+    {
+     "id": "starboy-b",
+     "album": "starboy",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/starboy/b/",
+     "tracks": [
+      {
+       "title": "Rockin’",
+       "by": "The Weeknd",
+       "len": 233
+      },
+      {
+       "title": "Secrets",
+       "by": "The Weeknd",
+       "len": 266
+      },
+      {
+       "title": "True Colors",
+       "by": "The Weeknd",
+       "len": 206
+      },
+      {
+       "title": "Stargirl Interlude",
+       "by": "The Weeknd",
+       "len": 112
+      },
+      {
+       "title": "Sidewalks",
+       "by": "The Weeknd",
+       "len": 231
+      }
+     ]
+    },
+    {
+     "id": "starboy-c",
+     "album": "starboy",
+     "disc": 2,
+     "side": "C",
+     "title": "Side C",
+     "dir": "assets/starboy/c/",
+     "tracks": [
+      {
+       "title": "Six Feet Under",
+       "by": "The Weeknd",
+       "len": 238
+      },
+      {
+       "title": "Love To Lay",
+       "by": "The Weeknd",
+       "len": 223
+      },
+      {
+       "title": "A Lonely Night",
+       "by": "The Weeknd",
+       "len": 220
+      },
+      {
+       "title": "Attention",
+       "by": "The Weeknd",
+       "len": 198
+      },
+      {
+       "title": "Ordinary Life",
+       "by": "The Weeknd",
+       "len": 222
+      }
+     ]
+    },
+    {
+     "id": "starboy-d",
+     "album": "starboy",
+     "disc": 2,
+     "side": "D",
+     "title": "Side D",
+     "dir": "assets/starboy/d/",
+     "tracks": [
+      {
+       "title": "Nothing Without You",
+       "by": "The Weeknd",
+       "len": 199
+      },
+      {
+       "title": "All I Know",
+       "by": "The Weeknd",
+       "len": 321
+      },
+      {
+       "title": "Die For You",
+       "by": "The Weeknd",
+       "len": 260
+      },
+      {
+       "title": "I Feel It Coming",
+       "by": "The Weeknd",
+       "len": 269
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "ai",
+   "title": "Ái",
+   "by": "tlinh",
+   "cover": "covers/ai.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "ai-a",
+     "album": "ai",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/ai/a/",
+     "tracks": [
+      {
+       "title": "tình yêu có nghĩa là gì?",
+       "by": "tlinh",
+       "len": 134
+      },
+      {
+       "title": "người đẹp ngủ",
+       "by": "tlinh",
+       "len": 216
+      },
+      {
+       "title": "người điên",
+       "by": "tlinh",
+       "len": 147
+      },
+      {
+       "title": "kho báu đánh rơi",
+       "by": "tlinh feat. GREY D",
+       "len": 200
+      },
+      {
+       "title": "ái",
+       "by": "tlinh",
+       "len": 67
+      },
+      {
+       "title": "làm lành chữa tình",
+       "by": "tlinh",
+       "len": 206
+      },
+      {
+       "title": "thế giới thần tiên",
+       "by": "tlinh",
+       "len": 171
+      }
+     ]
+    },
+    {
+     "id": "ai-b",
+     "album": "ai",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/ai/b/",
+     "tracks": [
+      {
+       "title": "những đốm sáng",
+       "by": "tlinh",
+       "len": 244
+      },
+      {
+       "title": "nữ siêu anh hùng",
+       "by": "tlinh",
+       "len": 211
+      },
+      {
+       "title": "ghệ iu dấu của em ơi",
+       "by": "tlinh, 2pillz, WOKEUP",
+       "len": 205
+      },
+      {
+       "title": "nếu lúc đó",
+       "by": "tlinh, 2pillz",
+       "len": 264
+      },
+      {
+       "title": "kết thúc = mở đầu",
+       "by": "tlinh",
+       "len": 57
       }
      ]
     }

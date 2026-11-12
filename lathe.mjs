@@ -151,6 +151,12 @@ const tidy = (s) => (s || '').replace(/&(#x?[0-9a-f]+|[a-z]+);/gi, (m, e) => {
   const a = /^([a-z])(grave|acute|circ|tilde|uml)$/i.exec(e);
   return a ? (a[1] + ACCENT[a[2].toLowerCase()]).normalize('NFC') : ENT[e.toLowerCase()] ?? m;
 }).trim();
+// A download site sometimes writes its own name over a tag, or shouts the title in capitals: then the file name is the better title.
+const clean = (s) => { const v = tidy(s); return /^nhaccuatui(\.com)?$/i.test(v) ? '' : v; };
+const songTitle = (t) => {
+  const base = t.file.replace(AUDIO, '').replace(/^\d+[\s._-]+/, ''), v = clean(t.title);
+  return !v || (v === v.toUpperCase() && v.toLowerCase() === base.toLowerCase()) ? base : v;
+};
 const artists = (s) => [...new Set(tidy(s).replace(/\[[^\]]*\]/g, '').split(/\s*[;,]\s*/).filter(Boolean))].join(', ');
 function probe(file) {
   const r = spawnSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration:format_tags', '-of', 'json', file], { encoding: 'utf8' });
@@ -184,7 +190,7 @@ function albumPlans() {
       const letter = String.fromCharCode(65 + i), tracks = songs.slice(a, b);
       return {
         id: `${id}-${letter.toLowerCase()}`, album: id, disc: (i >> 1) + 1, side: letter, title: `Side ${letter}`, dir: `assets/${id}/${letter.toLowerCase()}/`,
-        tracks: tracks.map((t) => ({ title: tidy(t.title) || t.file.replace(AUDIO, '').replace(/^\d+[\s._-]+/, ''), by: artists(t.artist || by), len: Math.round(t.len), file: t.file })),
+        tracks: tracks.map((t) => ({ title: songTitle(t), by: artists(clean(t.artist) || by), len: Math.round(t.len), file: t.file })),
         sources: tracks.map((t) => { const st = statSync(join(dir, t.file)); return `${t.file}|${st.size}|${Math.round(st.mtimeMs)}`; }),
       };
     });
