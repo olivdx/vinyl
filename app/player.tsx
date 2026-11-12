@@ -57,6 +57,11 @@ export function Player() {
           <button data-rpm="33.3333" className="on">33</button><button data-rpm="45">45</button><button data-rpm="78.26">78</button>
         </div>
         <div className="row"><label>Volume</label><input id="p-volume" type="range" min="0" max="1" step="0.01" defaultValue="1" /><output /></div>
+        <div className="row">
+          <button id="b-smooth" type="button" title="Lower render resolution and frame rate (weaker GPUs, large monitors)">
+            Smooth graphics
+          </button>
+        </div>
 
         <h2>Cartridge</h2>
         <div className="row">
@@ -101,7 +106,7 @@ export function Player() {
           <li>Pitch wavers when the hole is off-centre, and bends when the platter starts or stops, because the platter has inertia.</li>
           <li>With too little tracking force the needle leaves the wall. Knock the table and it skips.</li>
         </ul>
-        <p>Drop the needle anywhere, or drag the record to scratch it. Drag empty space to look around and scroll to zoom in on the stylus. The album is a double LP: pick a side or a song under Albums, and Flip (or F) turns the record over. When a side ends, the needle rides the locked run-out for a few seconds, then the deck lifts it, flips the disc, and drops in at the lead-in of the other side (if there is one). In Controls you can change the stylus, lower the tracking force, press a dirtier copy, or cut your own audio.</p>
+        <p>Drop the needle anywhere, or drag the record to scratch it. Drag empty space to look around and scroll to zoom in on the stylus. The album is a double LP: pick a side or a song under Albums, and Flip (or F) turns the record over. When a side ends, the needle rides the locked run-out for a few seconds, then the deck lifts it, flips the disc, and drops in at the lead-in of the other side (if there is one). In Controls, <strong>Smooth graphics</strong> lowers GPU load on large screens or integrated graphics. You can change the stylus, lower the tracking force, press a dirtier copy, or cut your own audio.</p>
         <p className="fine">Set by hand rather than derived: how rough the walls are, and how much the bearing rumbles and the motor flutters. Not simulated: stylus rake angle and record wear.</p>
         <form method="dialog"><button>Close</button></form>
       </dialog>

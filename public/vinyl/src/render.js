@@ -140,10 +140,13 @@ export class Renderer {
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     const c = [0.04, 0, -0.02], eye = c.map((v, i) => v + KEY[i]);
     this.lvp = G.mul(G.ortho(-0.46, 0.46, -0.46, 0.46, 0.3, 1.7), G.lookAt(eye, c).m);
+    this.shadowReady = false;
     this.info = null; this.cam = null;
     this.setLabel(['']);
     gl.enable(gl.DEPTH_TEST);
   }
+
+  invalidateShadow() { this.shadowReady = false; }
 
   // Drawing a label (label.js) takes tens of ms: keep the last few, keyed by what is printed on them, so a change
   // that puts the same label back (the real record replacing its preview) costs nothing, and a flip can draw the

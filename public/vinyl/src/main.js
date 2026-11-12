@@ -292,6 +292,52 @@ $('t-reset').addEventListener('click', () => {      // ease the camera back to w
 });
 $('b-more').addEventListener('click', () => { $('more').showModal(); $('more').scrollTop = 0; });
 $('more').addEventListener('click', (e) => { if (e.target === $('more')) $('more').close(); });   // click outside closes
+// Smooth graphics: cap backing-store resolution, ~30 fps while the platter turns, reuse the shadow map when still.
+const SMOOTH_LS = 'vinyl-smooth';
+const SMOOTH_RES = 0.72;
+function defaultSmooth() {
+  return window.innerWidth * Math.min(2, window.devicePixelRatio || 1) > 2800;
+}
+function readSmoothPref() {
+  try {
+    const q = localStorage.getItem(SMOOTH_LS);
+    if (q === '1') return true;
+    if (q === '0') return false;
+  } catch {}
+  return defaultSmooth();
+}
+S.smooth = readSmoothPref();
+S.shadowKey = '';
+function applySmoothUi() {
+  const b = $('b-smooth');
+  if (!b) return;
+  b.classList.toggle('on', S.smooth);
+  b.setAttribute('aria-pressed', String(S.smooth));
+  document.documentElement.classList.toggle('smooth-graphics', S.smooth);
+}
+function setSmooth(on) {
+  S.smooth = !!on;
+  try { localStorage.setItem(SMOOTH_LS, S.smooth ? '1' : '0'); } catch {}
+  S.shadowKey = '';
+  renderer.invalidateShadow();
+  applySmoothUi();
+}
+$('b-smooth')?.addEventListener('click', () => setSmooth(!S.smooth));
+applySmoothUi();
+function gfxPass(discOff) {
+  const behindModal = document.documentElement.classList.contains('albums-open');
+  if (behindModal) return { res: 0.4, keepShadow: true };
+  if (!S.smooth) return {};
+  const t = S.tel, off = discOff || [0, 0, 0, 0, 0];
+  const cam = `${S.az.toFixed(2)}|${S.el.toFixed(2)}|${S.zoom.toFixed(2)}`;
+  const arm = t ? `${t.al.toFixed(3)}|${(t.thp + t.wp * 0).toFixed(1)}` : '';
+  const lift = `${off[0].toFixed(3)}|${off[1].toFixed(3)}|${off[2].toFixed(3)}|${off[3].toFixed(3)}`;
+  const key = `${cam}|${arm}|${lift}|${S.rec?.seq ?? 0}|m${S.motor ? 1 : 0}`;
+  let keepShadow = false;
+  if (!S.swap && !S.motor && key === S.shadowKey) keepShadow = true;
+  else if (key !== S.shadowKey) { S.shadowKey = key; renderer.invalidateShadow(); }
+  return { res: SMOOTH_RES, keepShadow };
+}
 $('b-start').addEventListener('click', () => { if (!S.swap) setMotor(!S.motor); });
 $('b-cue').addEventListener('click', () => { if (!S.swap) send({ t: 'cue', up: !S.cue }); });
 $('b-bump').addEventListener('click', () => send({ t: 'bump', s: 1 }));
@@ -591,6 +637,8 @@ const REDUCED = matchMedia('(prefers-reduced-motion: reduce)');
 function beginSwap(meta) {
   if (!S.shown) return;                         // the first record of the page is simply there
   S.runoutSince = 0;
+  S.shadowKey = '';
+  renderer.invalidateShadow();
   if (!S.swap) {
     if (drag) { drag.tap = false; release(); }
     const flipping = sameDisc(meta, S.platterRec) && meta.id !== S.platterRec.id;   // same disc: turn it over
@@ -708,16 +756,17 @@ function tick() {
   }
   const moved = Math.abs(S.zoomT) > 0.01 || Math.abs(S.az - AZ0) > 0.01 || Math.abs(S.el - EL0) > 0.01;
   if (moved !== S.moved) { S.moved = moved; $('t-reset').hidden = !moved; }
-  // Behind the Albums modal the deck is dimmed: draw it at a third of the rate so the GPU has room for the modal's own animations.
+  // Behind the Albums modal the deck is dimmed: draw at a third of the rate. Smooth mode halves fps while the motor runs.
   const behindModal = document.documentElement.classList.contains('albums-open');
   if (behindModal && !S.swap && frame++ % 3 !== 0) return;
+  if (S.smooth && !behindModal && !S.swap && S.motor && frame++ % 2 !== 0) return;
   guard('render', () => {
     if (OG) renderer.draw({ thp: 2.2, al: alphaForRadius(0.108), zt: 0, zoom: 0, az: -0.5, el: 0.6, motor: true, rpm: 33.3333, bare: true, dist: 1.1, at: [0.021, -0.07, -0.093], ...window.__og });   // deck high in the frame: X overlays the bottom
     else renderer.draw({ thp: t ? t.thp + t.wp * dt : 0, al: t ? t.al : ALPHA_REST, zt: t ? t.zb + t.ze : 5e-3, zoom: S.zoom, az: S.az, el: S.el, motor: S.motor, rpm: S.rpm, discOff, lever: S.lever,
-      press: S.press, startLed: startLed(now), seg: readout(now),
-      ...(behindModal && { res: 0.4, keepShadow: true }) });
+      press: S.press, startLed: startLed(now), seg: readout(now), ...gfxPass(discOff) });
   });
-  if (frame++ % 2 === 0 && S.hudOn && !behindModal) guard('groove view', drawScope);
+  const scopeEvery = S.smooth ? 4 : 2;
+  if (frame++ % scopeEvery === 0 && S.hudOn && !behindModal) guard('groove view', drawScope);
   if (frame % 6 === 0) guard('readout', drawStats);
 }
 tick();
