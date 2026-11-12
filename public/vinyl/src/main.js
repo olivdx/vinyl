@@ -87,6 +87,8 @@ function loadRecord() {
   const { art, ...plain } = rec;                 // the label's cover stays here: an image cannot go to the audio thread
   send({ t: 'record', rec: plain, seq: S.rec.seq }, [rec.wallIn.buffer, rec.wallOut.buffer]);
   S.loaded = true;
+  S.autoFlipFrom = null;
+  S.runoutSince = 0;
   if (S.started) play(); else start();
 }
 // Where the needle goes down: the lead-in, or the silent band just before a song that was asked for.
@@ -221,7 +223,7 @@ function initAudio() {
     await ctx.audioWorklet.addModule(new URL('./worklet.js', import.meta.url));
     node = new AudioWorkletNode(ctx, 'turntable', { numberOfInputs: 0, numberOfOutputs: 1, outputChannelCount: [2] });
     node.port.onmessage = ({ data: m }) => {
-      if (m.t === 'tel') { S.tel = m; S.tRecv = performance.now(); if (m.view) S.view = m.view; S.cue = m.cueUp; }
+      if (m.t === 'tel') { S.tel = m; S.tRecv = performance.now(); if (m.view) S.view = m.view; S.cue = m.cueUp; if (m.cueUp) S.runoutSince = 0; }
       else if (m.t === 'ready') {
         S.ready = true; pushParams(); send({ t: 'view', on: true }); loadRecord(); start();
         $('d-rate').textContent = (m.os * m.fs).toLocaleString('en-US');
@@ -260,7 +262,7 @@ $('power-msg').textContent = POWER_MSG;
 // Worklet modules load on power-on (powerOn -> initAudio) so they do not compete with the opening record download.
 
 // ---------- controls ----------
-function setMotor(on) { S.motor = on; send({ t: 'motor', on }); $('b-start').textContent = on ? 'Stop' : 'Start'; $('b-start').classList.toggle('on', on); }
+function setMotor(on) { S.motor = on; if (!on) S.runoutSince = 0; send({ t: 'motor', on }); $('b-start').textContent = on ? 'Stop' : 'Start'; $('b-start').classList.toggle('on', on); }
 function pushParams() {
   // 100% on the slider is 2 dB under unity: the cartridge lifts the treble by up to 1.9 dB, and bright peaks would clip
   send({ t: 'set', volume: 0.8 * +$('p-volume').value, stylus: $('p-stylus').value, vtf: +$('p-vtf').value, antiskate: +$('p-antiskate').value, hum: +$('p-hum').value });
@@ -377,11 +379,33 @@ function playSong(id, i) {
   if (!S.swap && S.platterRec?.id === id && S.markId === id) { if (S.started) play(); }
   else pickRecord(r);
 }
+// The other side of the same disc on the platter, if there is one.
+function otherSide(cur) {
+  return cur && SIDES.find((r) => sameDisc(r, cur) && r.id !== cur.id);
+}
 // The other side of the disc on the platter.
 function flip() {
   const cur = S.swap ? S.swap.meta : S.platterRec;
-  const other = cur && SIDES.find((r) => sameDisc(r, cur) && r.id !== cur.id);
+  const other = otherSide(cur);
   if (other) { S.cueTrack = null; pickRecord(other); }
+}
+// After the programme, the tip sits in the locked run-out groove; then lift, flip, and cue the other side at lead-in.
+const AUTO_FLIP_RUNOUT_S = 4.5;
+function maybeAutoFlip(t) {
+  if (!t || S.swap || !S.started || !S.motor || S.autoFlipFrom) return;
+  const rec = S.rec && S.rec.pick === pick && t.recSeq === S.rec.seq ? S.rec : null;
+  if (!rec) { S.runoutSince = 0; return; }
+  const down = t.hc < 40e-6 && t.xg === t.xg;
+  if (!down || t.theta < rec.thetaLock) { S.runoutSince = 0; return; }
+  const cur = S.platterRec;
+  if (!otherSide(cur)) { S.runoutSince = 0; return; }
+  const now = performance.now();
+  if (!S.runoutSince) S.runoutSince = now;
+  else if (now - S.runoutSince >= AUTO_FLIP_RUNOUT_S * 1000) {
+    S.autoFlipFrom = cur.id;
+    S.runoutSince = 0;
+    flip();
+  }
 }
 $('b-flip').addEventListener('click', flip);
 // the record on the platter when the page opens: a shared song's side (/s/<side>/<n>, needle at song n), else side A
@@ -554,6 +578,7 @@ function drawStats() {
   else if (!rec) nowPlaying(S.recTitle || 'Records');
   else nowPlaying(S.recTitle || 'Records', !down ? '' : t.xg !== t.xg ? 'off the groove'
     : t.theta >= S.rec.thetaLock ? 'run-out' : t.theta > S.rec.tracks[S.rec.tracks.length - 1].theta1 ? 'lead-out' : t.theta < S.rec.tracks[0].theta0 ? 'lead-in' : 'between tracks');
+  maybeAutoFlip(t);
 }
 
 // ---------- record change: arm to rest, platter stops, old disc lifts and slides out, new one slides in ----------
@@ -565,6 +590,7 @@ const SWAP_OUT = 0.9, SWAP_WAIT = 0.45, LIFT = 0.016, SLIDE = 0.8, SLIDE_DIR = [
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)');
 function beginSwap(meta) {
   if (!S.shown) return;                         // the first record of the page is simply there
+  S.runoutSince = 0;
   if (!S.swap) {
     if (drag) { drag.tap = false; release(); }
     const flipping = sameDisc(meta, S.platterRec) && meta.id !== S.platterRec.id;   // same disc: turn it over
