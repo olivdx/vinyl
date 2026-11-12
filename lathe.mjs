@@ -227,8 +227,15 @@ const jobs = [
   })),
 ];
 const args0 = process.argv.slice(2), wantAlbums = args0.includes('albums') || args0.includes('all');
-const plans = wantAlbums && ffprobe ? albumPlans() : [];
+let plans = wantAlbums && ffprobe ? albumPlans() : [];
 if (wantAlbums && !ffprobe) log('albums/: skipped, ffprobe (ffmpeg) is not installed');
+// `node lathe.mjs albums <id>` cuts only those albums. The others stay as they are in library.json.
+const onlyAlbums = wantAlbums && !args0.includes('all') ? args0.filter((a) => a !== 'albums').map((a) => slug(a)) : [];
+if (onlyAlbums.length) {
+  const picked = plans.filter((a) => onlyAlbums.includes(a.id) || onlyAlbums.includes(slug(a.name)));
+  if (!picked.length) log(`no such album: ${onlyAlbums.join(', ')} (have: ${plans.map((a) => a.id).join(', ') || 'none'})`);
+  plans = picked;
+}
 for (const a of plans) {
   if (a.coverFile) { mkdirSync(coversDir, { recursive: true }); copyFileSync(join(a.dir, a.coverFile), join(root, 'public', a.cover)); }
   log(`${a.title} by ${a.by}: ${a.sides.length} sides: ` + a.sides.map((s) => `${s.side} ${(s.tracks.reduce((x, t) => x + t.len, 0) / 60).toFixed(1)} min`).join(', '));

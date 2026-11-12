@@ -1639,6 +1639,75 @@
      ]
     }
    ]
+  },
+  {
+   "id": "nhien",
+   "title": "Nhiên",
+   "by": "Lân Nhã",
+   "cover": "covers/nhien.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "nhien-a",
+     "album": "nhien",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/nhien/a/",
+     "tracks": [
+      {
+       "title": "Biển Nhớ",
+       "by": "Lân Nhã",
+       "len": 227
+      },
+      {
+       "title": "Còn Tuổi Nào Cho Em",
+       "by": "Lân Nhã",
+       "len": 276
+      },
+      {
+       "title": "Cuối Cùng Cho Một Tình Yêu",
+       "by": "Lân Nhã",
+       "len": 181
+      },
+      {
+       "title": "Vàng Phai Trước Ngõ",
+       "by": "Lân Nhã",
+       "len": 313
+      }
+     ]
+    },
+    {
+     "id": "nhien-b",
+     "album": "nhien",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/nhien/b/",
+     "tracks": [
+      {
+       "title": "Như Một Lời Chia Tay",
+       "by": "Lân Nhã",
+       "len": 269
+      },
+      {
+       "title": "Em Còn Nhớ Hay Em Đã Quên",
+       "by": "Lân Nhã",
+       "len": 324
+      },
+      {
+       "title": "Phôi Pha",
+       "by": "Lân Nhã",
+       "len": 270
+      },
+      {
+       "title": "Tình Sầu",
+       "by": "Lân Nhã",
+       "len": 307
+      }
+     ]
+    }
+   ]
   }
  ]
 }
