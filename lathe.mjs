@@ -205,15 +205,20 @@ function writeLibrary(plans) {
       .map(({ id, album, disc, side, title, dir, tracks }) => ({ id, album, disc, side, title, dir, tracks: tracks.map(({ file, ...t }) => t) })),
   })).filter((a) => a.sides.length);
   const planIds = new Set(fromPlans.map((a) => a.id));
-  let kept = [];
+  let kept = [], added = new Map();
   try {
     const prev = JSON.parse(readFileSync(libFile, 'utf8'));
+    added = new Map((prev.albums || []).map((a) => [a.id, a.added]));
     // Albums cut earlier (e.g. mck, starboy) stay listed until their assets are gone, even if albums/<folder>/ has no songs.
     kept = (prev.albums || []).filter(
       (a) => !planIds.has(a.id) && (a.sides || []).some((s) => existsSync(join(root, 'public', 'vinyl', s.dir || `assets/${s.id}/`, 'record.json'))),
     );
   } catch {}
-  const albums = [...kept, ...fromPlans];
+  // The page lists albums in this order: the newest first. `added` is when an album first entered the library;
+  // cutting it again keeps the date.
+  const now = new Date().toISOString();
+  const albums = [...kept, ...fromPlans].map(({ id, title, by, ...rest }) => ({ id, title, by, added: added.get(id) || now, ...rest }))
+    .sort((a, b) => (a.added < b.added ? 1 : a.added > b.added ? -1 : 0));
   writeFileSync(libFile, JSON.stringify({ albums }, null, 1));
   log(`library: ${albums.map((a) => `${a.title} (${a.sides.length} sides)`).join(', ') || 'no albums'} -> public/vinyl/library.json`);
 }
