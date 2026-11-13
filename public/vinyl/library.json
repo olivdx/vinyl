@@ -657,6 +657,75 @@
    ]
   },
   {
+   "id": "nhien",
+   "title": "Nhiên",
+   "by": "Lân Nhã",
+   "cover": "covers/nhien.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "nhien-a",
+     "album": "nhien",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/nhien/a/",
+     "tracks": [
+      {
+       "title": "Biển Nhớ",
+       "by": "Lân Nhã",
+       "len": 227
+      },
+      {
+       "title": "Còn Tuổi Nào Cho Em",
+       "by": "Lân Nhã",
+       "len": 276
+      },
+      {
+       "title": "Cuối Cùng Cho Một Tình Yêu",
+       "by": "Lân Nhã",
+       "len": 181
+      },
+      {
+       "title": "Vàng Phai Trước Ngõ",
+       "by": "Lân Nhã",
+       "len": 313
+      }
+     ]
+    },
+    {
+     "id": "nhien-b",
+     "album": "nhien",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/nhien/b/",
+     "tracks": [
+      {
+       "title": "Như Một Lời Chia Tay",
+       "by": "Lân Nhã",
+       "len": 269
+      },
+      {
+       "title": "Em Còn Nhớ Hay Em Đã Quên",
+       "by": "Lân Nhã",
+       "len": 324
+      },
+      {
+       "title": "Phôi Pha",
+       "by": "Lân Nhã",
+       "len": 270
+      },
+      {
+       "title": "Tình Sầu",
+       "by": "Lân Nhã",
+       "len": 307
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "christmas",
    "title": "Christmas",
    "by": "Various artists",
@@ -864,6 +933,75 @@
    ]
   },
   {
+   "id": "nhung-ngay-mua",
+   "title": "Những Ngày Mưa",
+   "by": "Various artists",
+   "cover": "covers/nhung-ngay-mua.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "nhung-ngay-mua-a",
+     "album": "nhung-ngay-mua",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/nhung-ngay-mua/a/",
+     "tracks": [
+      {
+       "title": "Gói Con Tim Làm Quà",
+       "by": "Nguyễn Hùng, Mounter",
+       "len": 243
+      },
+      {
+       "title": "Xuân Thì",
+       "by": "Hà Anh Tuấn",
+       "len": 346
+      },
+      {
+       "title": "Lỡ Thương Nhau (Bò Sữa Bay Original Soundtrack)",
+       "by": "Nguyễn Hùng, Mounter",
+       "len": 234
+      },
+      {
+       "title": "Thế Thôi",
+       "by": "Haisam",
+       "len": 243
+      }
+     ]
+    },
+    {
+     "id": "nhung-ngay-mua-b",
+     "album": "nhung-ngay-mua",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/nhung-ngay-mua/b/",
+     "tracks": [
+      {
+       "title": "Một Điều Mà Anh Rất Ngại Nói Ra",
+       "by": "Various artists",
+       "len": 203
+      },
+      {
+       "title": "Nhiều Hơn Một Lý Do",
+       "by": "Haisam",
+       "len": 257
+      },
+      {
+       "title": "Những Vì Tinh Tú Trong Đôi Mắt Em (Soft Version)",
+       "by": "Haisam",
+       "len": 188
+      },
+      {
+       "title": "Lạnh Thôi Đừng Mưa",
+       "by": "Haisam",
+       "len": 258
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "pillzcasso",
    "title": "PILLZCASSO",
    "by": "2pillz",
@@ -977,6 +1115,75 @@
        "title": "CHẲNG AI VẬY",
        "by": "2pillz & Kay Châu Anh",
        "len": 188
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "suy",
+   "title": "Suy",
+   "by": "Various artists",
+   "cover": "covers/suy.jpg",
+   "discs": 1,
+   "sides": [
+    {
+     "id": "suy-a",
+     "album": "suy",
+     "disc": 1,
+     "side": "A",
+     "title": "Side A",
+     "dir": "assets/suy/a/",
+     "tracks": [
+      {
+       "title": "Moianh",
+       "by": "Various artists",
+       "len": 174
+      },
+      {
+       "title": "Wish U Back",
+       "by": "Various artists",
+       "len": 222
+      },
+      {
+       "title": "Badtrip",
+       "by": "RPT MCK",
+       "len": 159
+      },
+      {
+       "title": "B.E.C.D.B.K",
+       "by": "brook, KhoaiTay feat. consauzuize",
+       "len": 202
+      }
+     ]
+    },
+    {
+     "id": "suy-b",
+     "album": "suy",
+     "disc": 1,
+     "side": "B",
+     "title": "Side B",
+     "dir": "assets/suy/b/",
+     "tracks": [
+      {
+       "title": "dư âm",
+       "by": "Obito",
+       "len": 167
+      },
+      {
+       "title": "she goes by.",
+       "by": "where.t.at",
+       "len": 177
+      },
+      {
+       "title": "Tiếc Làm Gì?",
+       "by": "Parys",
+       "len": 140
+      },
+      {
+       "title": "Một Ngày Như Hôm Nay",
+       "by": "Hải Sâm, Khoa Vũ",
+       "len": 190
       }
      ]
     }
@@ -1635,75 +1842,6 @@
        "title": "kết thúc = mở đầu",
        "by": "tlinh",
        "len": 57
-      }
-     ]
-    }
-   ]
-  },
-  {
-   "id": "nhien",
-   "title": "Nhiên",
-   "by": "Lân Nhã",
-   "cover": "covers/nhien.jpg",
-   "discs": 1,
-   "sides": [
-    {
-     "id": "nhien-a",
-     "album": "nhien",
-     "disc": 1,
-     "side": "A",
-     "title": "Side A",
-     "dir": "assets/nhien/a/",
-     "tracks": [
-      {
-       "title": "Biển Nhớ",
-       "by": "Lân Nhã",
-       "len": 227
-      },
-      {
-       "title": "Còn Tuổi Nào Cho Em",
-       "by": "Lân Nhã",
-       "len": 276
-      },
-      {
-       "title": "Cuối Cùng Cho Một Tình Yêu",
-       "by": "Lân Nhã",
-       "len": 181
-      },
-      {
-       "title": "Vàng Phai Trước Ngõ",
-       "by": "Lân Nhã",
-       "len": 313
-      }
-     ]
-    },
-    {
-     "id": "nhien-b",
-     "album": "nhien",
-     "disc": 1,
-     "side": "B",
-     "title": "Side B",
-     "dir": "assets/nhien/b/",
-     "tracks": [
-      {
-       "title": "Như Một Lời Chia Tay",
-       "by": "Lân Nhã",
-       "len": 269
-      },
-      {
-       "title": "Em Còn Nhớ Hay Em Đã Quên",
-       "by": "Lân Nhã",
-       "len": 324
-      },
-      {
-       "title": "Phôi Pha",
-       "by": "Lân Nhã",
-       "len": 270
-      },
-      {
-       "title": "Tình Sầu",
-       "by": "Lân Nhã",
-       "len": 307
       }
      ]
     }
